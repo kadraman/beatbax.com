@@ -1,0 +1,43 @@
+---
+sidebar_position: 2
+title: Quick Start
+mdx:
+  format: mdx
+---
+
+import BaxPlayer from '@site/src/components/BaxPlayer';
+import {helloBax} from '@site/src/components/BaxPlayer/demos/hello';
+
+This guide gets you playing your first `.bax` song in minutes.
+
+## Play a snippet here
+
+Press **Play** to hear this Game Boy example rendered by BeatBax in your browser:
+
+<BaxPlayer title="Your first song" code={helloBax} />
+
+## Try in the browser
+
+1. Open [app.beatbax.com](https://app.beatbax.com)
+2. Choose an example from the toolbar or paste a `.bax` song
+3. Click **Apply** then **Play**
+
+## Use the desktop app
+
+1. [Download](/download) and install BeatBax Desktop
+2. Open `songs/sample.bax` from the examples menu
+3. Press **Play** in the transport bar
+
+## Use the CLI
+
+From a cloned toolchain repo:
+
+```powershell
+node bin/beatbax verify songs/sample.bax
+node bin/beatbax play songs/sample.bax
+node bin/beatbax export wav songs/sample.bax output.wav
+```
+
+## Learn the language
+
+Continue with the [Tutorial overview](/docs/tutorial/overview) for the full language quick reference.

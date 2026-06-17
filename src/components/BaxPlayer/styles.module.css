@@ -1,0 +1,96 @@
+.baxPlayer {
+  border: 1px solid var(--beatbax-border-strong);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 1.25rem 0 1.75rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--beatbax-border);
+}
+
+.title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--beatbax-accent);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--beatbax-accent);
+  color: var(--beatbax-text-on-accent);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--beatbax-accent-dark);
+}
+
+.button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  background: transparent;
+  color: var(--beatbax-accent-alt);
+  border: 1px solid var(--beatbax-accent-alt);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  color: var(--beatbax-accent);
+  border-color: var(--beatbax-accent);
+}
+
+.code {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  background: color-mix(in srgb, var(--beatbax-bg) 88%, transparent);
+}
+
+.code code {
+  background: none;
+  padding: 0;
+  border: none;
+  white-space: pre;
+}
+
+.status {
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  border-top: 1px solid var(--beatbax-border);
+}
+
+.statusError {
+  color: #f87171;
+}
+
+.statusPlaying {
+  color: var(--beatbax-accent-alt);
+}
+
+.fallback {
+  padding: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}

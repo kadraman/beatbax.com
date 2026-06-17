@@ -1,0 +1,362 @@
+/**
+ * BeatBax retro theme — NES / CRT arcade palette.
+ * Deep navy surfaces, amber-gold accents, phosphor cyan highlights.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --beatbax-bg: #ebe4d4;
+  --beatbax-surface: #f5f0e6;
+  --beatbax-accent: #b84a1f;
+  --beatbax-accent-dark: #963d19;
+  --beatbax-accent-alt: #2d5a87;
+  --beatbax-text-on-accent: #fffaf4;
+  --beatbax-border: rgba(45, 90, 135, 0.22);
+  --beatbax-border-strong: rgba(45, 90, 135, 0.35);
+  --beatbax-hero-text: #1a1d2e;
+
+  --ifm-color-primary: #2d5a87;
+  --ifm-color-primary-dark: #284f78;
+  --ifm-color-primary-darker: #254a71;
+  --ifm-color-primary-darkest: #1f3d5d;
+  --ifm-color-primary-light: #326596;
+  --ifm-color-primary-lighter: #356a9c;
+  --ifm-color-primary-lightest: #3d77ad;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(45, 90, 135, 0.1);
+  --ifm-font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --ifm-heading-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+[data-theme='dark'] {
+  --beatbax-bg: #0c0e18;
+  --beatbax-surface: #161a2e;
+  --beatbax-accent: #f5c842;
+  --beatbax-accent-dark: #ddb830;
+  --beatbax-accent-alt: #5de4ff;
+  --beatbax-text-on-accent: #0c0e18;
+  --beatbax-border: rgba(93, 228, 255, 0.14);
+  --beatbax-border-strong: rgba(93, 228, 255, 0.28);
+  --beatbax-hero-text: #e8ecf8;
+
+  --ifm-color-primary: #f5c842;
+  --ifm-color-primary-dark: #ddb830;
+  --ifm-color-primary-darker: #d1ae2e;
+  --ifm-color-primary-darkest: #ad9026;
+  --ifm-color-primary-light: #f7d05e;
+  --ifm-color-primary-lighter: #f8d469;
+  --ifm-color-primary-lightest: #fadf87;
+  --ifm-background-color: #0c0e18;
+  --ifm-background-surface-color: #161a2e;
+  --docusaurus-highlighted-code-line-bg: rgba(245, 200, 66, 0.1);
+}
+
+.navbar-download-button {
+  background: var(--beatbax-accent);
+  color: var(--beatbax-text-on-accent) !important;
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem !important;
+  margin-left: 0.25rem;
+}
+
+.navbar-download-button:hover {
+  background: var(--beatbax-accent-dark);
+  color: var(--beatbax-text-on-accent) !important;
+}
+
+.hero--beatbax {
+  background:
+    linear-gradient(160deg, #080a14 0%, #12162a 42%, #1a1040 100%);
+  color: var(--beatbax-hero-text);
+  padding: 4rem 0 5rem;
+  position: relative;
+}
+
+[data-theme='light'] .hero--beatbax {
+  background:
+    linear-gradient(160deg, #d8cfc0 0%, #c9bfb0 45%, #b8a898 100%);
+  color: #1a1d2e;
+}
+
+.hero--beatbax .hero__title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.hero--beatbax .hero__subtitle {
+  font-size: 1.15rem;
+  max-width: 42rem;
+  margin: 1.5rem auto 0;
+  opacity: 0.92;
+}
+
+.heroLogo {
+  max-width: min(420px, 80vw);
+  margin-bottom: 1.5rem;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.ctaPrimary,
+.ctaSecondary {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.85rem 1.4rem;
+}
+
+.ctaPrimary {
+  background: var(--beatbax-accent);
+  color: var(--beatbax-text-on-accent) !important;
+  border: 2px solid var(--beatbax-accent);
+}
+
+.ctaPrimary:hover {
+  background: var(--beatbax-accent-dark);
+  border-color: var(--beatbax-accent-dark);
+  color: var(--beatbax-text-on-accent) !important;
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: inherit !important;
+  border: 2px solid var(--beatbax-border-strong);
+}
+
+.ctaSecondary:hover {
+  border-color: var(--beatbax-accent-alt);
+  color: var(--beatbax-accent-alt) !important;
+}
+
+.featuresSection {
+  padding: 4rem 0;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.featureCard {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--beatbax-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+}
+
+.featureCard h3 {
+  color: var(--beatbax-accent);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.featureCard p {
+  margin-bottom: 0;
+}
+
+.featureCardLink {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--beatbax-accent-alt);
+}
+
+.featureCardLink:hover {
+  color: var(--beatbax-accent);
+  text-decoration: none;
+}
+
+.screenshotSection {
+  padding: 3rem 0 4rem;
+  background: color-mix(in srgb, var(--beatbax-surface) 55%, transparent);
+}
+
+.screenshotGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: start;
+}
+
+.screenshotCard img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--beatbax-border-strong);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.screenshotCard figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.downloadPage {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.downloadHero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.downloadCard {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--beatbax-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.downloadCard h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.downloadCardCta {
+  text-align: center;
+}
+
+.platformLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.platformRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.platformLabel {
+  min-width: 5rem;
+  font-weight: 600;
+  color: var(--beatbax-accent);
+}
+
+.downloadBtn {
+  display: inline-block;
+  background: var(--beatbax-accent);
+  color: var(--beatbax-text-on-accent) !important;
+  border-radius: 6px;
+  padding: 0.45rem 0.9rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.downloadBtn:hover {
+  background: var(--beatbax-accent-dark);
+  color: var(--beatbax-text-on-accent) !important;
+}
+
+.downloadBtnSecondary {
+  background: transparent;
+  border: 1px solid var(--beatbax-accent-alt);
+  color: var(--beatbax-accent-alt) !important;
+}
+
+.downloadBtnSecondary:hover {
+  color: var(--beatbax-accent) !important;
+  border-color: var(--beatbax-accent);
+}
+
+.noticeBox {
+  border-left: 4px solid var(--beatbax-accent);
+  background: color-mix(in srgb, var(--beatbax-accent) 8%, transparent);
+  padding: 1rem 1.25rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1.5rem 0;
+}
+
+/* Subtle CRT scanline texture on hero only */
+[data-theme='dark'] .hero--beatbax::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+}
+
+[data-theme='dark'] .hero--beatbax > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-doc-markdown blockquote {
+  border-left: 4px solid var(--beatbax-accent);
+  background: color-mix(in srgb, var(--beatbax-accent) 8%, transparent);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.theme-doc-markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.docsTooltip {
+  border-bottom: 1px dotted currentColor;
+  color: var(--ifm-link-color);
+  cursor: help;
+  position: relative;
+}
+
+.docsTooltip:focus-visible {
+  border-radius: 0.125rem;
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.docsTooltip::after {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.375rem;
+  box-shadow: var(--ifm-global-shadow-lw);
+  color: var(--ifm-font-color-base);
+  content: attr(data-tooltip);
+  font-size: 0.875rem;
+  left: 50%;
+  line-height: 1.4;
+  max-width: min(22rem, 80vw);
+  opacity: 0;
+  padding: 0.5rem 0.625rem;
+  pointer-events: none;
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  transform: translateX(-50%) translateY(0.25rem);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+  visibility: hidden;
+  width: max-content;
+  z-index: 10;
+}
+
+.docsTooltip:hover::after,
+.docsTooltip:focus::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  visibility: visible;
+}

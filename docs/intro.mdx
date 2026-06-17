@@ -1,0 +1,58 @@
+---
+sidebar_position: 1
+title: Introduction
+mdx:
+  format: mdx
+---
+
+export const introExampleSong = `song name "An example song"
+
+chip gameboy
+bpm 128
+
+inst lead  type=pulse1 duty=50 env=gb:12,down,1
+inst bass  type=pulse2 duty=25 env=gb:10,down,1
+inst snare type=noise env=gb:12,down,1
+
+effect wobble   = vib:8,4
+effect arpMajor = arp:4,7
+
+pat melody   = C5<wobble> E4 G4<arpMajor> C5
+pat bass_pat = C3 . G2 .
+pat drum_pat = snare . snare snare
+
+seq lead_seq  = melody:inst(lead) melody:inst(lead)
+seq bass_seq  = bass_pat:inst(bass)*2
+seq drums_seq = drum_pat*2
+
+channel 1 => inst lead seq lead_seq
+channel 2 => inst bass seq bass_seq
+channel 4 => inst snare seq drums_seq
+
+play`;
+
+BeatBax is a live-coding language and creative toolchain for making chiptune music in the style of classic 8/16-bit computers and game consoles.
+
+Instead of using a tracker or DAW, you write songs with a simple but powerful grammar that describes instruments, melodies, basslines, and beats — and BeatBax brings them to life with authentic retro sound.
+
+## Features
+
+- **Simple text-based grammar** — create instruments, melodies, basslines, and beats in `.bax` files
+- **Authentic retro sound** — Game Boy DMG-01 and NES Ricoh 2A03 emulation with hardware-accurate envelopes, duty cycles, and macros
+- **Built-in effects** — vibrato, arpeggio, portamento, pitch bend, sweep, volume slide, tremolo, pan, echo, note cut, and retrigger
+- **Reusable instrument libraries** — share instruments across songs via `.ins` files; import locally or from GitHub
+- **Export formats** — MIDI, WAV, ISM JSON, hUGETracker (UGE) for Game Boy, FamiTracker text for NES
+- **Desktop IDE** — Electron + React client with export, BeatBax Copilot, mixer, and pattern grid
+- **Web-lite browser client** — try in the browser at [app.beatbax.com](https://app.beatbax.com)
+- **CLI** — `play`, `verify`, `export`, `inspect`, and `convert` for scripted workflows
+- **Extensible architecture** — additional chip backends (SMS, Spectrum 128, and more) via plugins
+
+## Example song
+
+<BaxPlayer title="Example song" code={introExampleSong} />
+
+## Next steps
+
+- [Quick start](/docs/getting-started/quick-start)
+- [Download BeatBax](/download)
+- [Try in browser](https://app.beatbax.com)
