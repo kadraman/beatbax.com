@@ -10,6 +10,11 @@ const config: Config = {
 
   future: {
     v4: true,
+    faster: {
+      // Rspack currently panics in dev on Windows for this site; use Webpack instead.
+      rspackBundler: false,
+      rspackPersistentCache: false,
+    },
   },
 
   url: 'https://beatbax.com',
@@ -160,7 +165,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `BeatBax © ${new Date().getFullYear()} Kevin A. Lee.`,
+      copyright: `BeatBax Copyright © ${new Date().getFullYear()} <a href="https://github.com/kadraman">Kevin A. Lee</a>.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -49,6 +49,18 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Development',
+      items: [
+        'development/overview',
+        'development/engine',
+        'development/plugins',
+        'development/cli',
+        'development/web-app',
+        'development/desktop-app',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Exports',
       items: [
         'exports/wav',

@@ -2,9 +2,9 @@
 
 Marketing site and documentation for [BeatBax](https://github.com/kadraman/beatbax) — a live-coding language and toolchain for retro console chiptunes.
 
-Live at [beatbax.com](https://beatbax.com) (after deployment).
+>See live at [beatbax.com](https://beatbax.com).
 
-## Local development
+## Development
 
 Requires Node.js 20+.
 
@@ -24,7 +24,17 @@ npm run serve
 
 Production output is written to `build/`.
 
-## Deploy with IONOS Deploy Now
+## Project structure
+
+- `src/pages/` - landing, download pages etc.
+- `src/components/` - custom components used in pages
+- `src/config/site.ts` — external URLs
+- `src/css/custom.css` — custom CSS
+- `docs/` - user facing documentation
+- `sidebar.ts` - custom sidebar
+- `static` — logos, screenshots etc.
+
+## Deploy (with IONOS Deploy Now)
 
 1. Push this repository to GitHub (`kadraman/beatbax.com`).
 2. Sign in to [IONOS Deploy Now](https://ionos.space) and click **Add new project**.
@@ -34,23 +44,6 @@ Production output is written to `build/`.
    - **Publish directory:** `build`
 5. Connect the custom domain **beatbax.com** in the Ionos dashboard (SSL is provisioned automatically).
 6. Ionos adds GitHub Actions workflow files on setup; subsequent pushes to `main` trigger deploys.
-
-## Project structure
-
-- `src/pages/` — landing page and download page
-- `src/components/BaxPlayer/` — in-browser `.bax` snippet player (uses `@beatbax/engine`)
-- `docs/` — user documentation (migrated from the BeatBax toolchain repo)
-- `src/config/site.ts` — external URLs (itch.io, GitHub releases, web app)
-- `static/img/` — logos and screenshots
-
-## Docs maintenance
-
-User-facing docs live in this repo. To refresh from the toolchain:
-
-```bash
-# Clone beatbax alongside this repo as ../beatbax-toolchain-temp, then:
-node scripts/migrate-docs.mjs
-```
 
 ## License
 

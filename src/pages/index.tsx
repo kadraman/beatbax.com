@@ -12,28 +12,39 @@ const features = [
   {
     title: 'Live-code chiptunes',
     description:
-      'Write songs in .bax files with a simple grammar for instruments, patterns, sequences, and effects — authentic Game Boy and NES sound.',
+      'Write songs in .bax files with a simple grammar for instruments, patterns, sequences, and effects — create authentic retro console-style sounds.',
     link: '/docs/tutorial/overview',
     linkLabel: 'Language tutorial',
   },
   {
+    title: 'Sound Chips & Plugins',
+    description:
+      'Compose with emulated Game Boy, NES, SMS, and AY-3-8910 sound chips, then add new chip backends and export targets through plugins.',
+    link: '/docs/chips/overview',
+    linkLabel: 'Sound chips',
+  },
+  {
     title: 'Export for homebrew',
     description:
-      'Export to hUGETracker (UGE), FamiTracker text, WAV, MIDI, and more so your songs work in real game projects.',
+      'Export songs to hUGETracker (UGE), FamiTracker text, WAV, MIDI, and more so your songs can be used in homebrew game projects.',
     link: '/docs/exports/uge',
     linkLabel: 'Export guides',
   },
   {
-    title: 'Desktop IDE',
+    title: 'Desktop App',
     description:
-      'Full Electron app with Monaco editor, channel mixer, pattern grid, exports, and BeatBax Copilot AI assistant.',
+      'Full Electron Desktop app for Windows, macOS, and Linux with Monaco editor, channel mixer, visualizer and BeatBax Copilot AI assistant.',
     link: '/docs/tools/desktop',
     linkLabel: 'Desktop app',
   },
   {
-    title: 'Web-lite client',
-    description:
-      'Try BeatBax in the browser at app.beatbax.com — no install required for quick demos and lightweight edits.',
+    title: 'Web-lite App',
+    description: (
+      <>
+        Try BeatBax in the browser at <Link href={siteLinks.webApp}>app.beatbax.com</Link>{' '}
+        - no install required - for quick demos, lightweight edits and go anywhere creation.
+      </>
+    ),
     link: siteLinks.webApp,
     linkLabel: 'Open web app',
     external: true,
@@ -44,13 +55,6 @@ const features = [
       'Play, verify, export, inspect, and convert samples from the command line for scripted and headless workflows.',
     link: '/docs/tools/cli',
     linkLabel: 'CLI reference',
-  },
-  {
-    title: 'Plugins & chips',
-    description:
-      'Extend BeatBax with custom sound chip backends and export plugins — built-in Game Boy and NES, plus SMS, Spectrum 128, VGM, FamiTracker, and more.',
-    link: '/docs/chips/overview',
-    linkLabel: 'Sound chips',
   },
 ];
 
@@ -112,7 +116,7 @@ function Screenshots() {
     <section className="screenshotSection">
       <div className="container">
         <Heading as="h2" className="text--center margin-bottom--lg">
-          Write, play, and export retro console music
+          Write, Play, Export - retro console chiptunes.
         </Heading>
         <div className="screenshotGrid">
           <figure className="screenshotCard">
@@ -127,7 +131,7 @@ function Screenshots() {
               src="/img/web-ui-screenshot-1.png"
               alt="BeatBax Web UI"
             />
-            <figcaption>Web-lite client — try in your browser</figcaption>
+            <figcaption>Web-lite App — try in your browser</figcaption>
           </figure>
         </div>
       </div>
@@ -139,7 +143,7 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title="Live-coding chiptunes for retro consoles"
+      title="Live-coding language for retro console chiptunes"
       description={siteConfig.tagline}>
       <HomepageHeader />
       <main>

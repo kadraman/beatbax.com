@@ -5,9 +5,18 @@ title: CLI
 
 # CLI
 
-> **Windows note:** npm has limitations passing flag arguments through `npm run`. Use `node bin/beatbax` or the `bin\beatbax` wrapper directly.
+## Install from npm
 
-### Commands
+Install the CLI globally from [npm](https://www.npmjs.com/package/@beatbax/cli):
+
+```powershell
+npm install -g @beatbax/cli
+beatbax --help
+```
+
+> **Windows note for source builds:** npm has limitations passing flag arguments through `npm run`. When running from a cloned repository, use `node bin/beatbax` or the `bin\beatbax` wrapper directly.
+
+## Commands
 
 ```powershell
 # Validate a song file

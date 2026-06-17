@@ -35,7 +35,8 @@ export async function playBaxSource(
     const resolved = resolveSong(resolvedAst as Parameters<typeof resolveSong>[0]);
     await resumePromise;
 
-    const player = new Player(ctx);
+    const playbackCtx = ctx;
+    const player = new Player(playbackCtx);
     await player.playAST(resolved);
 
     return {
@@ -47,7 +48,7 @@ export async function playBaxSource(
             /* ignore */
           }
           try {
-            void ctx.close();
+            void playbackCtx.close();
           } catch {
             /* ignore */
           }

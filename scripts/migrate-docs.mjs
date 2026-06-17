@@ -133,7 +133,7 @@ Supported platforms:
 >
 > Installers are not code-signed yet. Windows SmartScreen and macOS Gatekeeper may warn on first install. See \`README.txt\` in the install folder for platform-specific steps.
 
-## Web-lite client
+## Web-lite App
 
 No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser.
 
