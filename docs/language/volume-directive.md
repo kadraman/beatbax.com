@@ -56,7 +56,7 @@ play
 
 ### WebAudio Playback
 
-During WebAudio playback (browser or Node.js), BeatBax creates a **master gain node** that connects all channel outputs to the audio context's destination. The master gain is set to the value specified by the `volume` directive (or `0.25` by default).
+During WebAudio playback (browser or Node.js), BeatBax creates a **master gain node** that connects all channel outputs to the audio context's destination. The master gain is set to the value specified by the `volume` directive (or `1.0` by default).
 
 All channel-level gain nodes (envelopes, effects) are applied first, then the master gain is applied globally.
 

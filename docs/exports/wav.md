@@ -442,9 +442,7 @@ For issues with WAV export:
 
 ## Future Enhancements
 
-Planned features for future versions:
-- **Pan control**: Stereo positioning per channel
-- **Master volume**: Global gain adjustment
+Potential improvements for future versions:
 - **Fade in/out**: Smooth volume transitions at start/end
 - **Sample rate conversion**: Better quality resampling
 - **Real-time streaming**: Live playback without temp files
