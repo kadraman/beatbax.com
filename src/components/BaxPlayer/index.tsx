@@ -1,18 +1,45 @@
 import type {ReactNode} from 'react';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import clsx from 'clsx';
+import {parseFocusedBaxSource} from './focusCode';
 import {playBaxSource, type BaxPlayerHandle} from './playBax';
 import styles from './styles.module.css';
 
 export type BaxPlayerProps = {
   title?: string;
+  /** Full BeatBax source. Use `# @show` / `# @end` to focus the displayed snippet. */
   code: string;
 };
 
 type PlayerStatus = 'idle' | 'loading' | 'playing' | 'error';
 
+function CodeBlock({
+  displayCode,
+  omittedBefore,
+  omittedAfter,
+}: {
+  displayCode: string;
+  omittedBefore: boolean;
+  omittedAfter: boolean;
+}) {
+  const lines = [
+    omittedBefore ? '…' : null,
+    displayCode,
+    omittedAfter ? '…' : null,
+  ]
+    .filter((part): part is string => part != null && part.length > 0)
+    .join('\n');
+
+  return (
+    <pre className={styles.code}>
+      <code>{lines}</code>
+    </pre>
+  );
+}
+
 function BaxPlayerInner({title, code}: BaxPlayerProps) {
+  const focused = useMemo(() => parseFocusedBaxSource(code), [code]);
   const handleRef = useRef<BaxPlayerHandle | null>(null);
   const [status, setStatus] = useState<PlayerStatus>('idle');
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +57,7 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
     setError(null);
     setStatus('loading');
 
-    const result = await playBaxSource(code);
+    const result = await playBaxSource(focused.playCode);
     if ('error' in result && result.error) {
       setError(result.error);
       setStatus('error');
@@ -45,7 +72,7 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
 
     handleRef.current = result.handle;
     setStatus('playing');
-  }, [code, stopPlayback]);
+  }, [focused.playCode, stopPlayback]);
 
   return (
     <div className={styles.baxPlayer}>
@@ -68,9 +95,11 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
           </button>
         </div>
       </div>
-      <pre className={styles.code}>
-        <code>{code.trim()}</code>
-      </pre>
+      <CodeBlock
+        displayCode={focused.displayCode}
+        omittedBefore={focused.omittedBefore}
+        omittedAfter={focused.omittedAfter}
+      />
       {error ? (
         <div className={clsx(styles.status, styles.statusError)}>{error}</div>
       ) : status === 'playing' ? (
@@ -81,6 +110,8 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
 }
 
 export default function BaxPlayer(props: BaxPlayerProps): ReactNode {
+  const focused = parseFocusedBaxSource(props.code);
+
   return (
     <BrowserOnly
       fallback={
@@ -88,9 +119,11 @@ export default function BaxPlayer(props: BaxPlayerProps): ReactNode {
           <div className={styles.fallback}>
             {props.title ? <strong>{props.title}</strong> : null}
             <p>Interactive playback loads in the browser.</p>
-            <pre className={styles.code}>
-              <code>{props.code.trim()}</code>
-            </pre>
+            <CodeBlock
+              displayCode={focused.displayCode}
+              omittedBefore={focused.omittedBefore}
+              omittedAfter={focused.omittedAfter}
+            />
           </div>
         </div>
       }>

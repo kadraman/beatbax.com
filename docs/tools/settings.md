@@ -1,39 +1,42 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Settings
 ---
 
-## Settings Panel
+# Settings
 
-All persistent preferences live in a single **Settings** modal. Open it with:
+The **Settings** modal is part of [BeatBax Desktop](/docs/tools/desktop). Open it with:
 
 - `Ctrl+,` (Windows / Linux) / `Cmd+,` (macOS)
-- **View → Settings…** in the menu bar
-- The ⚙ gear icon in the BeatBax Copilot panel header (opens directly to the **AI** tab)
-- The `…` overflow menu in the toolbar → **Settings**
+- **View → Settings…**
+- The gear icon in the Copilot panel header (opens the **AI** tab)
+- Toolbar `…` → **Settings**
 
-The modal divides settings into six tabs:
+The [web-lite client](/docs/tools/web-client) has no Settings modal — use the toolbar for theme (`Alt+Shift+L`) and word wrap.
+
+## Tabs
 
 | Tab | What it controls |
 |---|---|
 | **General** | Theme (dark / light / system), toolbar style, panel visibility, compact mixer |
 | **Editor** | Auto-save, word wrap, CodeLens, beat decorations, default BPM, font size |
 | **Playback** | Audio backend, sample rate, default loop, offline render buffer size |
-| **Features** | Enable / disable gated features (Pattern Grid, Hot Reload, AI Copilot, DAW Mixer) |
-| **AI** | API provider, endpoint URL, API key, model, interaction mode, max context chars |
-| **Advanced** | Log level, debug overlay, `window.__beatbax_player` exposure, reset-all |
+| **Features** | Pattern Grid, Hot Reload, AI Copilot, Channel Mixer |
+| **AI** | Provider, endpoint, API key, model, interaction mode, max context chars |
+| **Advanced** | Log level, debug overlay, debug player exposure, reset-all |
 
-Most changes apply **immediately** without a page reload. The following two settings are exceptions that take effect after reload: **Auto-save** (Editor tab) and **Audio backend / Sample rate** (Playback tab) — a note is shown inline beside each control. Each tab has a **Reset section to defaults** button. The **Advanced → Reset all settings** button clears all `beatbax:*` keys (with a confirmation prompt).
+Most changes apply **immediately**. Exceptions (noted inline): **Auto-save** and **Audio backend / Sample rate** need a reload. Each tab has **Reset section to defaults**. **Advanced → Reset all settings** clears BeatBax preference keys after confirmation.
 
-### Feature flags
-
-The **Features** tab controls which optional capabilities are active:
+## Feature flags
 
 | Feature | Badge | Notes |
 |---|---|---|
-| **Pattern Grid** | Experimental | Visual step-sequencer overlay for patterns |
-| **Hot Reload** | Experimental | Auto-replays on every editor change (800 ms debounce); state survives page reloads |
-| **AI Copilot** | Beta | Requires an API key — configure in the **AI** tab |
-| **DAW Mixer** | Planned | Horizontal channel strip with VU meters (not yet interactive) |
+| **Pattern Grid** | Experimental | Step-sequencer overlay for patterns |
+| **Hot Reload** | Experimental | Auto-replay on editor changes (debounced) |
+| **AI Copilot** | Beta | Configure provider on the **AI** tab; see [Copilot](/docs/tools/copilot) |
+| **Channel Mixer** | — | Channel strips and meters when enabled |
 
-Enabling or disabling a feature takes effect immediately — no reload needed.
+## Related docs
+
+- [Desktop app](/docs/tools/desktop)
+- [BeatBax Copilot](/docs/tools/copilot)

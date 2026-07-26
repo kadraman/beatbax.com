@@ -1,0 +1,102 @@
+---
+sidebar_position: 2
+title: Instruments
+mdx:
+  format: mdx
+---
+
+import {
+  pulse1Bax,
+  pulse2Bax,
+  sweepBax,
+  waveBax,
+  noiseBax,
+  kickProgramBax,
+  percussionBax,
+  allTogetherBax,
+} from '@site/src/components/BaxPlayer/demos/instruments';
+
+# Instruments
+
+Define instruments with `inst`, then assign them to channels or use their names as pattern tokens.
+
+Instrument `type=` and fields are **chip-specific**. This tutorial uses **Game Boy** (`chip gameboy`) only. For other chips see [Sound Chip Plugins](/docs/chips/overview).
+
+Examples below focus on the instrument (and a short pattern). Surrounding `chip` / `channel` / `play` wiring is hidden but still runs when you press **Play**.
+
+## Pulse 1
+
+Channel 1 is a pulse oscillator. Set `type=pulse1`, pick a `duty`, and give it a hardware envelope with `env`:
+
+<BaxPlayer title="Pulse 1 lead" code={pulse1Bax} />
+
+| Field | Notes |
+|-------|--------|
+| `duty` | **12.5, 25, 50, or 75** only |
+| `env` | Hardware envelope, e.g. `gb:12,down,1` |
+| `gm` | Optional GM program 0–127 for MIDI export |
+
+### Hardware sweep
+
+Pulse 1 can slide pitch with `sweep=time,direction,shift` (time/shift 0–7; direction `up` / `down`). Pitch `up` increases the frequency register; `down` decreases it:
+
+<BaxPlayer title="Pulse 1 sweep" code={sweepBax} />
+
+## Pulse 2
+
+Channel 2 is the second pulse oscillator — same duty and envelope options, but **no** hardware sweep. Useful for bass and harmony:
+
+<BaxPlayer title="Pulse 2 bass" code={pulse2Bax} />
+
+## Wave
+
+Channel 3 plays a custom wavetable. Provide 32 nibbles (0–15), a 16-value shorthand (tiled to 32), or a 32-character hex string. `volume=` sets the wave-channel level (percent):
+
+<BaxPlayer title="Wave pad" code={waveBax} />
+
+## Noise
+
+Channel 4 is LFSR noise — percussion and FX. Prefer `uge_note=` so BeatBax and hUGETracker share the LFSR clock; `note=` is the MIDI-style default when the instrument name is used as a pattern token:
+
+<BaxPlayer title="Noise snare" code={noiseBax} />
+
+| Field | Notes |
+|-------|--------|
+| `gb:width` | LFSR width (e.g. `7` or `15`) |
+| `uge_note=` | hUGE display note — drives **playback and** UGE export |
+| `note=` | Default pitch when the name is used as a pattern token |
+| `env` | Hardware envelope, e.g. `gb:12,down,1` |
+
+## Instrument macros
+
+Software macros (`pitch_env`, `vol_env`, `duty_env`, `arp_env`, …) work across chips. On Game Boy they also feed hUGETracker UGE subpatterns; native `subpat` is Game Boy–only.
+
+Here a noise kick uses pitch drop and volume decay:
+
+<BaxPlayer title="Noise kick program" code={kickProgramBax} />
+
+Full details: [Instrument macros](/docs/language/instrument-macros).
+
+## Percussion with named tokens
+
+Set `note=` (and for noise, preferably `uge_note=`) so instrument names work as pattern tokens:
+
+<BaxPlayer title="Named-token drum kit" code={percussionBax} />
+
+hUGETracker displays notes one octave higher than BeatBax MIDI-style `note=` values. More: [Instrument note mapping](/docs/language/instrument-note-mapping).
+
+## Putting it together
+
+Assign each instrument to its channel and sequence them at once:
+
+<BaxPlayer title="All four channels" code={allTogetherBax} />
+
+## Sharing instruments
+
+Reuse kits across songs with `import "…"`. See [Imports](/docs/language/imports) for syntax (`local:`, `github:`, `https:`) and security rules.
+
+## See also
+
+- [Instruments reference](/docs/language/instruments)
+- [Imports](/docs/language/imports)
+- [Patterns & sequences](/docs/tutorial/sequencing)

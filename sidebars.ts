@@ -14,27 +14,15 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Tutorial',
+      collapsed: false,
       items: [
         'tutorial/overview',
+        'tutorial/instruments',
+        'tutorial/sequencing',
+        'tutorial/modifiers',
         'tutorial/effects',
-        'tutorial/nes',
+        'tutorial/scale',
       ],
-    },
-    {
-      type: 'category',
-      label: 'Language',
-      items: [
-        'language/metadata-directives',
-        'language/instruments',
-        'language/instrument-note-mapping',
-        'language/imports',
-        'language/volume-directive',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Sound Chips',
-      items: ['chips/overview'],
     },
     {
       type: 'category',
@@ -42,9 +30,54 @@ const sidebars: SidebarsConfig = {
       items: [
         'tools/cli',
         'tools/web-client',
-        'tools/desktop',
-        'tools/settings',
-        'tools/copilot',
+        {
+          type: 'category',
+          label: 'Desktop App',
+          link: {
+            type: 'doc',
+            id: 'tools/desktop',
+          },
+          items: [
+            'tools/settings',
+            'tools/copilot',
+          ],
+        },
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Sound Chip Plugins',
+      items: [
+        'chips/overview',
+        'chips/gameboy',
+        'chips/nes',
+        'chips/sms',
+        'chips/spectrum-128',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Export Plugins',
+      items: [
+        'exports/wav',
+        'exports/uge',
+        'exports/uge-transpose',
+        'exports/vgm',
+        'exports/arkos',
+        'exports/famitracker-text',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Language Reference',
+      items: [
+        'language/metadata-directives',
+        'language/instruments',
+        'language/instrument-macros',
+        'language/instrument-note-mapping',
+        'language/modifiers',
+        'language/imports',
+        'language/volume-directive',
       ],
     },
     {
@@ -57,15 +90,6 @@ const sidebars: SidebarsConfig = {
         'development/cli',
         'development/web-app',
         'development/desktop-app',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'Exports',
-      items: [
-        'exports/wav',
-        'exports/uge',
-        'exports/uge-transpose',
       ],
     },
     'troubleshooting',

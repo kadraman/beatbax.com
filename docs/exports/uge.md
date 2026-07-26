@@ -6,7 +6,10 @@ title: UGE Export
 # UGE Export Usage Guide
 
 ## Overview
-BeatBax now supports exporting songs to hUGETracker v6 (.uge) format, enabling seamless integration with Game Boy music development workflows.
+
+BeatBax exports Game Boy songs to **hUGETracker v6** (`.uge`), including instrument **subpatterns** when you use macros (`pitch_env`, `vol_env`, `duty_env`, `arp_env`) or native `subpat`. Preview/WAV and UGE subpatterns share the same tick-program IR — see [Instrument macros](/docs/language/instrument-macros#game-boy-only-uge-subpatterns-subpat).
+
+Noise instruments should set **`uge_note=`** so playback and export use the same LFSR clock. Wave tables accept 32-nibble arrays or **32-character hex strings** (native hUGE format).
 
 ## Quick Start
 
@@ -20,20 +23,25 @@ bpm 128
 
 inst lead type=pulse1 duty=50 env=gb:12,down,1
 inst bass type=pulse2 duty=25 env=gb:10,down,1
+inst kick type=noise gb:width=7 uge_note=C-6 pitch_env=[0,-2,-4,-6] vol_env=[15,12,8,4]
 
 pat melody = C4 E4 G4 C5
 pat bassline = C2 . G2 .
+pat drums = kick . kick .
 
 channel 1 => inst lead pat melody
 channel 2 => inst bass pat bassline
+channel 4 => inst kick pat drums
 ```
 
 ### 2. Export to UGE
 
 Using the CLI:
 
-```bash
-npm run cli -- export uge mysong.bax mysong.uge
+```powershell
+node bin/beatbax export uge mysong.bax mysong.uge
+# or
+beatbax export uge mysong.bax --out mysong.uge
 ```
 
 Output:
@@ -44,8 +52,8 @@ Output:
 #### CLI Options
 
 **Verbose Output** - Get detailed progress information:
-```bash
-npm run cli -- export uge mysong.bax mysong.uge --verbose
+```powershell
+node bin/beatbax export uge mysong.bax mysong.uge --verbose
 ```
 
 Output:
@@ -74,7 +82,7 @@ File ready for hUGETracker v6
 
 **Debug Output** - Get detailed internal diagnostics:
 ```bash
-npm run cli -- export uge mysong.bax mysong.uge --debug
+node bin/beatbax export uge mysong.bax mysong.uge --debug
 ```
 
 Debug output includes:
@@ -136,9 +144,9 @@ Notes use standard pitch notation:
 Export to all formats at once:
 
 ```bash
-npm run cli -- export json mysong.bax mysong.json
-npm run cli -- export midi mysong.bax mysong.mid
-npm run cli -- export uge mysong.bax mysong.uge
+node bin/beatbax export json mysong.bax mysong.json
+node bin/beatbax export midi mysong.bax mysong.mid
+node bin/beatbax export uge mysong.bax mysong.uge
 ```
 
 ### Programmatic Export
@@ -329,7 +337,7 @@ Example: export and analyze a song with vibrato
 
 ```bash
 # export UGE then render WAV for analysis (example)
-npm run cli -- export uge songs/features/effect_demo.bax tmp/effect_demo.uge
+node bin/beatbax export uge songs/features/effect_demo.bax tmp/effect_demo.uge
 node scripts/auto_calibrate_vib.mjs songs/features/effect_demo.bax tmp/auto_cal --sampleRate 44100
 ```
 

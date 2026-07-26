@@ -21,7 +21,7 @@ Supported platforms:
 
 ## Web-lite App
 
-No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser.
+No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For exports, Copilot, mixer, and the full Settings UI, use Desktop.
 
 ## CLI / development
 
@@ -35,4 +35,6 @@ npm run build-all
 node bin/beatbax --help
 ```
 
-See [CLI](/docs/tools/cli) for command reference.
+Or install the published CLI: `npm install -g @beatbax/cli`.
+
+See [CLI](/docs/tools/cli) for command reference, including chip-specific exports (UGE, FamiTracker text, VGM, Arkos).
