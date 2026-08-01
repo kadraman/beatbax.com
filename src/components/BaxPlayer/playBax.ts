@@ -2,10 +2,29 @@ export type BaxPlayerHandle = {
   stop: () => void;
 };
 
+export type PlayBaxOptions = {
+  /** Called when one-shot playback finishes (not on manual stop). */
+  onComplete?: () => void;
+};
+
 export async function playBaxSource(
   source: string,
+  options: PlayBaxOptions = {},
 ): Promise<{handle: BaxPlayerHandle; error?: never} | {handle?: never; error: string}> {
   let ctx: AudioContext | undefined;
+  let contextClosed = false;
+
+  const closeContext = () => {
+    if (!ctx || contextClosed) {
+      return;
+    }
+    contextClosed = true;
+    try {
+      void ctx.close();
+    } catch {
+      /* ignore */
+    }
+  };
 
   try {
     const AudioCtx =
@@ -37,6 +56,12 @@ export async function playBaxSource(
 
     const playbackCtx = ctx;
     const player = new Player(playbackCtx);
+
+    player.onComplete = () => {
+      closeContext();
+      options.onComplete?.();
+    };
+
     await player.playAST(resolved);
 
     return {
@@ -47,22 +72,12 @@ export async function playBaxSource(
           } catch {
             /* ignore */
           }
-          try {
-            void playbackCtx.close();
-          } catch {
-            /* ignore */
-          }
+          closeContext();
         },
       },
     };
   } catch (err) {
-    if (ctx) {
-      try {
-        void ctx.close();
-      } catch {
-        /* ignore */
-      }
-    }
+    closeContext();
 
     const message = err instanceof Error ? err.message : String(err);
     return {error: message};

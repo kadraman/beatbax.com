@@ -3,11 +3,12 @@ sidebar_position: 1
 title: Installation
 ---
 
-BeatBax is available as a desktop app, browser client, or CLI from the toolchain repository.
+BeatBax is available as a native desktop client, as a web-lite browser client, or as a CLI — with each "client" serving slightly
+different needs.
 
-## Desktop (recommended)
+## BeatBax Desktop (recommended)
 
-Download installers from the [Download page](/download) or [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
+For the full **BeatBax** experience the native desktop client is recommended. Download a suitable desktop dlient installer for your chosen platform from the [Download page](/download) or [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
 
 Supported platforms:
 
@@ -17,24 +18,21 @@ Supported platforms:
 
 > **Code signing caution**
 >
-> Installers are not code-signed yet. Windows SmartScreen and macOS Gatekeeper may warn on first install. See `README.txt` in the install folder for platform-specific steps.
+> Please note: installers are not yet code-signed. Windows SmartScreen and macOS Gatekeeper may warn on first install. See `README.txt` in the install folder for platform-specific steps.
 
-## Web-lite App
+## BeatBax web-lite browser client
 
-No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For exports, Copilot, mixer, and the full Settings UI, use Desktop.
+No install required — simply open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For song exports, BeatBax Copilot, Song Visualizer, and the full Settings UI, use BeatBax Desktop instead.
 
-## CLI / development
+## BeatBax CLI
 
-Clone the [beatbax toolchain](https://github.com/kadraman/beatbax) and build from source:
+Install the published CLI from npm:
 
 ```powershell
-git clone https://github.com/kadraman/beatbax.git
-cd beatbax
-npm install
-npm run build-all
-node bin/beatbax --help
+npm install -g @beatbax/cli
+beatbax --help
 ```
 
-Or install the published CLI: `npm install -g @beatbax/cli`.
+Or run without a global install: `npx @beatbax/cli --help`.
 
-See [CLI](/docs/tools/cli) for command reference, including chip-specific exports (UGE, FamiTracker text, VGM, Arkos).
+See [CLI](/docs/tools/cli) for the command reference.

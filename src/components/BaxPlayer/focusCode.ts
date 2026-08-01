@@ -6,8 +6,11 @@
  *   # @end
  *
  * Playback always uses the full source (markers stripped).
- * When any @show region exists, only those regions are displayed,
- * with ellipsis hints when surrounding boilerplate was omitted.
+ * When any @show region exists, only those regions are displayed.
+ * Ellipsis (`…`) markers are inserted:
+ *   - before the first region when leading boilerplate was omitted
+ *   - between regions when non-blank lines were omitted between them
+ *   - after the last region when trailing boilerplate was omitted
  */
 
 const SHOW_LINE = /^\s*#\s*@show\s*$/;
@@ -17,7 +20,7 @@ const MARKER_LINE = /^\s*#\s*@(?:show|end)\s*$/;
 export type FocusedBaxSource = {
   /** Full source for the engine (markers removed). */
   playCode: string;
-  /** What the docs UI shows. */
+  /** What the docs UI shows (may include `…` for omitted spans). */
   displayCode: string;
   /** True when display omitted leading boilerplate. */
   omittedBefore: boolean;
@@ -25,31 +28,40 @@ export type FocusedBaxSource = {
   omittedAfter: boolean;
 };
 
+type ShowRange = {
+  lines: string[];
+  /** Index into playLines where this block starts. */
+  start: number;
+  /** Index into playLines just past this block. */
+  end: number;
+};
+
 export function parseFocusedBaxSource(source: string): FocusedBaxSource {
   const lines = source.replace(/^\uFEFF/, '').split(/\r?\n/);
 
   const playLines: string[] = [];
-  const showBlocks: string[][] = [];
+  const showRanges: ShowRange[] = [];
   let inShow = false;
   let currentShow: string[] = [];
-  let firstShowStart = -1;
-  let lastShowEnd = -1;
+  let currentStart = -1;
 
   for (const line of lines) {
     if (SHOW_LINE.test(line)) {
       inShow = true;
       currentShow = [];
+      currentStart = playLines.length;
       continue;
     }
     if (END_LINE.test(line)) {
       if (inShow) {
-        if (firstShowStart < 0) {
-          firstShowStart = playLines.length - currentShow.length;
-        }
-        lastShowEnd = playLines.length;
-        showBlocks.push(currentShow);
+        showRanges.push({
+          lines: currentShow,
+          start: currentStart,
+          end: playLines.length,
+        });
         inShow = false;
         currentShow = [];
+        currentStart = -1;
       }
       continue;
     }
@@ -61,16 +73,16 @@ export function parseFocusedBaxSource(source: string): FocusedBaxSource {
   }
 
   if (inShow) {
-    if (firstShowStart < 0) {
-      firstShowStart = playLines.length - currentShow.length;
-    }
-    lastShowEnd = playLines.length;
-    showBlocks.push(currentShow);
+    showRanges.push({
+      lines: currentShow,
+      start: currentStart < 0 ? playLines.length - currentShow.length : currentStart,
+      end: playLines.length,
+    });
   }
 
   const playCode = trimBlankEdges(playLines.join('\n'));
 
-  if (showBlocks.length === 0) {
+  if (showRanges.length === 0) {
     return {
       playCode,
       displayCode: playCode,
@@ -79,21 +91,45 @@ export function parseFocusedBaxSource(source: string): FocusedBaxSource {
     };
   }
 
-  const displayCode = showBlocks
-    .map((block) => trimBlankEdges(block.join('\n')))
-    .filter((block) => block.length > 0)
-    .join('\n\n');
+  const visible = showRanges
+    .map((range) => ({
+      ...range,
+      text: trimBlankEdges(range.lines.join('\n')),
+    }))
+    .filter((range) => range.text.length > 0);
+
+  if (visible.length === 0) {
+    return {
+      playCode,
+      displayCode: playCode,
+      omittedBefore: false,
+      omittedAfter: false,
+    };
+  }
+
+  const displayParts: string[] = [];
+  for (let i = 0; i < visible.length; i++) {
+    if (i > 0) {
+      const gap = playLines.slice(visible[i - 1].end, visible[i].start);
+      if (gap.some((line) => line.trim().length > 0)) {
+        displayParts.push('…');
+      }
+    }
+    displayParts.push(visible[i].text);
+  }
+
+  const first = visible[0];
+  const last = visible[visible.length - 1];
 
   return {
     playCode,
-    displayCode,
+    displayCode: displayParts.join('\n\n'),
     omittedBefore:
-      firstShowStart > 0 &&
-      playLines.slice(0, firstShowStart).some((line) => line.trim().length > 0),
+      first.start > 0 &&
+      playLines.slice(0, first.start).some((line) => line.trim().length > 0),
     omittedAfter:
-      lastShowEnd >= 0 &&
-      lastShowEnd < playLines.length &&
-      playLines.slice(lastShowEnd).some((line) => line.trim().length > 0),
+      last.end < playLines.length &&
+      playLines.slice(last.end).some((line) => line.trim().length > 0),
   };
 }
 

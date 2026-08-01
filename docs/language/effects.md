@@ -1,11 +1,13 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: Effects
 ---
 
-# Effects
+# Effects Reference
 
-This tutorial section uses **Game Boy** examples. Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview) for other backends.
+Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview) for other backends.
+
+For a Game Boy walkthrough that adds effects to a full song, see the [Tutorial — Effects](/docs/tutorial/effects) page.
 
 ```bax
 effect wobble   = vib:8,4

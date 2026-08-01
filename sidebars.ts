@@ -17,11 +17,12 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'tutorial/overview',
+        'tutorial/song-header',
+        'tutorial/notes',
         'tutorial/instruments',
         'tutorial/sequencing',
         'tutorial/modifiers',
         'tutorial/effects',
-        'tutorial/scale',
       ],
     },
     {
@@ -72,10 +73,12 @@ const sidebars: SidebarsConfig = {
       label: 'Language Reference',
       items: [
         'language/metadata-directives',
+        'language/scale',
         'language/instruments',
         'language/instrument-macros',
         'language/instrument-note-mapping',
         'language/modifiers',
+        'language/effects',
         'language/imports',
         'language/volume-directive',
       ],

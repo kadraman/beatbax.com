@@ -34,7 +34,7 @@ BeatBax supports top-level directives inside `.bax` files to:
 - **`stepsPerBar <number>`** — Sets steps per bar for bar/beat display and bar numbering (default: `4`). This is the canonical directive for time-signature-style grouping in the editor and resolver.
 - **`time <number>`** — *(deprecated)* Alias for `stepsPerBar`. Still parsed for backward compatibility; emits a parser warning. Prefer `stepsPerBar`.
 - **`ticksPerStep <number>`** — *(deprecated, no effect)* Parsed for backward compatibility only. The value is ignored; the engine uses a fixed internal tick resolution. Emits a parser warning.
-- **`scale <root> <mode> [warn|error|off]`** — Declares a song-level musical scale used by parser diagnostics and MIDI step-entry scale snap.
+- **`scale <root> <mode> [warn|error|off]`** — Declares a song-level musical scale used by parser diagnostics and MIDI step-entry scale snap. See [Scale awareness](/docs/language/scale) for lock modes and examples.
   - Examples: `scale C major`, `scale A minor error`, `scale F# dorian off`.
   - **`warn`** (default): out-of-lock notes produce warnings.
   - **`error`**: out-of-lock notes produce errors.

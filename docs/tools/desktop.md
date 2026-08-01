@@ -13,18 +13,18 @@ BeatBax Desktop is the full-featured BeatBax IDE for Windows, macOS, and Linux.
 
 ## Getting around
 
-- **Toolbar** — Open/Save, export menu, examples, theme / word wrap / fold
+- **Toolbar** — Open/Save, export menu, theme / word wrap / fold
 - **Transport bar** — play, pause, stop, apply, BPM, loop, live, rewind, BPM nudge, master volume
 - **Editor** — Monaco with diagnostics; optional CodeLens, glyph margin, and command palette
 - **Panels** — Problems, Output, Visualizer, Help, and (when enabled) Mixer, Pattern Grid, Copilot
 - **Status bar** — cursor position, parse status, chip/BPM, panel menu, diagnostics counts
 - **New Song Wizard** — **File → New** / toolbar New; first-run chip picker (Stable / Beta / Experimental)
 
-Native Open/Save dialogs, recent files, and file associations are built in.
+Native Open/Save dialogs, recent files, and file associations are built in. **File → Open** starts in the bundled songs directory shipped with the installer.
 
 ## Playback
 
-1. Open or paste a `.bax` song.
+1. Open a `.bax` song (**File → Open**, or paste into the editor).
 2. **Apply** (or enable **Live** for debounced auto-apply).
 3. **Play** / **Pause** / **Stop** from the transport bar.
 

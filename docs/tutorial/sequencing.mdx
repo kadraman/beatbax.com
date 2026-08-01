@@ -1,0 +1,63 @@
+---
+sidebar_position: 5
+title: Patterns & Sequences
+mdx:
+  format: mdx
+---
+
+import {sequencingBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
+
+# Patterns & Sequences
+
+Expand **Tutorial Groove** from one-bar loops into A/B phrases and named sequences. Use **Copy** for the full pasteable song.
+
+Pitch, `:N` lengths, rests, and sustains were introduced in [Notes and lengths](/docs/tutorial/notes). This page adds the rest of the pattern vocabulary, then `seq` and `channel` wiring.
+
+## Pattern tokens
+
+| Token | Meaning |
+|-------|---------|
+| `C4`, `G#5`, `A3` | Notes (scientific pitch) — default **1 step** |
+| `.` | Rest (cuts the previous note) |
+| `_` or `-` | Sustain (extends the previous note by 1 step) |
+| `C4:4` | Duration shorthand — hold for 4 steps (`C4 _ _ _`) |
+| `(C5 E5 G5)*2` | Group and repeat |
+| `snare`, `hat` | Named instrument tokens |
+| `inst(name,N)` | Temporary override for the next **N non-rest** tokens |
+| `inst(name)` | Permanent default instrument for the rest of the pattern |
+
+The count `N` in `inst(name,N)` applies only to notes/sustains — rests (`.`) do **not** consume from the count.
+
+## Sequences and channels
+
+Map patterns onto chip channels with `seq` and `channel`:
+
+- `seq name = pat_a pat_b` — ordered list of patterns
+- `pat*2` or `(a b)*2` — repetition
+- On Game Boy (this song): channel 1 lead (`pulse1`), 2 harmony (`pulse2`), 3 bass (`wave`), 4 drums (`noise`)
+
+## Tutorial Groove — arranged
+
+Same instruments as before; each part now has an A phrase and a B answer, wired through named sequences. Every pattern is **16 steps** long so the four channels stay locked when phrases chain:
+
+<BaxPlayer title="Tutorial Groove — sequencing" code={sequencingBax} />
+
+### Channel syntax variants
+
+| Form | Example |
+|------|---------|
+| Explicit seq | `seq myseq = pat1 pat2` then `channel 1 => inst lead seq myseq` |
+| Inline seq list | `channel 1 => inst lead seq pat1 pat2` |
+| Single pattern | `channel 1 => inst lead pat melody` |
+
+Use **one `channel` line per chip voice**. Empty `seq NAME =` lines are errors.
+
+## Next
+
+Continue with [Modifiers](/docs/tutorial/modifiers) — reshape phrases with `:oct`, `:rot`, `:slow`, and friends without rewriting notes.
+
+## See also
+
+- [Modifiers](/docs/tutorial/modifiers)
+- [Sequence modifiers reference](/docs/language/modifiers)
+- [Sound Chip Plugins](/docs/chips/overview)

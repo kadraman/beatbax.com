@@ -43,6 +43,8 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
   const handleRef = useRef<BaxPlayerHandle | null>(null);
   const [status, setStatus] = useState<PlayerStatus>('idle');
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const copiedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stopPlayback = useCallback(() => {
     handleRef.current?.stop();
@@ -52,12 +54,46 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
 
   useEffect(() => () => stopPlayback(), [stopPlayback]);
 
+  useEffect(
+    () => () => {
+      if (copiedTimerRef.current) {
+        clearTimeout(copiedTimerRef.current);
+      }
+    },
+    [],
+  );
+
+  const onCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(focused.playCode);
+      setCopied(true);
+      if (copiedTimerRef.current) {
+        clearTimeout(copiedTimerRef.current);
+      }
+      copiedTimerRef.current = setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setError('Could not copy to the clipboard.');
+      setStatus('error');
+    }
+  }, [focused.playCode]);
+
   const onPlay = useCallback(async () => {
     stopPlayback();
     setError(null);
     setStatus('loading');
 
-    const result = await playBaxSource(focused.playCode);
+    let activeHandle: BaxPlayerHandle | null = null;
+
+    const result = await playBaxSource(focused.playCode, {
+      onComplete: () => {
+        if (handleRef.current !== activeHandle) {
+          return;
+        }
+        handleRef.current = null;
+        setStatus('idle');
+      },
+    });
+
     if ('error' in result && result.error) {
       setError(result.error);
       setStatus('error');
@@ -70,7 +106,8 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
       return;
     }
 
-    handleRef.current = result.handle;
+    activeHandle = result.handle;
+    handleRef.current = activeHandle;
     setStatus('playing');
   }, [focused.playCode, stopPlayback]);
 
@@ -92,6 +129,13 @@ function BaxPlayerInner({title, code}: BaxPlayerProps) {
             onClick={stopPlayback}
             disabled={status !== 'playing'}>
             Stop
+          </button>
+          <button
+            type="button"
+            className={clsx(styles.button, styles.buttonSecondary)}
+            onClick={onCopy}
+            title="Copy the full playable song (including hidden wiring)">
+            {copied ? 'Copied!' : 'Copy'}
           </button>
         </div>
       </div>
