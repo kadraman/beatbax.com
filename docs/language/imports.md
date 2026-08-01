@@ -1,26 +1,40 @@
 ---
 sidebar_position: 4
-title: Instrument Imports
+title: Imports
 ---
 
-# Import Security
+# Imports
 
-This document describes the security measures implemented in BeatBax's import resolution system to prevent path traversal attacks and unauthorized file access.
+Import shared instrument collections from external `.ins` files so songs stay short and libraries stay reusable.
 
-## Overview
+## Syntax
 
-When BeatBax processes `import` statements in `.bax` and `.ins` files, it validates all import paths to ensure they cannot access files outside the intended project directories. This prevents malicious files from reading sensitive system files or escaping the project sandbox.
+```bax
+import "local:path/to/instruments.ins"          # CLI / desktop only
+import "github:user/repo/branch/file.ins"       # CLI, desktop, and browser
+import "https://example.com/path/file.ins"      # CLI, desktop, and browser
+```
 
-**As of February 2026**, BeatBax requires explicit import prefixes to clarify import intentions and enhance security:
-- `local:` prefix for local file system imports (CLI only)
-- `https://` or `github:` for remote imports (CLI and browser)
+- **Local imports** require the `local:` prefix and need filesystem access (CLI/desktop). They are blocked in the browser for security.
+- **Remote imports** use `github:` or `https:` and work in CLI, desktop, and the web-lite client.
+- Paths for `local:` are relative to the song file (e.g. `local:lib/common.ins` or `local:../shared/drums.ins`), with a fallback search from the current working directory.
+- Recursive imports are allowed; cycles are detected automatically.
+- Merging is **last-wins**: local `inst` definitions in the song override imported ones with the same name.
+
+Example songs in the toolchain repo: `songs/features/local_import_example.bax`, `songs/features/remote_import_example.bax`.
+
+## Import security
+
+BeatBax validates import paths to prevent path traversal and unauthorized file access.
+
+**As of February 2026**, BeatBax requires explicit import prefixes:
+- `local:` for local filesystem imports (CLI/desktop only)
+- `https://` or `github:` for remote imports (CLI, desktop, and browser)
 - Browser environments block all local imports for security
 
-## Security Measures
+### 1. Import prefix requirement
 
-### 1. Import Prefix Requirement
-
-All imports must use explicit prefixes to indicate their source:
+All imports must use explicit prefixes:
 
 ```
 // ✅ VALID - Local file import (CLI only)
@@ -39,10 +53,10 @@ import "instruments/drums.ins"
 This requirement ensures:
 - Import intentions are explicit and clear
 - Prevents accidental file system access
-- Enables browser security (see Browser Security section below)
+- Enables browser security (see below)
 - Makes code more auditable and secure
 
-### 2. Browser Security
+### 2. Browser security
 
 When running in a browser environment, BeatBax automatically blocks local file imports:
 
@@ -317,11 +331,11 @@ import "github:kadraman/beatbax-instruments/main/common.ins"
 **Automatic Migration:**
 Update all import statements in your `.bax` and `.ins` files by adding the `local:` prefix to file paths that don't start with `https://` or `github:`.
 
-## Related Documentation
+## Related documentation
 
-- [Remote Imports](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/remote-imports.md) - Using https:// and github: imports
-- [Instruments Guide](instruments.md) - How to define and organize instruments
-- [Tutorial](/docs/tutorial/overview) - Basic usage and examples
+- [Remote Imports](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/remote-imports.md) — `https://` and `github:` imports
+- [Instruments reference](/docs/language/instruments)
+- [Instruments tutorial](/docs/tutorial/instruments)
 
 ## Path Traversal Guard — Validation Examples
 

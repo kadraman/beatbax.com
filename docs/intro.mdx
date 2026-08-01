@@ -5,54 +5,38 @@ mdx:
   format: mdx
 ---
 
-export const introExampleSong = `song name "An example song"
+import {introExampleSong} from '@site/src/components/BaxPlayer/demos/intro';
 
-chip gameboy
-bpm 128
+**BeatBax** is a live coding language and creative toolchain for making chiptune music in the style of classic 8-bit and 16-bit computers and game consoles.
+Instead of using a Tracker or DAW, you write songs in a simple but powerful text grammar — instruments, melodies, basslines, and beats — and BeatBax plays
+them back with hardware-faithful chip sound.
 
-inst lead  type=pulse1 duty=50 env=gb:12,down,1
-inst bass  type=pulse2 duty=25 env=gb:10,down,1
-inst snare type=noise env=gb:12,down,1
+One goal of BeatBax is homebrew-friendly export: where possible, songs can be written out to tracker or driver formats games can consume
+(for example [hUGETracker](https://nickfa.ro/wiki/HUGETracker) .uge for Game Boy, [FamiTracker](http://famitracker.com/) text for NES, VGM for PSG targets). Common formats such as
+WAV and MIDI are available across chips; chip-specific formats are listed on the [ROADMAP](https://github.com/kadraman/beatbax/blob/main/ROADMAP.md).
 
-effect wobble   = vib:8,4
-effect arpMajor = arp:4,7
-
-pat melody   = C5<wobble> E4 G4<arpMajor> C5
-pat bass_pat = C3 . G2 .
-pat drum_pat = snare . snare snare
-
-seq lead_seq  = melody:inst(lead) melody:inst(lead)
-seq bass_seq  = bass_pat:inst(bass)*2
-seq drums_seq = drum_pat*2
-
-channel 1 => inst lead seq lead_seq
-channel 2 => inst bass seq bass_seq
-channel 4 => inst snare seq drums_seq
-
-play`;
-
-BeatBax is a live-coding language and creative toolchain for making chiptune music in the style of classic 8/16-bit computers and game consoles.
-
-Instead of using a tracker or DAW, you write songs with a simple but powerful grammar that describes instruments, melodies, basslines, and beats — and BeatBax brings them to life with authentic retro sound.
+Creating chiptunes is rewarding but can be hard and time-consuming. **BeatBax Desktop** also includes **BeatBax Copilot*** —
+an AI assistant (with BYOK model) to help you write and edit songs. It is not a replacement for creativity, but it
+can help with construction, editing, and typical chiptune techniques in the BeatBax grammar.
 
 ## Features
 
-- **Simple text-based grammar** — create instruments, melodies, basslines, and beats in `.bax` files
-- **Authentic retro sound** — Game Boy DMG-01 and NES Ricoh 2A03 emulation with hardware-accurate envelopes, duty cycles, and macros
-- **Built-in effects** — vibrato, arpeggio, portamento, pitch bend, sweep, volume slide, tremolo, pan, echo, note cut, and retrigger
-- **Reusable instrument libraries** — share instruments across songs via `.ins` files; import locally or from GitHub
-- **Export formats** — MIDI, WAV, ISM JSON, hUGETracker (UGE) for Game Boy, FamiTracker text for NES
-- **Desktop IDE** — Electron + React client with export, BeatBax Copilot, mixer, and pattern grid
-- **Web-lite browser client** — try in the browser at [app.beatbax.com](https://app.beatbax.com)
+- **Simple text-based grammar** — author instruments, patterns, sequences, and channel arrangements in `.bax` files
+- **Multi-chip playback** — Game Boy, NES, SMS/Game Gear, and Spectrum/CPC AY backends with chip-accurate voices, envelopes, and software macros
+- **Instrument macros** — pitch, volume, duty/timbre, and arp envelopes (plus chip-specific extras such as Game Boy subpat for hUGETracker)
+- **Built-in effects** — vibrato, arpeggio, portamento, pitch bend, volume slide, tremolo, pan, note cut, retrigger, echo, and chip-specific effects (e.g. pulse sweep)
+- **Reusable instrument libraries** — share instruments via .ins files; import locally or from GitHub or the web
+- **Export formats** — WAV and MIDI for supported chips; chip-specific exports (UGE, FamiTracker, VGM, …) via plugins
+- **Native desktop client** — Electron + React client with native file I/O, export, Copilot, channel mixer, pattern grid, and Monaco editor
+- **Web-lite browser client** — try-in-browser editor and playback for demos and light edits at [app.beatbax.com](https://app.beatbax.com)
+- **BeatBax Copilot** — AI assistant in the desktop client (BYOK / local Ollama)
 - **CLI** — `play`, `verify`, `export`, `inspect`, and `convert` for scripted workflows
-- **Extensible architecture** — additional chip backends (SMS, Spectrum 128, and more) via plugins
+- **Extensible architecture** — additional chip backends and exporters as plugins without changing the core song grammar
+
+>*BeatBax Copilot (desktop client only) uses your own OpenAI-compatible provider for cloud models (BYOK). Local Ollama or LM Studio need no API key. Cloud API keys are stored in the OS secure credential store on your machine only.
 
 ## Example song
 
-<BaxPlayer title="Example song" code={introExampleSong} />
+Press **Play** to hear a short Game Boy track — lead, bass, wave harmony, and a drum kit, with vibrato, arpeggio, and portamento woven in:
 
-## Next steps
-
-- [Quick start](/docs/getting-started/quick-start)
-- [Download BeatBax](/download)
-- [Try in browser](https://app.beatbax.com)
+<BaxPlayer title="First Light" code={introExampleSong} />

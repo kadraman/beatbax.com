@@ -1,70 +1,79 @@
 ---
-sidebar_position: 5
+sidebar_position: 3
 title: Desktop App
 ---
 
 # BeatBax Desktop
 
-BeatBax Desktop is the Electron + React **desktop-full** client — the primary full-featured BeatBax IDE.
+BeatBax Desktop is the full-featured BeatBax IDE for Windows, macOS, and Linux.
 
-Download installers from [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
+[Download](/download) installers from the site or [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
 
-## Scripts
+> Installers are not code-signed yet. Windows SmartScreen and macOS Gatekeeper may warn on first launch — see `README.txt` in the install folder.
 
-From the repository root:
+## Getting around
 
-- `npm run desktop:dev` — start the desktop app with hot reload
-- `npm run desktop:build` — build the Electron main, preload, and renderer bundles
-- `npm run desktop:test` — run desktop unit tests
-- `npm run desktop:dist` — create installable desktop artifacts with electron-builder
+- **Toolbar** — Open/Save, export menu, theme / word wrap / fold
+- **Transport bar** — play, pause, stop, apply, BPM, loop, live, rewind, BPM nudge, master volume
+- **Editor** — Monaco with diagnostics; optional CodeLens, glyph margin, and command palette
+- **Panels** — Problems, Output, Visualizer, Help, and (when enabled) Mixer, Pattern Grid, Copilot
+- **Status bar** — cursor position, parse status, chip/BPM, panel menu, diagnostics counts
+- **New Song Wizard** — **File → New** / toolbar New; first-run chip picker (Stable / Beta / Experimental)
 
-## Notes
+Native Open/Save dialogs, recent files, and file associations are built in. **File → Open** starts in the bundled songs directory shipped with the installer.
 
-- The desktop renderer builds with `__CLIENT_PROFILE__ = "desktop-full"`.
-- `apps/desktop` consumes `@beatbax/app-core` directly for shared playback, parsing, and editor logic.
-- Native file dialogs, recent files, and file associations are handled in the Electron main process.
+## Playback
 
-## Current scope
+1. Open a `.bax` song (**File → Open**, or paste into the editor).
+2. **Apply** (or enable **Live** for debounced auto-apply).
+3. **Play** / **Pause** / **Stop** from the transport bar.
 
-The desktop renderer bridges the web-ui panel implementations via `@web-ui` imports:
+**BPM nudge:** transport `«` / `»` steps tempo by 1 BPM without editing the source. Editing the `bpm` line or loading another file clears the override.
 
-- **Toolbar** — full export menu, examples, theme/wrap/fold controls
-- **Transport bar** — play/pause/stop/apply, BPM LCDs, pattern grid sync
-- **Three-pane layout** — resizable editor, Problems/Output tabs, Visualizer/Help tabs
-- **Song Visualizer**, **Channel Mixer**, **Pattern Grid** (feature-flag gated)
-- **Help panel** — full syntax reference with click-to-insert
-- **Settings modal** — Ctrl+,
-- **Export** — JSON/MIDI/UGE/WAV via native menu and toolbar
-- **Status bar** — cursor position, parse status, chip/BPM, panels menu, diagnostics counts
-- **AI Copilot** — right-tab ChatPanel (enable in Settings → Features → AI Assistant)
-- **New Song Wizard** — toolbar New / File → New; first-run onboarding
-- **Advanced editor** — Monaco diagnostics, code lens previews, glyph margin, command palette (Ctrl+Alt+P)
-- **Transport extras** — loop, live, rewind, BPM nudge, master volume
-- **MIDI step entry** — record button (requires MIDI input enabled in Settings)
-- **Debug overlay** — Settings → Advanced → Show debug overlay
+**Mute / Solo:** per-channel controls after a song is applied.
 
-Post-MVP enhancements (native React panels, auto-update, code signing): [desktop-client-enhancements.md](https://github.com/kadraman/beatbax/blob/main/features/desktop-client-enhancements.md).
+## Editor features
 
-## Releasing
+### CodeLens previews
 
-Desktop installers are published via git tags and CI — not npm.
+When enabled (Settings → Editor), above `pat` / `seq` / `inst` / `effect` lines you can:
 
-Before tagging, update `apps/desktop/package.json` version (if needed) and edit
-`apps/desktop/build/release-notes.body.txt` with bullet points for that release.
-`npm run desktop:dist` generates `README.txt` and `RELEASE-NOTES.txt` from the
-templates and bundles both next to the application.
+- **Preview** / **Loop** / **Stop** isolated pattern or sequence playback
+- Audition notes on `inst` lines (`C3`–`C7`)
+- Audition effect presets on `effect` lines
 
-```powershell
-git tag -a desktop-v0.2.0 -m "BeatBax Desktop v0.2.0"
-git push origin desktop-v0.2.0
-```
+Only one preview plays at a time.
 
-The [Desktop: Build](https://github.com/kadraman/beatbax/actions/workflows/desktop-build.yaml) workflow validates, packages on all three OSes, and publishes installer assets to GitHub Releases.
+### Command palette
 
-Full details: [docs/releasing.md](https://github.com/kadraman/beatbax/blob/main/docs/releasing.md).
+`F1` or `Ctrl+Shift+P` / `Cmd+Shift+P`, then type `BeatBax` for Play Selected, Verify, Export, Generate Sample Instruments/Pattern, Insert Transform, Instrument Override, Format Document, Mute/Solo Channel, and more.
+
+### MIDI step entry
+
+Enable MIDI input in Settings, then use the transport record control to step notes into the editor.
+
+## Export
+
+Use the toolbar or menu to export JSON, MIDI, UGE, WAV, and chip-specific formats (FamiTracker text, VGM, Arkos) when available for the active song’s chip.
+
+## Settings and Copilot
+
+- [Settings](/docs/tools/settings) — theme, editor, playback, feature flags, AI provider
+- [BeatBax Copilot](/docs/tools/copilot) — AI assistant (enable under Settings → Features)
+
+## Compared with web-lite
+
+| Capability | Desktop | [Web-lite](/docs/tools/web-client) |
+|------------|---------|-------------------------------------|
+| Native Open/Save | Yes | Download-only Save |
+| Full export menu | Yes | No |
+| Settings modal | Yes | Theme / wrap via toolbar |
+| Copilot, mixer, pattern grid | Yes (gated) | No |
+| CodeLens / command palette | Yes | No |
 
 ## Related docs
 
-- [docs/features/complete/desktop-first-client-split.md](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/desktop-first-client-split.md) — completed master plan
-- [docs/features/complete/electron-desktop-client.md](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/electron-desktop-client.md) — IPC and packaging reference
-- [docs/qa/desktop-release-qa.md](https://github.com/kadraman/beatbax/blob/main/docs/qa/desktop-release-qa.md) — QA sign-off
+- [Installation](/docs/getting-started/installation)
+- [Web-lite client](/docs/tools/web-client)
+- [CLI](/docs/tools/cli)
+- [Desktop development](/docs/development/desktop-app)

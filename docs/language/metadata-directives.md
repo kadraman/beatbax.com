@@ -19,17 +19,22 @@ BeatBax supports top-level directives inside `.bax` files to:
 
 ## Global Playback Directives
 
-- **`chip <name>`** — Selects the audio backend. Supported chips: `gameboy` or `gb`, `nes`, `sms`, `gg` or `gamegear`.
+- **`chip <name>`** — Selects the audio backend. Supported chips:
+  - `gameboy` / `gb` — Game Boy DMG-01
+  - `nes` / `famicom` — NES Ricoh 2A03
+  - `sms` / `gg` / `gamegear` — Sega Master System / Game Gear (SN76489)
+  - `spectrum-128` — ZX Spectrum 128 (AY-3-8912)
+  - `cpc` / `amstrad-cpc` — Amstrad CPC (same AY plugin, 1 MHz clock)
   - **`chip sms ntsc`** / **`chip sms pal`** — optional region qualifier for the SN76489 SMS backend. Selects the hardware clock frequency used for tone period calculations. `ntsc` (3,579,545 Hz, default) matches North American and Japanese hardware; `pal` (3,546,895 Hz) matches European hardware. Omitting the qualifier defaults to `ntsc`.
   - **`chip nes ntsc`** / **`chip nes pal`** — optional region qualifier for the NES backend. Selects the CPU clock frequency used for period and DMC rate calculations. `ntsc` (1,789,773 Hz, default) matches North American and Japanese hardware; `pal` (1,662,607 Hz, ~7.1% lower) matches European hardware. Omitting the qualifier defaults to `ntsc`.
-  - The region qualifier is only valid for `chip sms` and `chip nes`; using it with any other chip is a parser error.
+  - Region qualifiers (`ntsc` / `pal`) are only valid for `chip sms` and `chip nes`. Spectrum / CPC use platform selection via the chip name itself (`spectrum-128` vs `cpc`), not a region qualifier.
 - **`bpm <number>`** — Sets the tempo in beats per minute (default: `120`)
 - **`volume <float>`** — Sets master output volume, range `0.0` to `1.0` (default: `1.0`)
   - See [volume-directive.md](volume-directive.md) for details
 - **`stepsPerBar <number>`** — Sets steps per bar for bar/beat display and bar numbering (default: `4`). This is the canonical directive for time-signature-style grouping in the editor and resolver.
 - **`time <number>`** — *(deprecated)* Alias for `stepsPerBar`. Still parsed for backward compatibility; emits a parser warning. Prefer `stepsPerBar`.
 - **`ticksPerStep <number>`** — *(deprecated, no effect)* Parsed for backward compatibility only. The value is ignored; the engine uses a fixed internal tick resolution. Emits a parser warning.
-- **`scale <root> <mode> [warn|error|off]`** — Declares a song-level musical scale used by parser diagnostics and MIDI step-entry scale snap.
+- **`scale <root> <mode> [warn|error|off]`** — Declares a song-level musical scale used by parser diagnostics and MIDI step-entry scale snap. See [Scale awareness](/docs/language/scale) for lock modes and examples.
   - Examples: `scale C major`, `scale A minor error`, `scale F# dorian off`.
   - **`warn`** (default): out-of-lock notes produce warnings.
   - **`error`**: out-of-lock notes produce errors.

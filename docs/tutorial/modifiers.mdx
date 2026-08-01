@@ -1,0 +1,46 @@
+---
+sidebar_position: 6
+title: Modifiers
+mdx:
+  format: mdx
+---
+
+import {modifiersBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
+
+# Modifiers
+
+Colon-chained **modifiers** transform pattern or sequence references at expansion time. Keep the same Tutorial Groove notes — change how they are arranged.
+
+Modifiers apply **left-to-right**. You can also apply a named `effect` preset as a modifier (e.g. `melody:wobble`) — see [Effects](/docs/tutorial/effects).
+
+## Core modifiers
+
+| Modifier | Behaviour |
+|----------|-----------|
+| `:oct(n)` | Transpose by octaves |
+| `:+N` / `:-N` | Semitone transpose |
+| `:rot(N)` / `:rotate(N)` | Cyclic left shift by N tokens |
+| `:rev` | Reverse |
+| `:pal` / `:palindrome` | Forward then backward (no duplicated pivot) |
+| `:slow(N)` | Repeat each token N times (default 2) |
+| `:fast(N)` | Keep every Nth token (default 2) |
+| `:inst(name)` | Instrument override for the segment |
+| `:pan(value)` | Pan override for the segment |
+
+Also supported: `invert`, `every(N,MOD)`, `lag(N)`, `pick(...)`, `chunk(N)`, `shuffle(seed)`, `clamp` / `fold`, and more — full table in [Sequence modifiers reference](/docs/language/modifiers).
+
+## Tutorial Groove — with modifiers
+
+Listen for a rotated / octave-lifted lead B, a reversed harmony B, a deeper wave bass, and a reversed drum fill (all still 16 steps so channels stay locked):
+
+<BaxPlayer title="Tutorial Groove — modifiers" code={modifiersBax} />
+
+## Next
+
+Continue with [Effects](/docs/tutorial/effects) — add vibrato, arpeggio, and portamento to finish the song.
+
+## See also
+
+- [Patterns & sequences](/docs/tutorial/sequencing)
+- [Sequence modifiers reference](/docs/language/modifiers)
+- [Effects](/docs/tutorial/effects)

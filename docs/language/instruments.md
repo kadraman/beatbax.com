@@ -5,6 +5,15 @@ title: Instruments
 
 # Instruments Reference
 
+Instrument `type=` and fields are **chip-specific**. This page focuses on **Game Boy** (`chip gameboy`). For other targets see:
+
+- [Game Boy chip guide](/docs/chips/gameboy)
+- [NES](/docs/chips/nes)
+- [SMS / Game Gear](/docs/chips/sms)
+- [Spectrum 128 / CPC](/docs/chips/spectrum-128)
+- [Instrument macros](/docs/language/instrument-macros) (`pitch_env`, `vol_env`, `subpat`, …)
+- [Game Boy tutorial](/docs/tutorial/overview)
+
 ## Pulse (Duty)
 
 The Game Boy has two pulse channels: **Pulse 1** (`type=pulse1`) and **Pulse 2** (`type=pulse2`). Pulse 1 additionally supports frequency sweep.
@@ -134,12 +143,13 @@ Implementation note
 The noise channel (`type=noise`) uses a linear-feedback shift register to produce percussion and sound effects.
 
 ### Modes & parameters
-- `width=7` (7-bit) — metallic, high-frequency noise (hi-hats, shakers)
-- `width=15` (15-bit) — broader, fuller noise (snares, ambience)
+- `width=7` (7-bit) — shorter LFSR; metallic / pitched “crack” (classic **snares**, toms, kicks)
+- `width=15` (15-bit) — longer LFSR; broader white noise (**hi-hats**, shakers, cymbals, ambience)
 - `divisor` and `shift` control the LFSR update rate: higher `shift` → lower pitched noise. Use combinations to sculpt brightness/time.
 
 ### Percussion & envelopes
-- Short, high-initial envelopes with width=7 are great for hi-hats; longer envelopes with width=15 produce snares and toms.
+- Snares usually combine `width=7`, `uge_note=C-7`, a fast envelope, and often a short `pitch_env` “pop” (e.g. `[0,7,0]`).
+- Hi-hats usually use `width=15` with short, quiet envelopes.
 
 ---
 
@@ -159,27 +169,25 @@ pat drums = kick . snare . kick . hihat_cl .  # Uses default notes automatically
 
 ### Behavior
 
-1. **Pulse/Wave instruments:** The specified note is the actual pitch played when using the instrument name as a token
-2. **Noise instruments:** The note value is stored for UGE export compatibility (noise doesn't use traditional pitch during playback)
-3. **Override per-note:** You can still use explicit notes: `inst(snare) D6` overrides the default
-4. **No `note=` specified:** Defaults to C5 for backward compatibility in exports
+1. **Pulse/Wave instruments:** The specified note is the actual pitch played when using the instrument name as a token.
+2. **Noise instruments:** Use `note=` for named-token defaults. Prefer **`uge_note=`** (hUGE display notation) so BeatBax playback and UGE export share the same LFSR clock.
+3. **Override per-note:** Explicit notes still win: `inst(snare) D6`.
+4. **No `note=` specified:** Defaults to C5 for backward compatibility in exports.
 
 ### Recommended Values
 
 For Game Boy percussion (follows hUGETracker conventions):
 
 - **Kicks** (pulse channels): `note=C2` (deep bass)
-- **Snares** (7-bit noise): `note=C6` (exports as C-7 in hUGETracker)
-- **Closed hi-hats** (15-bit noise): `note=C6` to `note=D6` (exports as C-7 to D-7)
-- **Open hi-hats** (15-bit noise): `note=D6` to `note=E6` (exports as D-7 to E-7)
-- **Toms** (7-bit noise): `note=C5` to `note=E5` (exports as C-6 to E-6)
-- **Cymbals** (15-bit noise): `note=E6` to `note=F6` (exports as E-7 to F-7)
+- **Kicks** (noise): `uge_note=C-6` (often with `pitch_env`)
+- **Snares** (7-bit noise): `uge_note=C-7`, `note=C6`
+- **Closed hi-hats** (15-bit noise): `uge_note=C-7` to `D-7`
+- **Open hi-hats** (15-bit noise): `uge_note=D-7` to `E-7`
+- **Toms** (7-bit noise): `uge_note=C-6` to `E-6`
 
-**Important:** hUGETracker displays notes ONE OCTAVE HIGHER than BeatBax's MIDI notation:
-- BeatBax `note=C6` → exports as C-7 in hUGETracker
-- BeatBax `note=C2` → exports as C-3 in hUGETracker
+**Important:** hUGETracker displays notes ONE OCTAVE HIGHER than BeatBax MIDI-style `note=` values. Prefer writing tracker pitches with `uge_note=`.
 
-See [instrument-note-mapping-guide.md](/docs/language/instrument-note-mapping) for complete usage examples.
+See [Instrument note mapping](/docs/language/instrument-note-mapping) and [Instrument macros](/docs/language/instrument-macros).
 
 ## Cheat-sheet (at-a-glance)
 
@@ -187,7 +195,7 @@ See [instrument-note-mapping-guide.md](/docs/language/instrument-note-mapping) f
 |---|---:|:---|
 | Pulse 1 / 2 | `duty`, `env`, `sweep` (Pulse 1 only) | duty 50, env=gb:15,down,1 |
 | Wave | `wave=[32]` (or `[16]` shorthand), `volume=` | 32 nibbles 0..15, volume default `100` |
-| Noise | `width`, `divisor`, `shift`, `env` | width=15, divisor=3, shift=4 |
+| Noise | `gb:width`, `uge_note`, `env`, optional `divisor`/`shift` | width=7 or 15, `uge_note=C-7` for snares |
 
 ## Tests & examples
 - See `songs/instrument_demo.bax` and the added tutorial example for quick demos.

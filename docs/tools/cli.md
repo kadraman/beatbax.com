@@ -5,46 +5,54 @@ title: CLI
 
 # CLI
 
-## Install from npm
+The BeatBax command-line tool verifies, plays, exports, inspects, and converts songs.
 
-Install the CLI globally from [npm](https://www.npmjs.com/package/@beatbax/cli):
+## Install
 
 ```powershell
 npm install -g @beatbax/cli
 beatbax --help
 ```
 
-> **Windows note for source builds:** npm has limitations passing flag arguments through `npm run`. When running from a cloned repository, use `node bin/beatbax` or the `bin\beatbax` wrapper directly.
+Or run without a global install: `npx @beatbax/cli --help`.
+
+From a cloned toolchain repo after build, use `node bin/beatbax` (or `bin\beatbax` on Windows) instead of relying on `npm run` for flags.
 
 ## Commands
 
 ```powershell
-# Validate a song file
-node bin/beatbax verify songs/sample.bax
+# Validate
+beatbax verify songs/sample.bax
 
-# Play (headless by default in Node.js)
-node bin/beatbax play songs/sample.bax
-node bin/beatbax play songs/sample.bax --browser   # open Web UI instead
+# Play (headless by default)
+beatbax play songs/sample.bax
+beatbax play songs/sample.bax --browser
 
-# Export
-node bin/beatbax export json songs/sample.bax output.json
-node bin/beatbax export midi songs/sample.bax output.mid
-node bin/beatbax export uge  songs/sample.bax output.uge
-node bin/beatbax export wav  songs/sample.bax output.wav
+# Built-in exports
+beatbax export json songs/sample.bax output.json
+beatbax export midi songs/sample.bax output.mid
+beatbax export uge  songs/sample.bax output.uge
+beatbax export wav  songs/sample.bax output.wav
 
-# Convert a WAV into a raw NES DMC sample
-node bin/beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst
+# Chip-specific exporters (when available)
+beatbax export famitracker-text songs/nes/song.bax output.txt
+beatbax export vgm songs/sms/song.bax output.vgm
+beatbax export arkos songs/spectrum-128/song.bax output.aks
+beatbax export arkos songs/spectrum-128/song.bax --instruments   # .aki bank only
 
-# Inspect a .bax or .uge file
-node bin/beatbax inspect songs/sample.bax
-node bin/beatbax inspect output.uge --json
+# WAV → NES DMC sample
+beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst
+
+# Inspect
+beatbax inspect songs/sample.bax
+beatbax inspect output.uge --json
 ```
 
 ### Play options
 
 | Flag | Description |
 |------|-------------|
-| `--browser` / `-b` | Launch browser-based playback via Vite |
+| `--browser` / `-b` | Open browser-based playback |
 | `--headless` | Force Node.js headless playback (default) |
 | `--backend <name>` | `auto` (default), `node-webaudio`, `browser` |
 | `--sample-rate <hz>` / `-r` | PCM sample rate (default: 44100) |
@@ -57,41 +65,59 @@ node bin/beatbax inspect output.uge --json
 | `--out <path>` | all | Output file path |
 | `--duration <seconds>` | midi, wav | Override auto-calculated duration |
 | `--channels <list>` | midi, wav | Export only listed channels (e.g. `1,3`) |
+| `--instruments` | arkos | Write `.aki` instrument bank only |
+| `--verbose` / `--debug` | uge (and others) | Extra export diagnostics |
 
-### NES DMC sample conversion
+### Export formats
+
+| Format | Command | Typical chip |
+|--------|---------|--------------|
+| JSON (ISM) | `export json` | any |
+| MIDI | `export midi` | any |
+| WAV | `export wav` | any |
+| UGE | `export uge` | Game Boy |
+| FamiTracker text | `export famitracker-text` | NES |
+| VGM | `export vgm` | SMS / Game Gear |
+| Arkos (experimental) | `export arkos` | Spectrum / CPC |
+
+Guides: [WAV](/docs/exports/wav), [UGE](/docs/exports/uge), [FamiTracker text](/docs/exports/famitracker-text), [VGM](/docs/exports/vgm), [Arkos](/docs/exports/arkos).
+
+### NES DMC conversion
 
 `convert wav2dmc` turns a 16-bit mono/stereo PCM WAV into a raw NES `.dmc` sample for `type=dmc` instruments:
 
 ```powershell
-node bin/beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst --play
+beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst --play
 ```
 
-The output is a headerless DMC byte stream. Playback settings live on the BeatBax instrument, so the converter prints the matching line when you pass `--emit-inst`:
+With `--emit-inst`, the CLI prints a matching instrument line, for example:
 
 ```bax
 inst kick type=dmc dmc_rate=15 dmc_loop=false dmc_sample="local:samples/wav/kick.dmc"
 ```
 
-Useful controls:
-
 | Flag | Description |
 |------|-------------|
-| `--dmc-rate <0-15>` / `-q` | DMC rate used for encoding and playback preview. `15` is fastest/highest quality; lower values are darker and shorter-bandwidth. |
-| `--dmc-loop` | Use `dmc_loop=true` in emitted snippets and loop the preview. |
-| `--trim-silence <db>` / `--no-trim-silence` | Trim quiet WAV tails before encoding; this is often the most useful control for reducing DMC hiss. |
-| `--tail-ms <ms>` | Keep a small amount of audio after the last above-threshold sample. |
-| `--fade-out-ms <ms>` | Fade the end before encoding to avoid noisy/clicky tails. |
-| `--max-duration-ms <ms>` | Hard cap the source duration before encoding. |
-| `--ntsc` / `--pal` | Select the DMC hardware rate table (`--ntsc` is default). |
+| `--dmc-rate <0-15>` / `-q` | Encoding / preview rate (`15` = fastest / highest quality) |
+| `--dmc-loop` | Emit `dmc_loop=true` and loop preview |
+| `--trim-silence <db>` / `--no-trim-silence` | Trim quiet tails (often reduces hiss) |
+| `--tail-ms <ms>` | Keep audio after the last above-threshold sample |
+| `--fade-out-ms <ms>` | Fade before encoding |
+| `--max-duration-ms <ms>` | Cap source duration |
+| `--ntsc` / `--pal` | DMC rate table (`--ntsc` default) |
 
-### Headless audio fallback chain
+Invalid `--dmc-rate` values are rejected (not silently clamped).
 
-1. `speaker` npm module (best quality — install with `npm install --save-optional speaker`)
-2. `play-sound` wrapper (cross-platform system players)
-3. System command (`PowerShell`/`afplay`/`aplay`)
+### Headless audio
 
-### WAV export
+Playback tries, in order:
 
-WAV export uses a direct PCM renderer (`packages/engine/src/audio/pcmRenderer.ts`) with no WebAudio dependency. It implements all four Game Boy channels (duty, envelope, wavetable, LFSR noise) and outputs stereo 44100 Hz 16-bit PCM. See [docs/exports/wav-export-guide.md](/docs/exports/wav).
+1. `speaker` (optional native module)
+2. `play-sound` (system players)
+3. OS command (`PowerShell` / `afplay` / `aplay`)
 
----
+## Related docs
+
+- [Installation](/docs/getting-started/installation)
+- [CLI development](/docs/development/cli)
+- [Desktop app](/docs/tools/desktop)

@@ -1,6 +1,25 @@
 ---
-sidebar_position: 2
+sidebar_position: 8
 title: Effects
+---
+
+# Effects Reference
+
+Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview) for other backends.
+
+For a Game Boy walkthrough that adds effects to a full song, see the [Tutorial — Effects](/docs/tutorial/effects) page.
+
+```bax
+effect wobble   = vib:8,4
+effect arpMajor = arp:4,7
+
+pat melody = C5<wobble> E4 G4<arpMajor> C5
+# or as a sequence/pattern modifier:
+# seq lead = melody:wobble
+```
+
+**Arpeggio (`arp`):** cycles semitone offsets at chip frame rate. List only steps **above** the root — do not include `0`. UGE export maps the first two offsets to hUGE `0xy`.
+
 ---
 
 ### Panning (stereo)
@@ -8,7 +27,7 @@ Panning controls stereo position and can be specified in multiple forms:
 - `gb:pan=<L|R|C>` — Game Boy NR51 terminal mapping (exact hardware L/R/C flags)
 - `pan=<num>` or `<pan:num>` — numeric pan in range `[-1.0, 1.0]` (`-1.0` left, `0` center, `1.0` right)
 - Inline note tokens: `C5<pan:-1.0>` or `C6<pan:L>` apply to a single note
-- Effect parameter rules: parameters are comma-separated, trimmed, numeric tokens are converted to numbers (e.g., `1` → `1`), and empty params (consecutive commas or empty entries) are ignored and removed.
+- Effect parameter rules: parameters are comma-separated and trimmed; numeric tokens are converted to numbers (e.g., `1` → `1`). **Positional empty slots are preserved** so skipped parameters keep their defaults (e.g. `vib:6,5,,2` keeps the default waveform and applies `durationRows` on the 4th parameter).
 - Sequence-level transforms: `seqname:pan(1.0)` applies numeric pan to an entire sequence occurrence
 
 Notes:
@@ -463,7 +482,7 @@ channel 2 => inst leadB seq bass speed=2x
 
 **Example pattern snippet**
 ```
-inst leadA type=pulse1 duty=60 env=gb:12,down,7 gm=81
+inst leadA type=pulse1 duty=50 env=gb:12,down,7 gm=81
 inst sn type=noise env=gb:10,down,1
 
 # C5:4 plays for 4 ticks; E5 _ _ _ also plays for 4 ticks
