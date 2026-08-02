@@ -101,6 +101,11 @@ const config: Config = {
       },
       items: [
         {
+          to: '/about',
+          label: 'About',
+          position: 'left',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'docsSidebar',
           position: 'left',
@@ -109,17 +114,27 @@ const config: Config = {
         {
           to: '/download',
           label: 'Download',
-          position: 'right',
-          className: 'navbar-download-button',
+          position: 'left',
         },
         {
           href: 'https://app.beatbax.com',
           label: 'Try in Browser',
-          position: 'right',
+          position: 'left',
         },
         {
           href: 'https://github.com/kadraman/beatbax',
-          label: 'GitHub',
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub',
+        },
+        {
+          href: 'https://www.patreon.com/kadraman',
+          position: 'right',
+          className: 'header-patreon-link',
+          'aria-label': 'Patreon',
+        },
+        {
+          type: 'search',
           position: 'right',
         },
       ],
@@ -161,6 +176,10 @@ const config: Config = {
             {
               label: 'Site on GitHub',
               href: 'https://github.com/kadraman/beatbax.com',
+            },
+            {
+              label: 'Patreon',
+              href: 'https://www.patreon.com/kadraman',
             },
           ],
         },
