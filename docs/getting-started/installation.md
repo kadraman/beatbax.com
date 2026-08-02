@@ -8,7 +8,7 @@ different needs.
 
 ## BeatBax Desktop (recommended)
 
-For the full **BeatBax** experience the native desktop client is recommended. Download a suitable desktop dlient installer for your chosen platform from the [Download page](/download) or [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
+For the full **BeatBax** experience the native desktop client is recommended. Download a suitable desktop client installer for your chosen platform from the [Download page](/download) or [itch.io](https://kadraman.itch.io/beatbax).
 
 Supported platforms:
 

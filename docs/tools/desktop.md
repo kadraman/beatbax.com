@@ -7,7 +7,7 @@ title: Desktop App
 
 BeatBax Desktop is the full-featured BeatBax IDE for Windows, macOS, and Linux.
 
-[Download](/download) installers from the site or [GitHub Releases](https://github.com/kadraman/beatbax/releases) (tags `desktop-v*`).
+[Download](/download) installers from the site or [itch.io](https://kadraman.itch.io/beatbax).
 
 > Installers are not code-signed yet. Windows SmartScreen and macOS Gatekeeper may warn on first launch — see `README.txt` in the install folder.
 

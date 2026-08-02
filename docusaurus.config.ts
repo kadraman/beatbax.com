@@ -154,15 +154,11 @@ const config: Config = {
         {
           title: 'Downloads',
           items: [
-            {label: 'Download', to: '/download'},
             {
-              label: 'itch.io',
+              label: 'Download on itch.io',
               href: 'https://kadraman.itch.io/beatbax',
             },
-            {
-              label: 'GitHub Releases',
-              href: 'https://github.com/kadraman/beatbax/releases',
-            },
+            {label: 'Other Downloads', to: '/download'},
             {label: 'Web App', href: 'https://app.beatbax.com'},
           ],
         },
