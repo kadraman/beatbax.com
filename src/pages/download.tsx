@@ -28,8 +28,8 @@ export default function DownloadPage(): ReactNode {
         <div className="downloadHero">
           <Heading as="h1">Download BeatBax Desktop</Heading>
           <p>
-            <Link to="/docs/tools/desktop">BeatBax Desktop</Link> v
-            {siteLinks.latestDesktopVersion} — the live-coding IDE for retro
+            <Link to="/docs/tools/desktop">BeatBax Desktop</Link>{' '}
+            v{siteLinks.latestDesktopVersion} — the live-coding IDE for retro
             console chiptunes.
           </p>
           <p>

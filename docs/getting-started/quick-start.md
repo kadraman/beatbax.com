@@ -3,7 +3,7 @@ sidebar_position: 2
 title: Quick Start
 ---
 
-Here's how to get one of the built-in example song playing in minutes.
+Here's how to get a built-in example song playing in minutes.
 
 ## BeatBax Desktop (recommended)
 
