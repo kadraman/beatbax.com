@@ -41,5 +41,5 @@ Software macros (`vol_env`, `arp_env`, `pitch_env`, `noise_rate_env`) are expand
 ## See also
 
 - [SMS / Game Gear chip guide](/docs/chips/sms)
-- [CLI](/docs/tools/cli)
+- [BeatBax CLI](/docs/tools/cli)
 - [Feature write-up on GitHub](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/vgm-exporter-plugin.md)

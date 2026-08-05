@@ -12,7 +12,7 @@ The **Settings** modal is part of [BeatBax Desktop](/docs/tools/desktop). Open i
 - The gear icon in the Copilot panel header (opens the **AI** tab)
 - Toolbar `…` → **Settings**
 
-The [web-lite client](/docs/tools/web-client) has no Settings modal — use the toolbar for theme (`Alt+Shift+L`) and word wrap.
+The [BeatBax web-lite client](/docs/tools/web-client) has no Settings modal — use the toolbar for theme (`Alt+Shift+L`) and word wrap.
 
 ## Tabs
 
@@ -33,10 +33,10 @@ Most changes apply **immediately**. Exceptions (noted inline): **Auto-save** and
 |---|---|---|
 | **Pattern Grid** | Experimental | Step-sequencer overlay for patterns |
 | **Hot Reload** | Experimental | Auto-replay on editor changes (debounced) |
-| **AI Copilot** | Beta | Configure provider on the **AI** tab; see [Copilot](/docs/tools/copilot) |
+| **AI Copilot** | Beta | Configure provider on the **AI** tab; see [BeatBax Copilot](/docs/tools/copilot) |
 | **Channel Mixer** | — | Channel strips and meters when enabled |
 
 ## Related docs
 
-- [Desktop app](/docs/tools/desktop)
+- [BeatBax Desktop](/docs/tools/desktop)
 - [BeatBax Copilot](/docs/tools/copilot)

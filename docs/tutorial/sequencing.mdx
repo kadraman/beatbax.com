@@ -1,60 +1,116 @@
 ---
 sidebar_position: 5
-title: Patterns & Sequences
+title: Sequencing
 mdx:
   format: mdx
 ---
 
 import {sequencingBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
 
-# Patterns & Sequences
+# Sequencing
 
-Expand **Tutorial Groove** from one-bar loops into A/B phrases and named sequences. Use **Copy** for the full pasteable song.
+In this section we will look at how **BeatBax** sequences a song: naming patterns with `pat`, chaining them with `seq`, and wiring those sequences to channels. You already know notes and lengths from [Notes and lengths](/docs/tutorial/notes), and you have instruments on four Game Boy channels from [Instruments](/docs/tutorial/instruments). Here we take **Tutorial Groove** beyond a single looping bar — each part gets a pair of contrasting patterns (for example `lead_a` and `lead_b`) played in order through a named sequence.
 
-Pitch, `:N` lengths, rests, and sustains were introduced in [Notes and lengths](/docs/tutorial/notes). This page adds the rest of the pattern vocabulary, then `seq` and `channel` wiring.
 
-## Pattern tokens
+## Patterns
 
-| Token | Meaning |
-|-------|---------|
-| `C4`, `G#5`, `A3` | Notes (scientific pitch) — default **1 step** |
-| `.` | Rest (cuts the previous note) |
-| `_` or `-` | Sustain (extends the previous note by 1 step) |
-| `C4:4` | Duration shorthand — hold for 4 steps (`C4 _ _ _`) |
-| `(C5 E5 G5)*2` | Group and repeat |
-| `snare`, `hat` | Named instrument tokens |
-| `inst(name,N)` | Temporary override for the next **N non-rest** tokens |
-| `inst(name)` | Permanent default instrument for the rest of the pattern |
+A pattern is a named list of tokens. Its length is simply the sum of those token durations — **BeatBax** does not require a fixed size.
 
-The count `N` in `inst(name,N)` applies only to notes/sustains — rests (`.`) do **not** consume from the count.
+In practice, keep patterns on different channels the **same length** so they stay locked when you chain them in sequences. A shared phrase size such as **16 steps** is easy to manage; **Tutorial Groove** uses that throughout. 
 
-## Sequences and channels
+```bax
+pat rise     = C3:16                                    # one note held for 16 steps
+pat lead_pat = E5 . G5 C6 . G5 E5 . D5 . F5 A5 . G5 . . # sixteen one-step tokens
+```
 
-Map patterns onto chip channels with `seq` and `channel`:
+The optional `stepsPerBar` (default `4`) controls how the editor groups steps into bars for display — it does not affect pattern length or playback.
 
-- `seq name = pat_a pat_b` — ordered list of patterns
-- `pat*2` or `(a b)*2` — repetition
-- On Game Boy (this song): channel 1 lead (`pulse1`), 2 harmony (`pulse2`), 3 bass (`wave`), 4 drums (`noise`)
+## More pattern syntax
 
-## Tutorial Groove — arranged
+Notes, lengths, rests, and sustains (from [Notes and lengths](/docs/tutorial/notes)) are enough for simple melodies. Patterns also support grouping and repeats, named drum hits, and mid-pattern instrument switches:
 
-Same instruments as before; each part now has an A phrase and a B answer, wired through named sequences. Every pattern is **16 steps** long so the four channels stay locked when phrases chain:
+| Form | Meaning |
+|------|---------|
+| `(C5 E5 G5)*2` | Group notes and repeat the group |
+| `snare`, `hat` | Instrument **name** as a pattern token (plays that instrument’s default `note=`) |
+| `inst(name,N)` | Temporary instrument override for the next **N non-rest** hits |
+| `inst(name)` | Instrument override for the rest of the pattern |
 
-<BaxPlayer title="Tutorial Groove — sequencing" code={sequencingBax} />
+> Note: the count `N` in `inst(name,N)` applies only to notes/sustains — rests (`.`) do **not** consume from the count.
+
+## Sequences
+
+A **sequence** (`seq`) is an ordered playlist of patterns. Where a single `pat` is one phrase, a `seq` chains several phrases so a part can vary over time instead of looping the same bar forever.
+
+```bax
+pat lead_a = E5 . G5 C6 . G5 E5 . D5 . F5 A5 . G5 . .
+pat lead_b = C5 . E5 G5 . E5 C5 . A4 . C5 E5 . D5 C5 .
+
+seq lead_seq = lead_a lead_b lead_a lead_b
+```
+
+Here `lead_seq` plays A, then B, then A, then B. Each name in the list is a pattern reference; **BeatBax** expands them in order when that sequence is assigned to a channel.
+
+You can also repeat patterns or groups inside a sequence:
+
+| Form | Meaning |
+|------|---------|
+| `pat*2` | Play that pattern twice |
+| `(a b)*2` | Play `a` then `b`, then repeat that pair |
+
+```bax
+seq lead_seq  = lead_a lead_b*2       # A, then B twice
+seq drums_seq = (drums_a drums_b)*2   # A B A B
+```
+
+> Note: empty sequences (`seq name =` with nothing after `=`) will be treated as errors — every `seq` needs at least one pattern reference.
+
+## Channels
+
+A **`channel`** line tells **BeatBax** what to play on one chip voice: which default instrument to use, and which pattern or sequence to run. You need **one `channel` line per voice** you want to hear.
+
+```bax
+channel 1 => inst lead seq lead_seq
+```
+
+Reading left to right:
+
+1. **`channel 1`** — the chip voice (on Game Boy: 1 pulse1, 2 pulse2, 3 wave, 4 noise)
+2. **`inst lead`** — default instrument for this channel
+3. **`seq lead_seq`** — what to play (a named sequence, or a single `pat`)
+
+**Tutorial Groove**’s four-channel layout:
+
+| Channel | Typical role | Instrument type |
+|---------|--------------|-----------------|
+| 1 | Lead | `pulse1` |
+| 2 | Harmony / counter | `pulse2` |
+| 3 | Bass | `wave` |
+| 4 | Drums | `noise` |
+
+Other chips may have fewer or more channels — see [Sound Chip Plugins](/docs/chips/overview).
 
 ### Channel syntax variants
 
-| Form | Example |
-|------|---------|
-| Explicit seq | `seq myseq = pat1 pat2` then `channel 1 => inst lead seq myseq` |
-| Inline seq list | `channel 1 => inst lead seq pat1 pat2` |
-| Single pattern | `channel 1 => inst lead pat melody` |
+You can wire music to a channel in several equivalent ways:
 
-Use **one `channel` line per chip voice**. Empty `seq NAME =` lines are errors.
+| Form | Example | When to use |
+|------|---------|-------------|
+| Single pattern | `channel 1 => inst lead pat melody` | One looping phrase (as in the Instruments section) |
+| Inline sequence | `channel 1 => inst lead seq pat1 pat2` | Short playlists without a separate `seq` name |
+| Named sequence | `seq myseq = pat1 pat2`<br />`channel 1 => inst lead seq myseq` | Clearer when the same playlist is reused or gets long |
+
+## Tutorial Groove — arranged
+
+We can now arrange a more complex **Tutorial Groove** song using this information.
+Each part now has two patterns (for example `lead_a` / `lead_b`) chained through named sequences.
+Every pattern is **16 steps** long so the four channels stay locked when phrases chain:
+
+<BaxPlayer title="Tutorial Groove — sequencing" code={sequencingBax} />
 
 ## Next
 
-Continue with [Modifiers](/docs/tutorial/modifiers) — reshape phrases with `:oct`, `:rot`, `:slow`, and friends without rewriting notes.
+Continue with [Modifiers](/docs/tutorial/modifiers) — reshape phrases with `:oct`, `:rot`, `:slow`, and more without rewriting notes.
 
 ## See also
 

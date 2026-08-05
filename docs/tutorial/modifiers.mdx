@@ -9,11 +9,15 @@ import {modifiersBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
 
 # Modifiers
 
-Colon-chained **modifiers** transform pattern or sequence references at expansion time. Keep the same Tutorial Groove notes — change how they are arranged.
+In this section we will learn how to use colon-chained **modifiers** to reshape patterns and sequences at expansion time — 
+transpose, rotate, reverse, and more — all without rewriting the underlying notes. 
+We will keep the same **Tutorial Groove** patterns but use modifiers to change how it is arranged.
 
-Modifiers apply **left-to-right**. You can also apply a named `effect` preset as a modifier (e.g. `melody:wobble`) — see [Effects](/docs/tutorial/effects).
+Chain modifiers after a pattern or sequence name with colons, e.g. `lead_b:rot(2):oct(+1)`. They apply **left-to-right**: each step transforms the result of the previous one. So `lead_b:rot(2):oct(+1)` rotates first, then raises the rotated phrase by an octave — not the other way around.
 
 ## Core modifiers
+
+The core list of modifiers (that you will more commonly use in your songs) are as follows:
 
 | Modifier | Behaviour |
 |----------|-----------|
@@ -27,11 +31,20 @@ Modifiers apply **left-to-right**. You can also apply a named `effect` preset as
 | `:inst(name)` | Instrument override for the segment |
 | `:pan(value)` | Pan override for the segment |
 
-Also supported: `invert`, `every(N,MOD)`, `lag(N)`, `pick(...)`, `chunk(N)`, `shuffle(seed)`, `clamp` / `fold`, and more — full table in [Sequence modifiers reference](/docs/language/modifiers).
+However there are many more available - for the full table see [Sequence modifiers reference](/docs/language/modifiers).
+
+> Note: you can also apply a named `effect` preset as a modifier (e.g. `melody:wobble`) — see [Effects](/docs/tutorial/effects).
 
 ## Tutorial Groove — with modifiers
 
-Listen for a rotated / octave-lifted lead B, a reversed harmony B, a deeper wave bass, and a reversed drum fill (all still 16 steps so channels stay locked):
+In our updated song below, the same patterns from [Sequencing](/docs/tutorial/sequencing) are reused, but modifiers reshape individual phrases in each sequence:
+
+- **Lead** — `lead_b:rot(2)` shifts the B phrase left by two steps; later `lead_b:oct(+1)` plays B an octave higher
+- **Harmony** — `harmony_b:rev` plays the B chord phrase backwards
+- **Bass** — `bass_a:oct(-1)` drops the A phrase one octave for a deeper foundation
+- **Drums** — `drums_b:rev` reverses the B fill
+
+These modifiers keep the pattern length the same (16 steps), so the four channels stay locked. 
 
 <BaxPlayer title="Tutorial Groove — modifiers" code={modifiersBax} />
 
@@ -41,6 +54,6 @@ Continue with [Effects](/docs/tutorial/effects) — add vibrato, arpeggio, and p
 
 ## See also
 
-- [Patterns & sequences](/docs/tutorial/sequencing)
+- [Sequencing](/docs/tutorial/sequencing)
 - [Sequence modifiers reference](/docs/language/modifiers)
 - [Effects](/docs/tutorial/effects)

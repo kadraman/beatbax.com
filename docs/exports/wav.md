@@ -36,7 +36,7 @@ channel 4 => inst snare pat drums
 
 ### 2. Export to WAV
 
-Using the CLI:
+Using the BeatBax CLI:
 
 ```bash
 # Basic export (auto-calculated duration)

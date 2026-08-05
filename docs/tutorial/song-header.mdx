@@ -5,10 +5,10 @@ title: Song header
 
 # Song header
 
-Every BeatBax song starts with a **song header**: metadata (name, artist, …) plus global directives (chip, tempo, …).
+In this section we will set up the **song header** for **Tutorial Groove** — the metadata and global directives that every **BeatBax** song starts with.
 
-- **Metadata** defines information like the song name and its author.
-- **Global directives** define overall song settings, like the sound chip or tempo.
+- **Metadata** holds information like the song name and author.
+- **Global directives** set overall playback options, such as the sound chip and tempo.
 
 The header for our **Tutorial Groove** song will be as follows:
 
@@ -22,19 +22,27 @@ chip gameboy
 bpm 140
 ```
 
-Each of these metadata or directives are used as follows:
+## Metadata
+
+The `song …` lines are optional but recommended. **Tutorial Groove** uses:
 
 | Directive | Purpose |
 |-----------|---------|
-| `song name "…"` | The title of the song - this name will be the default when creating a physical `.bax` file via `Save`. |
-| `song artist "…"` | The calledomposer / artist of the song - this can be defaulted in `Settings` in BeatBax Desktop |
-| `song description "…"` | A short description of the song (you can also use multiline string with `"""…"""`) |
-| `song tags "…"` | Comma-separated tags - these are not used currently |
-| `chip gameboy` | The sound chip to be used in the song - this is required (note: `gb` can also be used as an alias for `gameboy`) |
-| `bpm 140` | The tempo of the song in beats-per-minute |
+| `song name "<name>"` | The title of the song — this name will be the default when creating a physical `.bax` file via `Save`. |
+| `song artist "<artist>"` | The composer / creator of the song — this can be defaulted in the `Settings` of [BeatBax Desktop](/docs/tools/desktop) |
+| `song description "<description>"` | A short description of the song (you can also use a multiline string with `"""…"""`) |
+| `song tags "<tag>,<tag>"` | Comma-separated list of tags (note: these are not used currently) |
 
-> There are other optional global directives you may use, for example `volume 0.0–1.0`, `stepsPerBar` 
-(editor bar grouping). Full more details see: [Metadata directives](/docs/language/metadata-directives).
+## Global directives
+
+These lines configure playback for the whole song. **BeatBax** requires a minimum of `chip`, **Tutorial Groove** uses:
+
+| Directive | Purpose |
+|-----------|---------|
+| `chip <name>` | The sound chip to use — this is required (some chips have aliases, e.g. `gb` for `gameboy`) |
+| `bpm <number>` | The tempo of the song in beats per minute |
+
+> There are other optional global directives you may use, for example `volume 0.0–1.0` and `stepsPerBar` (editor bar grouping). For full details see [Metadata directives](/docs/language/metadata-directives).
 
 ## Next
 

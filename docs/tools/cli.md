@@ -1,11 +1,11 @@
 ---
 sidebar_position: 1
-title: CLI
+title: BeatBax CLI
 ---
 
-# CLI
+# BeatBax CLI
 
-The BeatBax command-line tool verifies, plays, exports, inspects, and converts songs.
+The **BeatBax CLI** verifies, plays, exports, inspects, and converts songs.
 
 ## Install
 
@@ -120,4 +120,4 @@ Playback tries, in order:
 
 - [Installation](/docs/getting-started/installation)
 - [CLI development](/docs/development/cli)
-- [Desktop app](/docs/tools/desktop)
+- [BeatBax Desktop](/docs/tools/desktop)

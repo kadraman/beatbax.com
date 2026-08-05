@@ -53,4 +53,4 @@ play
 ## See also
 
 - [Metadata directives](/docs/language/metadata-directives)
-- [Patterns & sequences](/docs/tutorial/sequencing)
+- [Sequencing](/docs/tutorial/sequencing)

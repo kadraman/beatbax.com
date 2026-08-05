@@ -26,10 +26,11 @@ export default function DownloadPage(): ReactNode {
       description="Download BeatBax Desktop for Windows, macOS, and Linux. Also available on itch.io and in the browser.">
       <div className="downloadPage">
         <div className="downloadHero">
-          <Heading as="h1">Download BeatBax</Heading>
+          <Heading as="h1">Download BeatBax Desktop</Heading>
           <p>
-            BeatBax Desktop v{siteLinks.latestDesktopVersion} — the live-coding IDE
-            for retro console chiptunes.
+            <Link to="/docs/tools/desktop">BeatBax Desktop</Link> v
+            {siteLinks.latestDesktopVersion} — the live-coding IDE for retro
+            console chiptunes.
           </p>
           <p>
             <Link className="button button--lg ctaPrimary" href={siteLinks.itch}>
@@ -44,9 +45,9 @@ export default function DownloadPage(): ReactNode {
           See README.txt in the install folder for platform-specific steps.
         </div>
 
-        <DownloadCard title="Web-lite App">
+        <DownloadCard title="BeatBax web-lite client">
           <p>
-            Try BeatBax with no download required using a modern browser such as
+            Try <b>BeatBax</b> with no download required using a modern browser such as
             Chrome, Firefox, or Edge:
           </p>
           <p className="downloadCardCta">
@@ -55,14 +56,14 @@ export default function DownloadPage(): ReactNode {
             </Link>
           </p>
           <p>
-            <i>Song export, BeatBax Copilot, Channel Mixer, Visualizer and other enhanced features require the{' '}
-            <Link to="/docs/tools/desktop">BeatBax Desktop App</Link></i>.
+            <i>Song export, <Link to="/docs/tools/copilot">BeatBax Copilot</Link>, Channel Mixer, Visualizer and other enhanced features require{' '}
+            <Link to="/docs/tools/desktop">BeatBax Desktop</Link></i>.
           </p>
         </DownloadCard>
 
-        <DownloadCard title="CLI">
+        <DownloadCard title="BeatBax CLI">
           <p>
-            Install the BeatBax command-line tool from{' '}
+            Install the <Link to="/docs/tools/cli">BeatBax CLI</Link> from{' '}
             <Link href="https://www.npmjs.com/package/@beatbax/cli">npm</Link>{' '}
             for scripted playback, validation, exports, and sample conversion:
           </p>
@@ -71,14 +72,14 @@ export default function DownloadPage(): ReactNode {
 beatbax --help`}</code>
           </pre>
           <p>
-            See the <Link to="/docs/tools/cli">CLI documentation</Link> for
+            See the <Link to="/docs/tools/cli">BeatBax CLI</Link> documentation for
             installation notes and command reference.
           </p>
         </DownloadCard>
 
         <DownloadCard title="Development">
           <p>
-            Clone the BeatBax toolchain from{' '}
+            Clone the <b>BeatBax</b> toolchain from{' '}
             <Link href={siteLinks.github}>GitHub</Link> to work on the engine,
             plugins, CLI, web or desktop apps:
           </p>

@@ -16,7 +16,7 @@ import "https://example.com/path/file.ins"      # CLI, desktop, and browser
 ```
 
 - **Local imports** require the `local:` prefix and need filesystem access (CLI/desktop). They are blocked in the browser for security.
-- **Remote imports** use `github:` or `https:` and work in CLI, desktop, and the web-lite client.
+- **Remote imports** use `github:` or `https:` and work in the [BeatBax CLI](/docs/tools/cli), [BeatBax Desktop](/docs/tools/desktop), and the [BeatBax web-lite client](/docs/tools/web-client).
 - Paths for `local:` are relative to the song file (e.g. `local:lib/common.ins` or `local:../shared/drums.ins`), with a fallback search from the current working directory.
 - Recursive imports are allowed; cycles are detected automatically.
 - Merging is **last-wins**: local `inst` definitions in the song override imported ones with the same name.

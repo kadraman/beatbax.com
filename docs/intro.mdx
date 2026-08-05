@@ -8,16 +8,16 @@ mdx:
 import {introExampleSong} from '@site/src/components/BaxPlayer/demos/intro';
 
 **BeatBax** is a live coding language and creative toolchain for making chiptune music in the style of classic 8-bit and 16-bit computers and game consoles.
-Instead of using a Tracker or DAW, you write songs in a simple but powerful text grammar — instruments, melodies, basslines, and beats — and BeatBax plays
+Instead of using a Tracker or DAW, you write songs in a simple but powerful text grammar — instruments, melodies, basslines, and beats — and **BeatBax** plays
 them back with hardware-faithful chip sound.
 
-One goal of BeatBax is homebrew-friendly export: where possible, songs can be written out to tracker or driver formats games can consume
+One goal of **BeatBax** is homebrew-friendly export: where possible, songs can be written out to tracker or driver formats games can consume
 (for example [hUGETracker](https://nickfa.ro/wiki/HUGETracker) .uge for Game Boy, [FamiTracker](http://famitracker.com/) text for NES, VGM for PSG targets). Common formats such as
 WAV and MIDI are available across chips; chip-specific formats are listed on the [ROADMAP](https://github.com/kadraman/beatbax/blob/main/ROADMAP.md).
 
-Creating chiptunes is rewarding but can be hard and time-consuming. **BeatBax Desktop** also includes **BeatBax Copilot*** —
+Creating chiptunes is rewarding but can be hard and time-consuming. [BeatBax Desktop](/docs/tools/desktop) also includes [BeatBax Copilot](/docs/tools/copilot)* —
 an AI assistant (with BYOK model) to help you write and edit songs. It is not a replacement for creativity, but it
-can help with construction, editing, and typical chiptune techniques in the BeatBax grammar.
+can help with construction, editing, and typical chiptune techniques in the **BeatBax** grammar.
 
 ## Features
 
@@ -27,16 +27,27 @@ can help with construction, editing, and typical chiptune techniques in the Beat
 - **Built-in effects** — vibrato, arpeggio, portamento, pitch bend, volume slide, tremolo, pan, note cut, retrigger, echo, and chip-specific effects (e.g. pulse sweep)
 - **Reusable instrument libraries** — share instruments via .ins files; import locally or from GitHub or the web
 - **Export formats** — WAV and MIDI for supported chips; chip-specific exports (UGE, FamiTracker, VGM, …) via plugins
-- **Native desktop client** — Electron + React client with native file I/O, export, Copilot, channel mixer, pattern grid, and Monaco editor
-- **Web-lite browser client** — try-in-browser editor and playback for demos and light edits at [app.beatbax.com](https://app.beatbax.com)
-- **BeatBax Copilot** — AI assistant in the desktop client (BYOK / local Ollama)
-- **CLI** — `play`, `verify`, `export`, `inspect`, and `convert` for scripted workflows
+- **[BeatBax Desktop](/docs/tools/desktop)** — full Electron IDE with native file I/O, export, [BeatBax Copilot](/docs/tools/copilot), channel mixer, pattern grid, and Monaco editor
+- **[BeatBax web-lite client](/docs/tools/web-client)** — try-in-browser editor and playback for demos and light edits at [app.beatbax.com](https://app.beatbax.com)
+- **[BeatBax Copilot](/docs/tools/copilot)** — AI assistant in [BeatBax Desktop](/docs/tools/desktop) (BYOK / local Ollama)
+- **[BeatBax CLI](/docs/tools/cli)** — `play`, `verify`, `export`, `inspect`, and `convert` for scripted workflows
 - **Extensible architecture** — additional chip backends and exporters as plugins without changing the core song grammar
 
->*BeatBax Copilot (desktop client only) uses your own OpenAI-compatible provider for cloud models (BYOK). Local Ollama or LM Studio need no API key. Cloud API keys are stored in the OS secure credential store on your machine only.
+>*[BeatBax Copilot](/docs/tools/copilot) (available in [BeatBax Desktop](/docs/tools/desktop) only) uses your preferred 
+OpenAI-compatible provider for cloud models (BYOK) or local model via Ollama or LM Studio. Cloud API keys are stored in the OS 
+secure credential store on your machine only. Local providers need no API Key.
 
 ## Example song
 
-Press **Play** to hear a short Game Boy track — lead, bass, wave harmony, and a drum kit, with vibrato, arpeggio, and portamento woven in:
+Press **Play** to hear a short, driving Game Boy track in a minor key — lead, bass, sustained wave pad, and a punchy drum kit, with vibrato and portamento woven in:
 
-<BaxPlayer title="First Light" code={introExampleSong} />
+<BaxPlayer title="Neon Run" code={introExampleSong} />
+
+## Next steps
+
+Continue with **Getting Started**:
+
+- [Installation](/docs/getting-started/installation) — set up [BeatBax Desktop](/docs/tools/desktop), the [BeatBax web-lite client](/docs/tools/web-client), or the [BeatBax CLI](/docs/tools/cli)
+- [Quick start](/docs/getting-started/quick-start) — play a built-in example song in a few minutes
+
+Then work through the [Tutorial](/docs/tutorial/overview) to build **Tutorial Groove** step by step for the Game Boy sound chip.

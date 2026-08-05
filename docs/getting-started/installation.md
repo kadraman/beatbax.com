@@ -3,12 +3,12 @@ sidebar_position: 1
 title: Installation
 ---
 
-BeatBax is available as a native desktop client, as a web-lite browser client, or as a CLI — with each "client" serving slightly
+**BeatBax** is available as [BeatBax Desktop](/docs/tools/desktop), the [BeatBax web-lite client](/docs/tools/web-client), or the [BeatBax CLI](/docs/tools/cli) — each serving slightly
 different needs.
 
 ## BeatBax Desktop (recommended)
 
-For the full **BeatBax** experience the native desktop client is recommended. Download a suitable desktop client installer for your chosen platform from the [Download page](/download) or [itch.io](https://kadraman.itch.io/beatbax).
+For the full **BeatBax** experience, [BeatBax Desktop](/docs/tools/desktop) is recommended. Download a suitable installer for your platform from the [Download page](/download).
 
 Supported platforms:
 
@@ -20,9 +20,9 @@ Supported platforms:
 >
 > Please note: installers are not yet code-signed. Windows SmartScreen and macOS Gatekeeper may warn on first install. See `README.txt` in the install folder for platform-specific steps.
 
-## BeatBax web-lite browser client
+## BeatBax web-lite client
 
-No install required — simply open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For song exports, BeatBax Copilot, Song Visualizer, and the full Settings UI, use BeatBax Desktop instead.
+No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For song exports, [BeatBax Copilot](/docs/tools/copilot), Song Visualizer, and the full Settings UI, use [BeatBax Desktop](/docs/tools/desktop) instead.
 
 ## BeatBax CLI
 
@@ -35,4 +35,4 @@ beatbax --help
 
 Or run without a global install: `npx @beatbax/cli --help`.
 
-See [CLI](/docs/tools/cli) for the command reference.
+See [BeatBax CLI](/docs/tools/cli) for the command reference.

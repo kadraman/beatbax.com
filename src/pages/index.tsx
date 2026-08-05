@@ -31,30 +31,35 @@ const features = [
     linkLabel: 'Export guides',
   },
   {
-    title: 'Desktop App',
-    description:
-      'Full Electron Desktop app for Windows, macOS, and Linux with Monaco editor, channel mixer, visualizer and BeatBax Copilot AI assistant.',
-    link: '/docs/tools/desktop',
-    linkLabel: 'Desktop app',
-  },
-  {
-    title: 'Web-lite App',
+    title: 'BeatBax Desktop',
     description: (
       <>
-        Try BeatBax in the browser at <Link href={siteLinks.webApp}>app.beatbax.com</Link>{' '}
-        - no install required - for quick demos, lightweight edits and go anywhere creation.
+        Full Electron IDE for Windows, macOS, and Linux with code editor, channel
+        mixer, visualizer and{' '}
+        <Link to="/docs/tools/copilot">BeatBax Copilot</Link> AI assistant.
+      </>
+    ),
+    link: '/docs/tools/desktop',
+    linkLabel: 'BeatBax Desktop',
+  },
+  {
+    title: 'BeatBax web-lite client',
+    description: (
+      <>
+        Try <b>BeatBax</b> in the browser at <Link href={siteLinks.webApp}>app.beatbax.com</Link>{' '}
+        — no install required — for quick demos, lightweight edits and go-anywhere creation.
       </>
     ),
     link: siteLinks.webApp,
-    linkLabel: 'Open web app',
+    linkLabel: 'Open web-lite client',
     external: true,
   },
   {
-    title: 'CLI toolchain',
+    title: 'BeatBax CLI',
     description:
       'Play, verify, export, inspect, and convert samples from the command line for scripted and headless workflows.',
     link: '/docs/tools/cli',
-    linkLabel: 'CLI reference',
+    linkLabel: 'BeatBax CLI',
   },
 ];
 
@@ -124,14 +129,28 @@ function Screenshots() {
               src="/img/desktop-screenshot-1.png"
               alt="BeatBax Desktop IDE"
             />
-            <figcaption>BeatBax Desktop — full IDE with export and Copilot</figcaption>
+            <figcaption>
+              BeatBax Desktop — full IDE with code editor, channel mixer,
+              visualizer and{' '}
+              <Link to="/docs/tools/copilot">BeatBax Copilot</Link> AI assistant.
+            </figcaption>
           </figure>
           <figure className="screenshotCard">
             <img
               src="/img/web-ui-screenshot-1.png"
-              alt="BeatBax Web UI"
+              alt="BeatBax web-lite client"
             />
-            <figcaption>Web-lite App — try in your browser</figcaption>
+            <figcaption>
+              BeatBax web-lite client — quick demos, lightweight edits and
+              go-anywhere creation.
+            </figcaption>
+          </figure>
+          <figure className="screenshotCard">
+            <img src="/img/cli-screenshot.png" alt="BeatBax CLI" />
+            <figcaption>
+              BeatBax CLI — play, verify, export, and convert from the
+              command line.
+            </figcaption>
           </figure>
         </div>
       </div>

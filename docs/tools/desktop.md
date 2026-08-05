@@ -1,11 +1,11 @@
 ---
 sidebar_position: 3
-title: Desktop App
+title: BeatBax Desktop
 ---
 
 # BeatBax Desktop
 
-BeatBax Desktop is the full-featured BeatBax IDE for Windows, macOS, and Linux.
+**BeatBax Desktop** is the full-featured **BeatBax** IDE for Windows, macOS, and Linux.
 
 [Download](/download) installers from the site or [itch.io](https://kadraman.itch.io/beatbax).
 
@@ -16,7 +16,7 @@ BeatBax Desktop is the full-featured BeatBax IDE for Windows, macOS, and Linux.
 - **Toolbar** — Open/Save, export menu, theme / word wrap / fold
 - **Transport bar** — play, pause, stop, apply, BPM, loop, live, rewind, BPM nudge, master volume
 - **Editor** — Monaco with diagnostics; optional CodeLens, glyph margin, and command palette
-- **Panels** — Problems, Output, Visualizer, Help, and (when enabled) Mixer, Pattern Grid, Copilot
+- **Panels** — Problems, Output, Visualizer, Help, and (when enabled) Mixer, Pattern Grid, [BeatBax Copilot](/docs/tools/copilot)
 - **Status bar** — cursor position, parse status, chip/BPM, panel menu, diagnostics counts
 - **New Song Wizard** — **File → New** / toolbar New; first-run chip picker (Stable / Beta / Experimental)
 
@@ -61,10 +61,10 @@ Use the toolbar or menu to export JSON, MIDI, UGE, WAV, and chip-specific format
 - [Settings](/docs/tools/settings) — theme, editor, playback, feature flags, AI provider
 - [BeatBax Copilot](/docs/tools/copilot) — AI assistant (enable under Settings → Features)
 
-## Compared with web-lite
+## Compared with the web-lite client
 
-| Capability | Desktop | [Web-lite](/docs/tools/web-client) |
-|------------|---------|-------------------------------------|
+| Capability | BeatBax Desktop | [BeatBax web-lite client](/docs/tools/web-client) |
+|------------|-----------------|--------------------------------------------------|
 | Native Open/Save | Yes | Download-only Save |
 | Full export menu | Yes | No |
 | Settings modal | Yes | Theme / wrap via toolbar |
@@ -74,6 +74,6 @@ Use the toolbar or menu to export JSON, MIDI, UGE, WAV, and chip-specific format
 ## Related docs
 
 - [Installation](/docs/getting-started/installation)
-- [Web-lite client](/docs/tools/web-client)
-- [CLI](/docs/tools/cli)
+- [BeatBax web-lite client](/docs/tools/web-client)
+- [BeatBax CLI](/docs/tools/cli)
 - [Desktop development](/docs/development/desktop-app)

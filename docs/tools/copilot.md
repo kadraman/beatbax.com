@@ -7,11 +7,11 @@ title: BeatBax Copilot
 
 BeatBax Copilot is a **desktop-only** AI chat assistant. It understands the BeatBax language and can write songs, answer questions, and help debug errors — powered by any OpenAI-compatible REST API (OpenAI, Groq, Ollama, LM Studio, and others).
 
-The hosted web-lite client at [app.beatbax.com](https://app.beatbax.com) does **not** include Copilot. Use [BeatBax Desktop](/docs/tools/desktop).
+The hosted **BeatBax web-lite client** at [app.beatbax.com](https://app.beatbax.com) does **not** include Copilot. Use [BeatBax Desktop](/docs/tools/desktop).
 
 ## Enabling the assistant
 
-1. Open **BeatBax Desktop**.
+1. Open [BeatBax Desktop](/docs/tools/desktop).
 2. Press `Ctrl+,` / `Cmd+,` (or **View → Settings…**) to open **Settings**.
 3. On the **Features** tab, enable **AI Copilot**.
 4. Switch to the **AI** tab to configure your provider (endpoint, API key, model).
@@ -124,5 +124,5 @@ Tips: clear Copilot chat before a large Edit; use Ask for explanations; raise `n
 
 ## Related docs
 
-- [Desktop app](/docs/tools/desktop)
+- [BeatBax Desktop](/docs/tools/desktop)
 - [Settings](/docs/tools/settings)

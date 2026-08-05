@@ -18,15 +18,11 @@ import {
 
 # Instruments
 
-You define BeatBax instruments with `inst`, then assign them to channels, override them in sequences or use their names as pattern tokens.
+In this section we will give **Tutorial Groove** its sound: define instruments with `inst` for each Game Boy voice (pulse, wave, and noise), then assign them to channels. Instrument names can also be used as pattern tokens (especially usefull for percussion), and you can switch instruments inside a pattern with `inst(name)` or `inst(name,N)`.
 
-Instrument type (`type=`) and fields are **chip-specific**. This tutorial uses **Game Boy** sound chip only. For other chips see [Sound Chip Plugins](/docs/chips/overview).
+Instrument type (`type=`) and its fields are **chip-specific**. This tutorial uses the **Game Boy** sound chip. For other chips see [Sound Chip Plugins](/docs/chips/overview).
 
-> Use **Copy** on any player below to copy and paste a complete working song. Focused snippets hide wiring with `…`; the copied source still includes `song` / `chip` / `channel` / `play`.
-
-Patterns below use the note syntax from [Notes and lengths](/docs/tutorial/notes) (`C4`, `C4:4`, `.`, `_`).
-
-A common Game Boy layout (and the one Tutorial Groove uses):
+A common Game Boy layout for instruments (and the one **Tutorial Groove** uses) is:
 
 | Channel | Type | Role |
 |---------|------|------|
@@ -34,6 +30,8 @@ A common Game Boy layout (and the one Tutorial Groove uses):
 | 2 | `pulse2` | Harmony / counter |
 | 3 | `wave` | Bass |
 | 4 | `noise` | Drums |
+
+Note: the patterns below use the note syntax from [Notes and lengths](/docs/tutorial/notes) (`C4`, `C4:4`, `.`, `_`).
 
 ## Pulse 1
 
@@ -45,69 +43,95 @@ Channel 1 is a pulse oscillator. Set `type=pulse1`, pick a `duty`, and give it a
 |-------|--------|
 | `duty` | Pulse **timbre** — the fraction of each wave cycle that is “on” (high). Game Boy allows only **12.5, 25, 50, or 75** (percent). This shapes the sound, not how long a note lasts in a pattern. **12.5** / **25** sound thinner; **50** is a balanced square; **75** sounds darker/thicker (like 25% flipped). |
 | `env` | Hardware volume **envelope**: `gb:<initial>,<up\|down>,<period>`. `initial` is starting volume (0–15); `up`/`down` is the direction; `period` is how fast it steps (1–7). Use `period=0` to hold a constant volume. Short periods sound plucky; longer ones fade more slowly. Example: `gb:13,down,1`. |
-| `gm` | Optional General Midi (GM) program 0–127 for MIDI export |
+| `gm` | Optional General Midi (GM) program 0–127 - this is only used for MIDI export instrument mapping |
 
 ### Hardware sweep
 
-Pulse 1 can also slide pitch with `sweep=time,direction,shift` (time/shift 0–7; direction `up` / `down`). Use a constant envelope (`period=0`) so the note stays loud while the pitch moves:
+Pulse 1 can also slide pitch with a hardware frequency sweep: `sweep=<time>,<up|down>,<shift>` (Pulse 2 cannot). Example: `sweep=7,up,3`. Use a constant envelope (`env` period `0`) so the note stays loud while the pitch moves:
 
 <BaxPlayer title="Pulse 1 sweep" code={sweepBax} />
 
+| Field | Notes |
+|-------|--------|
+| `time` | How often the sweep steps (0–7). Higher values update more slowly. |
+| `direction` | `up` raises pitch; `down` lowers it. |
+| `shift` | How strongly each step changes frequency (0–7). Larger values move pitch faster/further. |
+
+Hardware sweep is more often used for sound effects rather than music.
+
 ## Pulse 2
 
-Channel 2 is the second pulse — same duty and envelope options, but **no** hardware sweep. Add harmony / counter under the lead:
+Channel 2 is the second pulse — same duty and envelope options, but **no** hardware sweep. It is typically used to add harmony / counter under the lead:
 
 <BaxPlayer title="Add the harmony" code={pulse2Bax} />
 
 ## Wave
 
-Channel 3 plays a custom wavetable — often used for **bass** on Game Boy. Provide 32 nibbles (0–15), a 16-value shorthand (tiled to 32), or a 32-character hex string. `volume=` must be **0, 25, 50, or 100**:
+Channel 3 plays a custom **wavetable** — 32 samples that define the waveform itself. Shape the table and you can get smooth basses, soft pads, bright leads, bells, or metallic / organ-like tones; **Tutorial Groove** uses a gentle triangle-like table for **bass**.
+
+Provide the table as 32 nibbles (0–15), a 16-value shorthand (tiled to 32), or a 32-character hex string. Output level is set with `volume=` — only **0, 25, 50, or 100**:
 
 <BaxPlayer title="Add the wave bass" code={waveBax} />
 
 ## Noise
 
-Channel 4 is LFSR noise — percussion and FX. Prefer `uge_note=` so BeatBax and hUGETracker share the LFSR clock.
+Channel 4 is **LFSR noise** — random-ish hiss shaped by the sound chip. In songs it is typically used for **percussion** (kicks, snares, hats, toms) and short FX hits rather than pitched melody.
 
-On Game Boy, **snares** usually use `gb:width=7` (metallic crack); **hi-hats** use `gb:width=15` (broader white noise). A short `pitch_env` “pop” helps the snare read as a hit:
+The noise channel does not play musical pitch the way pulse and wave do. Timbre comes mainly from `gb:width` and the envelope; how “high” or “low” the noise sounds is set by a clock rate. On Game Boy that clock is chosen with **`uge_note=`** (hUGETracker note names like `C-7`), so **BeatBax** playback and UGE export stay in sync. Patterns still write ordinary notes (e.g. `C6`) for when each hit fires.
+
+On Game Boy, **snares** usually use `gb:width=7` (metallic crack); **hi-hats** use `gb:width=15` (broader white noise). A short pitch “pop” (via `pitch_env` — covered under [Instrument macros](#instrument-macros) below) helps the snare read as a hit:
 
 <BaxPlayer title="Noise snare" code={noiseBax} />
 
 | Field | Notes |
 |-------|--------|
 | `gb:width` | `7` = metallic (snares/toms); `15` = white noise (hats/cymbals) |
-| `uge_note=` | hUGE display note — drives **playback and** UGE export |
-| `note=` | Default pitch when the name is used as a pattern token |
+| `uge_note=` | Noise **clock** in hUGETracker notation (e.g. `C-7`). Controls how high/low the noise sounds in **BeatBax** and what is written to UGE. Prefer this for percussion you care about hearing correctly. |
 | `env` | Hardware envelope, e.g. `gb:13,down,1` |
 
 ## Instrument macros
 
 Software macros (`pitch_env`, `vol_env`, …) add per-tick motion on top of the hardware voice. On Game Boy they also feed hUGETracker UGE subpatterns.
 
-The first hit below is a plain noise kick; the second uses the same base note with a pitch drop and volume decay — listen for the difference:
+The first four hits below are a plain noise kick; the next four use the same notes with a pitch drop and volume decay — listen for the difference. (`inst(name)` switches which instrument plays the following notes; more on that in [Sequencing](/docs/tutorial/sequencing).)
 
 <BaxPlayer title="Noise kick program" code={kickProgramBax} />
 
-Full details: [Instrument macros](/docs/language/instrument-macros).
+For full details see: [Instrument macros](/docs/language/instrument-macros).
 
 ## Percussion with named tokens
 
-Set `uge_note=` / `note=` so instrument names work as pattern tokens:
+Writing `C5` / `C6` on every drum hit works, but it is clearer to use the **instrument name** as the pattern token (`kick`, `snare`, `hat`). Add **`note=`** so each name has a default pitch; keep **`uge_note=`** for the noise clock (as above).
 
 <BaxPlayer title="Drum kit" code={percussionBax} />
 
-More: [Instrument note mapping](/docs/language/instrument-note-mapping).
-
-## Putting it together
-
-Wire all four channels for Tutorial Groove:
-
-<BaxPlayer title="Tutorial Groove — instruments" code={instrumentsTogetherBax} />
+More detail: [Instrument note mapping](/docs/language/instrument-note-mapping).
 
 ## Sharing instruments
 
-Reuse kits with `import "…"`. See [Imports](/docs/language/imports).
+As well as defining instruments from scratch in each song you can also reuse instruments
+defined in other files with the `import "…"` directive. See [Imports](/docs/language/imports) for more information.
+
+## Putting it together
+
+Defining instruments is not enough on its own — **BeatBax** only plays a voice when you assign it with a **`channel`** line. Each line maps one chip voice to:
+
+1. a default instrument (`inst …`)
+2. the music it should play (`pat …` for a single pattern, or `seq …` for a list of patterns)
+
+**Tutorial Groove** uses all four Game Boy voices — pulse lead, pulse harmony, wave bass, and noise drums. The Game Boy can play **at most these four voices at once**; other chips may have fewer or more channels (see [Sound Chip Plugins](/docs/chips/overview)).
+
+```bax
+channel 1 => inst lead    seq lead_pat
+channel 2 => inst harmony seq harmony_pat
+channel 3 => inst bass    seq bass_pat
+channel 4 => inst snare   seq drums_pat
+```
+
+You need **one `channel` line per voice** you want to hear. Patterns, named sequences, and other channel forms are covered in [Sequencing](/docs/tutorial/sequencing). Here is the full song so far:
+
+<BaxPlayer title="Tutorial Groove — instruments" code={instrumentsTogetherBax} />
 
 ## Next
 
-Continue with [Patterns & sequences](/docs/tutorial/sequencing) — expand one-bar loops into A/B phrases and named `seq`s.
+Continue with [Sequencing](/docs/tutorial/sequencing) — how `pat` and `seq` work in more detail, and how to chain different patterns so each part can vary instead of looping a single bar.

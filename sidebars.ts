@@ -33,7 +33,7 @@ const sidebars: SidebarsConfig = {
         'tools/web-client',
         {
           type: 'category',
-          label: 'Desktop App',
+          label: 'BeatBax Desktop',
           link: {
             type: 'doc',
             id: 'tools/desktop',
