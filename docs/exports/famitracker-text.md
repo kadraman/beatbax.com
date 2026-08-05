@@ -42,5 +42,5 @@ Hardware sweep fields map to pattern `Hxy` effects where applicable. Triangle `l
 ## See also
 
 - [NES](/docs/chips/nes)
-- [CLI](/docs/tools/cli)
+- [BeatBax CLI](/docs/tools/cli)
 - [Detailed mapping on GitHub](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/famitracker-export.md)

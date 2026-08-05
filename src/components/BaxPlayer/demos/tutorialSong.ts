@@ -124,13 +124,13 @@ channel 3 => inst bass seq bass_pat
 
 play`;
 
-/** Noise snare alone. */
+/** Noise snare alone — explicit notes (named tokens come later). */
 export const noiseBax = `${META}
 
 # @show
-inst snare type=noise gb:width=7 env=gb:13,down,1 length=16 uge_note=C-7 note=C6 pitch_env=[0,7,0] vol_env=[13,10,6,2]
+inst snare type=noise gb:width=7 env=gb:13,down,1 length=16 uge_note=C-7 pitch_env=[0,7,0] vol_env=[13,10,6,2]
 
-pat hits = snare . snare . snare snare . .
+pat hits = C6 . C6 . C6 C6 . .
 # @end
 
 channel 4 => inst snare seq hits
@@ -144,11 +144,11 @@ export const kickProgramBax = `${META}
 inst kick_plain type=noise gb:width=7 uge_note=C-6 length=16
 inst kick       type=noise gb:width=7 uge_note=C-6 length=16 pitch_env=[0,-2,-4,-6] vol_env=[15,12,8,4]
 
-# Plain hit, then the same base with macros (pitch drop + volume decay)
-pat kicks = kick_plain:8 . . kick:8 . .
+# Several plain hits, then the same notes with macros (pitch drop + volume decay)
+pat kicks = inst(kick_plain) C5:4 . C5:4 . C5:4 . C5:4 . inst(kick) C5:4 . C5:4 . C5:4 . C5:4 .
 # @end
 
-channel 4 => inst kick seq kicks
+channel 4 => inst kick_plain seq kicks
 
 play`;
 

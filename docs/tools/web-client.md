@@ -1,15 +1,15 @@
 ---
 sidebar_position: 2
-title: Web Client
+title: BeatBax web-lite client
 ---
 
-# Web-lite client
+# BeatBax web-lite client
 
-Try BeatBax in the browser at [app.beatbax.com](https://app.beatbax.com) — no install required.
+Try **BeatBax** in the browser at [app.beatbax.com](https://app.beatbax.com) — no install required.
 
 The full IDE (exports, Copilot, mixer, pattern grid, Settings, advanced editor) is in [BeatBax Desktop](/docs/tools/desktop).
 
-## Using the web UI
+## Using the web-lite client
 
 1. Open [app.beatbax.com](https://app.beatbax.com).
 2. Paste a `.bax` song, open a file, or pick an example from the toolbar.
@@ -31,9 +31,9 @@ Save always **downloads** a `.bax` file; it does not write to a chosen path on d
 
 ### Theme and wrap
 
-Theme: toolbar or `Alt+Shift+L`. Word wrap: toolbar. There is no Settings modal in web-lite.
+Theme: toolbar or `Alt+Shift+L`. Word wrap: toolbar. There is no Settings modal in the BeatBax web-lite client.
 
-## What web-lite includes
+## What the web-lite client includes
 
 - Monaco editor — highlighting, diagnostics, completions, folding
 - Toolbar, transport, visualizer, help, problems, output
@@ -43,17 +43,17 @@ Theme: toolbar or `Alt+Shift+L`. Word wrap: toolbar. There is no Settings modal 
 
 | Feature | Use instead |
 |---------|-------------|
-| Export menu (JSON, MIDI, UGE, WAV, VGM, Arkos, …) | [Desktop](/docs/tools/desktop) |
-| BeatBax Copilot | [Desktop](/docs/tools/desktop) → Settings → Features |
-| Channel mixer / pattern grid | Desktop |
-| CodeLens, glyph margin, command palette | Desktop |
-| BPM runtime nudge annotations | Desktop |
-| MIDI step entry | Desktop |
-| Settings modal | [Desktop Settings](/docs/tools/settings) |
-| Native Open/Save dialogs | Desktop |
+| Export menu (JSON, MIDI, UGE, WAV, VGM, Arkos, …) | [BeatBax Desktop](/docs/tools/desktop) |
+| [BeatBax Copilot](/docs/tools/copilot) | [BeatBax Desktop](/docs/tools/desktop) → Settings → Features |
+| Channel mixer / pattern grid | [BeatBax Desktop](/docs/tools/desktop) |
+| CodeLens, glyph margin, command palette | [BeatBax Desktop](/docs/tools/desktop) |
+| BPM runtime nudge annotations | [BeatBax Desktop](/docs/tools/desktop) |
+| MIDI step entry | [BeatBax Desktop](/docs/tools/desktop) |
+| Settings modal | [BeatBax Desktop Settings](/docs/tools/settings) |
+| Native Open/Save dialogs | [BeatBax Desktop](/docs/tools/desktop) |
 
 ## Related docs
 
-- [Desktop app](/docs/tools/desktop)
+- [BeatBax Desktop](/docs/tools/desktop)
 - [Quick start](/docs/getting-started/quick-start)
 - [Web app development](/docs/development/web-app)

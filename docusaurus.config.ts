@@ -128,6 +128,12 @@ const config: Config = {
           'aria-label': 'GitHub',
         },
         {
+          href: 'https://kadraman.itch.io/beatbax',
+          position: 'right',
+          className: 'header-itch-link',
+          'aria-label': 'itch.io',
+        },
+        {
           href: 'https://www.patreon.com/kadraman',
           position: 'right',
           className: 'header-patreon-link',
@@ -148,7 +154,7 @@ const config: Config = {
             {label: 'Introduction', to: '/docs/intro'},
             {label: 'Getting Started', to: '/docs/getting-started/quick-start'},
             {label: 'Tutorial', to: '/docs/tutorial/overview'},
-            {label: 'CLI', to: '/docs/tools/cli'},
+            {label: 'BeatBax CLI', to: '/docs/tools/cli'},
           ],
         },
         {
@@ -159,7 +165,7 @@ const config: Config = {
               href: 'https://kadraman.itch.io/beatbax',
             },
             {label: 'Other Downloads', to: '/download'},
-            {label: 'Web App', href: 'https://app.beatbax.com'},
+            {label: 'BeatBax web-lite client', href: 'https://app.beatbax.com'},
           ],
         },
         {
@@ -172,6 +178,10 @@ const config: Config = {
             {
               label: 'Site on GitHub',
               href: 'https://github.com/kadraman/beatbax.com',
+            },
+            {
+              label: 'itch.io',
+              href: 'https://kadraman.itch.io/beatbax',
             },
             {
               label: 'Patreon',

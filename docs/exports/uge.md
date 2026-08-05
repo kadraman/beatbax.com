@@ -36,7 +36,7 @@ channel 4 => inst kick pat drums
 
 ### 2. Export to UGE
 
-Using the CLI:
+Using the BeatBax CLI:
 
 ```powershell
 node bin/beatbax export uge mysong.bax mysong.uge

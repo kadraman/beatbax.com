@@ -5,24 +5,26 @@ title: Notes and lengths
 
 # Notes and lengths
 
-Before defining instruments, it helps to know how pitches and timing are written in a pattern. Patterns are lists of **tokens**.
+In this section we will cover how pitches and timing are written in **BeatBax** — notes, step lengths, rests, and sustains — before we attach instruments in the next section. The main tokens are:
 
 | Token | Meaning |
 |-------|---------|
 | `C4`, `E5`, `G#5` | A note — letter, optional sharp (`#`) or flat (`b`), then octave (scientific pitch). Default length is **1 step**. |
-| `C4:4` | Same note held for **4 steps** (shorthand for `C4 _ _ _`). |
-| `.` | Rest — silence; also cuts the previous note. |
-| `_` or `-` | Sustain — keep the previous note sounding for one more step. |
+| `C4:4` | Length — hold the same note for **4 steps** |
+| `.` | Rest — silence; also cuts the previous note |
+| `_` or `-` | Sustain — keep the previous note sounding for one more step. `C4 _ _ _` is the same as `C4:4` |
 
-A **step** is one timing unit at the song’s `bpm` (with default `stepsPerBar 4`, four steps make one bar). Tutorial Groove phrases are **16 steps** long so all channels stay locked together.
+A **step** is one timing slot at the song’s `bpm`:
+
+- a bare note (`E5`) or rest (`.`) lasts **1 step**
+- an explicit length (`C3:8`) lasts that many steps
 
 ```bax
-pat rise     = C3:16                 # hold C3 for sixteen steps
-pat lead_pat = E5 . G5 C6 . G5 E5 .  # one-step notes and rests
+C3:16                 # hold C3 for 16 steps
+E5 . G5 C6 . G5 E5 .  # one-step notes and rests
+C4 _ _ _              # same duration as C4:4
 ```
-
-More pattern tokens (`(…)`, `*N`, named drums, `inst(…)`) come later in [Patterns & sequences](/docs/tutorial/sequencing).
 
 ## Next
 
-Continue with [Instruments](/docs/tutorial/instruments) — give Tutorial Groove its pulse, wave, and noise voices.
+Continue with [Instruments](/docs/tutorial/instruments) — give **Tutorial Groove** its pulse, wave, and noise voices.

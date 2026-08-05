@@ -50,5 +50,5 @@ Keep Arkos-bound songs within the v1 subset, or use WAV for full-preview renders
 ## See also
 
 - [Spectrum 128 / CPC](/docs/chips/spectrum-128)
-- [CLI](/docs/tools/cli)
+- [BeatBax CLI](/docs/tools/cli)
 - [Completion notes on GitHub](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/spectrum-cpc-arkos-exporter.md)
