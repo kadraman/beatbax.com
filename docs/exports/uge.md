@@ -17,7 +17,7 @@ Noise instruments should set **`uge_note=`** so playback and export use the same
 
 Create a `.bax` file with your song:
 
-```
+```bax
 chip gameboy
 bpm 128
 
@@ -416,7 +416,7 @@ Effect Params (u8) - Effect parameters
 ## Examples
 
 ### Simple Melody
-```
+```bax
 chip gameboy
 bpm 128
 
@@ -428,7 +428,7 @@ channel 1 => inst lead pat verse
 ```
 
 ### Four-Channel Song
-```
+```bax
 chip gameboy
 bpm 140
 

@@ -1,0 +1,66 @@
+---
+sidebar_position: 8
+title: Final Song
+mdx:
+  format: mdx
+---
+
+import {finalSongBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
+
+# Final Song
+
+**Tutorial Groove** is complete. This page is the payoff for the whole walkthrough: the four-channel arrangement from [Sequencing](/docs/tutorial/sequencing), phrase variation from [Modifiers](/docs/tutorial/modifiers), and the `wobble` / `spark` / `slide` presets from [Effects](/docs/tutorial/effects).
+
+Modifiers are what make the finished track feel longer and more polished — the same few patterns are reshaped across an **eight-phrase** form instead of looping a short A/B block.
+
+## Form (8 phrases)
+
+Each sequence lists eight 16-step phrases (channels stay locked). Rough arc:
+
+| Phrases | Role | What happens |
+|---------|------|----------------|
+| 1–2 | Open | A/B with `lead_b:rot(2)`, `harmony_b:rev` |
+| 3–4 | Build | Return to A, then `lead_b:oct(+1)` |
+| 5 | Peak | `lead_c` (vibrato) over a simple `harmony_pad` — less clash than busy arps |
+| 6 | Break | Lead/harmony rest; bass + `drums_fill` keep the pulse |
+| 7–8 | Settle | Familiar `lead_a` / `harmony_a`, then `lead_outro` and rests on bass/drums |
+
+Empty patterns (`lead_rest`, `harmony_rest`, …) and lighter alts (`harmony_pad`, `drums_fill`, `lead_outro`) give the second half air so stacked modifiers do not turn discordant.
+
+## Effects in the mix
+
+| Preset | Body | Where you hear it |
+|--------|------|-------------------|
+| `wobble` | `vib:6,4` | Lead peak / settle — high note in `lead_c` |
+| `spark` | `arp:4,7` | Harmony chord tones in `harmony_a` / `harmony_b` |
+| `slide` | `port:16` | Wave bass in `bass_b` |
+
+## Tutorial Groove — finished
+
+Press **Play** for the complete song, or **Copy** to paste it into [BeatBax Desktop](/docs/tools/desktop), the [web-lite client](https://app.beatbax.com), or a `.bax` file:
+
+<BaxPlayer title="Tutorial Groove — finished" code={finalSongBax} />
+
+## Ideas to try
+
+After you **Copy** the song, experiment:
+
+- Lengthen the form further with `(lead_a lead_b:rot(2))*2` style groups, or add a ninth/tenth phrase
+- Chain more modifiers, e.g. `harmony_b:rev:oct(+1)` or `drums_b:rot(4):rev`
+- Change `bpm 140`, pulse duties, or the bass wavetable
+- Tweak effect presets — deeper vibrato, `arp:3,7`, slower `port`
+- Pan a phrase or add another effect from the [Effects reference](/docs/language/effects)
+
+## Other sound chips
+
+The notes, patterns, sequences, and most effects in **Tutorial Groove** are chip-agnostic — the same musical material can target another backend by changing `chip` and rewriting the **instruments** (and channel map) for that hardware.
+
+For example, on the NES you might keep `lead_a` / `bass_seq` as-is but define `type=pulse1`, `type=triangle`, and `type=noise` voices with NES fields instead of Game Boy `duty` / `wave=` / `uge_note`. Channel counts differ too (NES has five voices including DMC; SMS has three tones plus noise). Start from the Game Boy song, then follow the guide for your target chip under [Sound Chip Plugins](/docs/chips/overview).
+
+## See also
+
+- [Modifiers](/docs/tutorial/modifiers)
+- [Effects](/docs/tutorial/effects)
+- [Tutorial overview](/docs/tutorial/overview)
+- [Effects reference](/docs/language/effects)
+- [Sound Chip Plugins](/docs/chips/overview)

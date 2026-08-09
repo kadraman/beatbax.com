@@ -18,7 +18,14 @@ Supported platforms:
 
 > **Code signing**
 >
-> macOS GitHub Release `.dmg`/`.zip` are Developer ID signed and notarized. Windows installers are not Authenticode-signed — SmartScreen may warn (More info → Run anyway). See `README.txt` in the install folder for platform-specific steps. Verify downloads with `SHA256SUMS` on [GitHub Releases](https://github.com/kadraman/beatbax/releases).
+> Please note Windows installers are not currently Authenticode-signed — SmartScreen may warn when you run the installer.
+> Click <b>'More info'</b> and <b>'Run anyway'</b> to proceed.
+> See README.txt in the install folder for more details.
+>
+> macOS installers are Developer ID signed and notarized, but may still 
+> may ask you to click <b>'Open anyway'</b> to proceed.
+
+To check installer integrity with `SHA256SUMS` (GitHub Releases or itch.io), see [Verify downloads](/docs/tools/verify-downloads).
 
 ## BeatBax web-lite client
 

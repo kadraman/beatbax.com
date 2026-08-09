@@ -9,14 +9,14 @@ When using instrument names as pattern tokens (e.g. `snare`, `hihat`, `kick`), s
 
 ## Syntax
 
-```
+```bax
 inst <name> type=<type> [<params>...] note=<note>
 inst <name> type=noise ... uge_note=C-6 note=C6
 ```
 
 ## Example: Percussion Kit
 
-```
+```bax
 chip gameboy
 bpm 140
 
@@ -49,7 +49,7 @@ Optional `divisor` / `shift` on noise instruments can still override the clock f
 
 The Game Boy noise channel does not use melodic pitch the way pulse/wave do. Timbre still comes from `gb:width` (and related LFSR settings), but the **noise period / clock** is selected from the hUGE note table via `uge_note` (or derived mapping) so BeatBax matches hUGETracker listening levels and export.
 
-```
+```bax
 inst snare type=noise gb:width=7 env=13,down uge_note=C-7 note=C6
 
 # Playback: LFSR clock from uge_note; timbre from width/envelope

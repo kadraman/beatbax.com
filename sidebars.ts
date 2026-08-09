@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'tutorial/sequencing',
         'tutorial/modifiers',
         'tutorial/effects',
+        'tutorial/final-song',
       ],
     },
     {
@@ -41,6 +42,7 @@ const sidebars: SidebarsConfig = {
           items: [
             'tools/settings',
             'tools/copilot',
+            'tools/verify-downloads',
           ],
         },
       ],

@@ -1,10 +1,15 @@
 import type {ReactNode} from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import {usePrismTheme} from '@docusaurus/theme-common';
 import clsx from 'clsx';
+import {Highlight, Prism} from 'prism-react-renderer';
+import registerBaxLanguage from '@site/src/theme/prism-bax';
 import {parseFocusedBaxSource} from './focusCode';
 import {playBaxSource, type BaxPlayerHandle} from './playBax';
 import styles from './styles.module.css';
+
+registerBaxLanguage(Prism);
 
 export type BaxPlayerProps = {
   title?: string;
@@ -23,7 +28,8 @@ function CodeBlock({
   omittedBefore: boolean;
   omittedAfter: boolean;
 }) {
-  const lines = [
+  const prismTheme = usePrismTheme();
+  const code = [
     omittedBefore ? '…' : null,
     displayCode,
     omittedAfter ? '…' : null,
@@ -32,9 +38,23 @@ function CodeBlock({
     .join('\n');
 
   return (
-    <pre className={styles.code}>
-      <code>{lines}</code>
-    </pre>
+    <Highlight theme={prismTheme} code={code} language="bax">
+      {({className, style, tokens, getLineProps, getTokenProps}) => (
+        <pre
+          className={clsx(styles.code, className)}
+          style={{...style, backgroundColor: 'transparent', background: 'none'}}>
+          <code>
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({line})}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({token})} />
+                ))}
+              </div>
+            ))}
+          </code>
+        </pre>
+      )}
+    </Highlight>
   );
 }
 

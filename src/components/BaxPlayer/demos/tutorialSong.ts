@@ -49,15 +49,23 @@ pat drums_b = kick . hat hat snare . hat . kick kick hat . snare . snare .`;
 const PATS_EFFECTS = `pat lead_a = E5 . G5 C6 . G5 E5 . D5 . F5 A5 . G5 . .
 pat lead_b = C5 . E5 G5 . E5 C5 . A4 . C5 E5 . D5 C5 .
 pat lead_c = G5 . A5 C6<wobble>:2 A5 G5 E5 . F5 G5 A5 G5 E5 D5 C5
+pat lead_outro = C6<wobble>:4 G5:4 E5:4 C5:4
 
 pat harmony_a = C4<spark>:4 E4:4 G4<spark>:4 E4:4
 pat harmony_b = A3<spark>:4 C4:4 F4<spark>:4 G4:4
+pat harmony_pad = C4:8 G3:8
 
 pat bass_a = C3 . . C3 G2 . . G2 A2 . . A2 F2 . G2 .
 pat bass_b = C3 . E3<slide> . G2 . . G2 A2 . C3 . F2 . G2 .
 
 pat drums_a = kick . hat . snare . hat hat kick . hat . snare hat hat .
-pat drums_b = kick . hat hat snare . hat . kick kick hat . snare . snare .`;
+pat drums_b = kick . hat hat snare . hat . kick kick hat . snare . snare .
+pat drums_fill = kick . . . snare . . . kick kick . . snare . . .
+
+pat lead_rest = .:16
+pat harmony_rest = .:16
+pat bass_rest = .:16
+pat drums_rest = .:16`;
 
 /** Pulse 1 alone — lead. */
 export const pulse1Bax = `${META}
@@ -221,7 +229,71 @@ channel 4 => inst snare   seq drums_seq
 
 play`;
 
-/** Stage 5 — effects on the finished arrangement. */
+/** Isolated effect demos for the Effects tutorial page. */
+export const vibDemoBax = `${META}
+
+# @show
+inst lead type=pulse1 duty=50 env=gb:15,down,0
+
+# Plain held notes, then the same pitches with vibrato
+pat plain = C5:8 E5:8
+pat vib   = C5<vib:6,4>:8 E5<vib:8,6>:8
+# @end
+
+channel 1 => inst lead seq plain vib
+
+play`;
+
+export const arpDemoBax = `${META}
+
+# @show
+inst lead type=pulse1 duty=50 env=gb:15,down,0
+
+# Same root (C4) — listen for E (major) vs Eb (minor) in the cycle
+# Trailing rest so the next C4 retriggers instead of blending
+pat major = C4<arp:4,7>:15 .
+pat minor = C4<arp:3,7>:16
+# @end
+
+channel 1 => inst lead seq major minor
+
+play`;
+
+export const portDemoBax = `${META}
+
+# @show
+inst bass type=wave volume=100 wave=[0,2,4,6,8,10,12,14,15,14,12,10,8,6,4,2]
+
+# First bar: stepped notes. Second: slide into each target with portamento
+pat stepped = C3:4 E3:4 G3:4 C4:4
+pat slides  = C3:4 E3<port:16>:4 G3<port:12>:4 C4<port:8>:4
+# @end
+
+channel 3 => inst bass seq stepped slides
+
+play`;
+
+export const namedEffectsDemoBax = `${META}
+
+# @show
+effect wobble = vib:6,4
+effect spark  = arp:4,7
+effect slide  = port:16
+
+inst lead type=pulse1 duty=50 env=gb:15,down,0
+inst bass type=wave volume=100 wave=[0,2,4,6,8,10,12,14,15,14,12,10,8,6,4,2]
+
+# Presets need enough duration to hear — hold the effected notes
+pat lead_line = C5:4 E5<wobble>:8 G5<spark>:4
+pat bass_line = C3:4 E3<slide>:4 G3<slide>:4 C4<slide>:4
+# @end
+
+channel 1 => inst lead pat lead_line
+channel 3 => inst bass pat bass_line
+
+play`;
+
+/** Stage 5 — finished song: longer form via modifiers + effects. */
 export const effectsBax = `${META}
 
 ${INSTRUMENTS}
@@ -233,10 +305,12 @@ effect slide  = port:16
 
 ${PATS_EFFECTS}
 
-seq lead_seq    = lead_a lead_b lead_a lead_c
-seq harmony_seq = harmony_a harmony_b harmony_a harmony_b
-seq bass_seq    = bass_a bass_b bass_a bass_b
-seq drums_seq   = drums_a drums_b drums_a drums_b
+# Eight 16-step phrases — open → build → peak → break → settle
+# Phrases 1–4: modifiers on A/B. Phrases 5–8: space + simpler alts
+seq lead_seq = lead_a lead_b:rot(2) lead_a lead_b:oct(+1) lead_c lead_rest lead_a lead_outro
+seq harmony_seq = harmony_a harmony_b:rev harmony_a harmony_b harmony_pad harmony_rest harmony_a harmony_pad
+seq bass_seq = bass_a:oct(-1) bass_b bass_a:oct(-1) bass_b bass_a:oct(-1) bass_b bass_a:oct(-1) bass_rest
+seq drums_seq = drums_a drums_b drums_a drums_b:rev drums_a drums_fill drums_a drums_rest
 # @end
 
 channel 1 => inst lead    seq lead_seq
@@ -245,3 +319,6 @@ channel 3 => inst bass    seq bass_seq
 channel 4 => inst snare   seq drums_seq
 
 play`;
+
+/** Alias used by the Final Song tutorial page. */
+export const finalSongBax = effectsBax;

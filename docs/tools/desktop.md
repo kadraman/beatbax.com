@@ -74,6 +74,7 @@ Use the toolbar or menu to export JSON, MIDI, UGE, WAV, and chip-specific format
 ## Related docs
 
 - [Installation](/docs/getting-started/installation)
+- [Verify downloads](/docs/tools/verify-downloads)
 - [BeatBax web-lite client](/docs/tools/web-client)
 - [BeatBax CLI](/docs/tools/cli)
 - [Desktop development](/docs/development/desktop-app)

@@ -96,7 +96,7 @@ Note: hUGE stores the raw selector value (0..3); hUGEDriver writes NR32 = (value
 
 Examples:
 
-```
+```bax
 inst bass type=wave wave=[0,4,8,12,15,12,8,4,0,4,8,12,15,12,8,4] volume=100
 inst pad  type=wave wave=[8,11,13,14,15,14,13,11,8,4,2,1,0,1,2,4] vol=50%
 ```
@@ -159,7 +159,7 @@ The noise channel (`type=noise`) uses a linear-feedback shift register to produc
 
 All instrument types (pulse, wave, noise) can specify a default note value using the `note=` parameter. When you use the instrument name as a pattern token (e.g., `snare` or `kick`), this note is automatically used:
 
-```
+```bax
 inst kick     type=pulse1 duty=12.5 env=15,down note=C2
 inst snare    type=noise  gb:width=7 env=13,down note=C6
 inst hihat_cl type=noise  gb:width=15 env=6,down note=C6

@@ -14,7 +14,7 @@ BeatBax supports exporting songs to WAV audio files using a direct PCM renderer 
 
 Create a `.bax` file with your song:
 
-```
+```bax
 chip gameboy
 bpm 128
 
