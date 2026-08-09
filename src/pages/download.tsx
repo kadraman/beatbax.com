@@ -40,8 +40,9 @@ export default function DownloadPage(): ReactNode {
         </div>
 
         <div className="noticeBox">
-          <strong>Code signing:</strong> Installers are not code-signed yet.
-          Windows SmartScreen and macOS Gatekeeper may warn on first install.
+          <strong>Code signing:</strong> macOS GitHub Release installers are
+          Developer ID signed and notarized. Windows installers are not
+          Authenticode-signed — SmartScreen may warn (More info → Run anyway).
           See README.txt in the install folder for platform-specific steps.
         </div>
 

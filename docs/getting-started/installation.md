@@ -16,9 +16,9 @@ Supported platforms:
 - **macOS** — `.dmg` or arm64 `.zip`
 - **Linux** — `.deb` or `.AppImage`
 
-> **Code signing caution**
+> **Code signing**
 >
-> Please note: installers are not yet code-signed. Windows SmartScreen and macOS Gatekeeper may warn on first install. See `README.txt` in the install folder for platform-specific steps.
+> macOS GitHub Release `.dmg`/`.zip` are Developer ID signed and notarized. Windows installers are not Authenticode-signed — SmartScreen may warn (More info → Run anyway). See `README.txt` in the install folder for platform-specific steps. Verify downloads with `SHA256SUMS` on [GitHub Releases](https://github.com/kadraman/beatbax/releases).
 
 ## BeatBax web-lite client
 

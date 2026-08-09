@@ -9,7 +9,7 @@ title: BeatBax Desktop
 
 [Download](/download) installers from the site or [itch.io](https://kadraman.itch.io/beatbax).
 
-> Installers are not code-signed yet. Windows SmartScreen and macOS Gatekeeper may warn on first launch — see `README.txt` in the install folder.
+> macOS GitHub Release installers are Developer ID signed and notarized. Windows installers are not Authenticode-signed — SmartScreen may warn (More info → Run anyway). See `README.txt` in the install folder.
 
 ## Getting around
 
