@@ -40,10 +40,12 @@ export default function DownloadPage(): ReactNode {
         </div>
 
         <div className="noticeBox">
-          <strong>Code signing:</strong> macOS GitHub Release installers are
-          Developer ID signed and notarized. Windows installers are not
-          Authenticode-signed — SmartScreen may warn (More info → Run anyway).
-          See README.txt in the install folder for platform-specific steps.
+          <strong>Code signing:</strong> Please note Windows installers are not
+          currently Authenticode-signed — SmartScreen may warn when you run the installer.          Click <b>'More info'</b> and <b>'Run anyway'</b> to proceed.
+          See README.txt in the install folder for more details.
+
+          macOS installers are Developer ID signed and notarized, but may still ask you to 
+          click <b>'Open anyway'</b> to proceed.
         </div>
 
         <DownloadCard title="BeatBax web-lite client">
@@ -57,7 +59,7 @@ export default function DownloadPage(): ReactNode {
             </Link>
           </p>
           <p>
-            <i>Song export, <Link to="/docs/tools/copilot">BeatBax Copilot</Link>, Channel Mixer, Visualizer and other enhanced features require{' '}
+            <i>Please note: Song export, <Link to="/docs/tools/copilot">BeatBax Copilot</Link>, Channel Mixer, Visualizer and other enhanced features require{' '}
             <Link to="/docs/tools/desktop">BeatBax Desktop</Link></i>.
           </p>
         </DownloadCard>

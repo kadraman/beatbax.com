@@ -7,7 +7,7 @@ title: Effects
 
 Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview) for other backends.
 
-For a Game Boy walkthrough that adds effects to a full song, see the [Tutorial — Effects](/docs/tutorial/effects) page.
+For a Game Boy walkthrough of vibrato, arpeggio, and portamento (with playable demos), see [Tutorial — Effects](/docs/tutorial/effects). For the complete **Tutorial Groove** song, see [Final Song](/docs/tutorial/final-song).
 
 ```bax
 effect wobble   = vib:8,4
@@ -35,7 +35,7 @@ Notes:
 - Exporting to hUGETracker (`export uge`) maps `gb:pan` to NR51 bits exactly; numeric `pan` values are snapped (pan < -0.33 → L, pan > 0.33 → R, otherwise C) unless you use the `--strict-gb` flag which rejects numeric pans.
 
 Example:
-```
+```bax
 pat stereo = C5<pan=-1.0> E5<pan=0.0> G5<pan=1.0> C6<gb:pan:L>
 seq bass_seq = bassline bassline:pan(gb:R) bassline bassline:pan(1.0)
 ```
@@ -422,7 +422,7 @@ See `songs/effects/retrigger.bax` for a complete working example.
    - 100 = wet only (echo only)
 
 **Examples:**
-```
+```bax
 # Named effect presets
 effect ambient = echo:0.5,30,20      # Half-beat delay, light feedback, subtle mix
 effect slapback = echo:0.25,0,40     # Quarter-beat, no feedback, moderate mix
@@ -469,7 +469,7 @@ See `songs/effects/echo.bax` for a complete working example.
   twice as fast as the master tempo.
 
 Example:
-```
+```bax
 # Use master tempo 128 BPM
 bpm 128
 
@@ -481,7 +481,7 @@ channel 2 => inst leadB seq bass speed=2x
 ```
 
 **Example pattern snippet**
-```
+```bax
 inst leadA type=pulse1 duty=50 env=gb:12,down,7 gm=81
 inst sn type=noise env=gb:10,down,1
 
@@ -502,7 +502,7 @@ The Game Boy wave channel exposes a per-instrument output-level selector via `vo
 
 Example:
 
-```
+```bax
 # Two wave instruments with different output levels
 inst wave_loud type=wave wave=[8,11,13,14,15,14,13,11,8,4,2,1,0,1,2,4] volume=100
 inst wave_soft type=wave wave=[8,11,13,14,15,14,13,11,8,4,2,1,0,1,2,4] volume=50

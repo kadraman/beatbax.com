@@ -9,6 +9,66 @@ title: Troubleshooting
 - Use the `--debug` (or `-D`) flag on the CLI to see full stack traces if a command fails.
 - Use the `--verbose` (or `-v`) flag to see more detailed validation information and the parsed AST.
 
+### Windows: `npm install -g @beatbax/cli` fails with `EPERM` / `EEXIST`
+
+Upgrading or reinstalling a global CLI on Windows often fails when files from the previous install are still locked, or when the npm shim scripts already exist:
+
+```text
+npm warn cleanup Failed to remove some directories [...] EPERM: operation not permitted, rmdir ...\@beatbax\cli\...
+npm error code EEXIST
+npm error File exists: C:\Users\<you>\AppData\Roaming\npm\beatbax.ps1
+```
+
+This is a Windows/npm file-lock issue, not a BeatBax package defect.
+
+1. Close anything that may be using the CLI (terminals running `beatbax`, editors, or scans of the npm global folder).
+2. Remove the old install and shims, then reinstall:
+
+```powershell
+npm uninstall -g @beatbax/cli
+Remove-Item -Force "$env:APPDATA\npm\beatbax*" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:APPDATA\npm\node_modules\@beatbax\cli" -ErrorAction SilentlyContinue
+npm install -g @beatbax/cli
+```
+
+If uninstall still hits `EPERM`, log out or reboot, then run the `Remove-Item` lines again before install.
+
+As a quicker alternative when you only need to overwrite the shim files:
+
+```powershell
+npm install -g @beatbax/cli --force
+```
+
+`--force` usually clears the `EEXIST` on `beatbax.ps1`, but locked folders can still produce `EPERM` cleanup warnings — then use the manual remove steps above.
+
+### CLI: `allow-scripts` warning for `speaker` on install
+
+A successful global install may still print:
+
+```text
+npm warn allow-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn allow-scripts   speaker@0.5.5 (install: node-gyp rebuild)
+```
+
+This comes from npm’s install-script allowlist. `speaker` is an **optional** native dependency used for headless CLI playback (`beatbax play`). Its install script compiles a small native addon via `node-gyp`.
+
+- The CLI itself still installs (for example `beatbax --version`, `verify`, and exports work without it).
+- Without `speaker` built, some headless playback paths may fall back or be noisier.
+
+If you want realtime CLI audio on this machine:
+
+```powershell
+npm install -g --allow-scripts=speaker @beatbax/cli
+```
+
+Or allow it for all global installs:
+
+```powershell
+npm config set allow-scripts=speaker --location=user
+```
+
+Only do that if you are comfortable letting `speaker`’s known install script run (normal for this package).
+
 That's all — for developer notes, see `DEVNOTES.md`.
 
 ## Importing UGE Files

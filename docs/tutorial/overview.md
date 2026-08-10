@@ -24,7 +24,8 @@ Work through these sections in order:
 | [Instruments](/docs/tutorial/instruments) | Pulse, wave, noise, macros, drum kit |
 | [Sequencing](/docs/tutorial/sequencing) | `pat`, `seq`, four-channel arrangement |
 | [Modifiers](/docs/tutorial/modifiers) | Colon-chained transforms (`:oct`, `:rot`, …) |
-| [Effects](/docs/tutorial/effects) | Vibrato, arpeggio, portamento on the finished song |
+| [Effects](/docs/tutorial/effects) | Vibrato, arpeggio, portamento — with playable demos |
+| [Final Song](/docs/tutorial/final-song) | Complete **Tutorial Groove** — modifiers + effects |
 
 Optional language topics outside this walkthrough: [Scale awareness](/docs/language/scale), [Imports](/docs/language/imports), [Effects reference](/docs/language/effects).
 

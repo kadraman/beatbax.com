@@ -9,7 +9,7 @@ BeatBax provides a `volume` directive to control the master output level for all
 
 ## Syntax
 
-```
+```bax
 volume <value>
 ```
 
@@ -29,7 +29,7 @@ If no `volume` directive is specified, BeatBax uses a **default of `1.0`** (no a
 
 ## Example
 
-```
+```bax
 chip gameboy
 bpm 140
 volume 0.5  # Reduce to 50% to prevent clipping in dense mixes

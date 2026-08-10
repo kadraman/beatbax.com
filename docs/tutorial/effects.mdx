@@ -5,44 +5,18 @@ mdx:
   format: mdx
 ---
 
-import {effectsBax} from '@site/src/components/BaxPlayer/demos/tutorialSong';
+import {
+  vibDemoBax,
+  arpDemoBax,
+  portDemoBax,
+  namedEffectsDemoBax,
+} from '@site/src/components/BaxPlayer/demos/tutorialSong';
 
 # Effects
 
-In this section we will finish **Tutorial Groove** by adding musical **effects** such as vibrato, arpeggio, and 
-portamento, first inline on notes, then as reusable named presets.
+In this section we will add musical **effects** to notes — vibrato, arpeggio, and portamento — first as short demos you can hear clearly, then as the named presets **Tutorial Groove** will use in [Final Song](/docs/tutorial/final-song).
 
-> Note: that effects available can vary by chip — see [Sound Chip Plugins](/docs/chips/overview).
-
-## Using effects
-
-Attach an effect to a note with angle brackets after the pitch. The effect name and parameters use a colon to separate them. 
-If the note has a length this should come after the effect angled brackets. An example of using effects is as follows:
-
-```bax
-pat lead_c = G5 . A5 C6<vib:6,4>:2 A5 G5 E5 .
-pat bass_b = C3 . E3<port:16> . G2 . . G2
-```
-
-| Effect | Example | What it does |
-|--------|---------|--------------|
-| `vib` | `C6<vib:6,4>` | Vibrato — rate and depth |
-| `arp` | `C4<arp:4,7>` | Arpeggio — semitone steps **above** the root |
-| `port` | `E3<port:16>` | Portamento — slide into this note from the previous pitch |
-
-The arpeggio steps are offsets from the note itself, and the root is always played first — so you do **not** include `0`. For example, `C4<arp:4,7>` rapidly cycles three pitches:
-
-- `C4` — the root (0 semitones)
-- `E4` — root + 4 semitones
-- `G4` — root + 7 semitones
-
-Together those offsets (`4, 7`) outline a C major chord. Change the offsets to change the chord — e.g. `arp:3,7` gives C minor (`C4`, `Eb4`, `G4`).
-
-Writing effects this way is fine for one-off use. When you reuse the same settings in several places, name them instead.
-
-## Named effect presets
-
-Define a reusable preset with `effect <name> = <effect>`. The right-hand side is the same effect body you would write inline, for example:
+By the end of this page you will know how to write:
 
 ```bax
 effect wobble = vib:6,4
@@ -50,51 +24,98 @@ effect spark  = arp:4,7
 effect slide  = port:16
 ```
 
-Give presets clear names so patterns stay readable, for example `wobble`, is easier to read than raw `vib:6,4` everywhere.
+and apply them on the lead, harmony, and bass the same way the finished song does.
 
-## Inline use of named presets
+> Note: effects available can vary by chip — see [Sound Chip Plugins](/docs/chips/overview). The demos below use Game Boy voices so each effect is easy to hear in isolation.
 
-Once defined, apply a preset on a note the same way as a built-in effect by putting the **preset name** in the brackets:
+## Using effects
+
+Attach an effect to a note with angle brackets after the pitch. Parameters follow a colon. If the note has a length, put `:N` **after** the effect brackets:
 
 ```bax
-pat lead_c    = G5 . A5 C6<wobble>:2 A5 G5 E5 .
-pat harmony_a = C4<spark>:4 E4:4 G4<spark>:4 E4:4
-pat bass_b    = C3 . E3<slide> . G2 . . G2
+C6<vib:6,4>:2    # pitch, then effect, then length
+E3<port:16>      # length defaults to 1 step when omitted
 ```
+
+| Effect | Example | What it does | In the final song |
+|--------|---------|--------------|-------------------|
+| `vib` | `C6<vib:6,4>` | Vibrato — rate, then depth | Lead high note (`wobble`) |
+| `arp` | `C4<arp:4,7>` | Arpeggio — semitone steps **above** the root | Harmony chords (`spark`) |
+| `port` | `E3<port:16>` | Portamento — slide into this note from the previous pitch | Wave bass (`slide`) |
+
+## Vibrato (`vib`)
+
+Vibrato gently rocks the pitch up and down. The first parameter is **rate** (how fast), the second is **depth** (how wide). Hold notes long enough to hear it — short one-step hits barely show the motion.
+
+Press **Play** to hear two plain held notes, then the same pitches with vibrato (deeper on the second note):
+
+<BaxPlayer title="Vibrato" code={vibDemoBax} />
+
+In **Tutorial Groove** we will use a modest `vib:6,4` as the `wobble` preset on the lead’s held high note in `lead_c` (`C6<wobble>:2`) so the phrase peaks with a little motion instead of a static pitch.
+
+## Arpeggio (`arp`)
+
+Arpeggio rapidly cycles the root note plus semitone offsets at the chip frame rate (~60 Hz on Game Boy). List only steps **above** the root — do **not** include `0`. The root is always played first.
+
+For example, `C4<arp:4,7>` cycles three pitches:
+
+- `C4` — the root (0 semitones)
+- `E4` — root + 4 (major third)
+- `G4` — root + 7 (perfect fifth)
+
+Together those offsets outline a C major chord. `arp:3,7` gives C minor (`C4`, `Eb4`, `G4`).
+
+Major vs minor differs by only **one semitone** on the third (`E` vs `Eb`). At frame-rate speed that is easy to miss if the root also changes. The demo below keeps a single root (`C4`) and holds each chord for a full bar — listen for the middle pitch of the cycle:
+
+<BaxPlayer title="Arpeggio — major then minor" code={arpDemoBax} />
+
+In the final song, harmony patterns use major-triad arps (`arp:4,7`) as the `spark` preset on held chord tones — for example `C4<spark>:4` and `G4<spark>:4` in `harmony_a` — so the pulse2 part shimmers instead of sitting as flat pads.
+
+## Portamento (`port`)
+
+Portamento slides into the current note from the **previous** pitch (legato — the target note does not retrigger from silence). Higher speed values reach the target faster. The first note in a phrase has nothing to slide from, so portamento usually starts on the second note. Previous pitch is remembered across rests, but the slide still needs enough **duration** on the target note to hear it.
+
+Listen to stepped bass notes, then the same targets with slides:
+
+<BaxPlayer title="Portamento" code={portDemoBax} />
+
+In **Tutorial Groove**, `bass_b` keeps the same rhythm as before but slides into the E3 with `E3<slide>` (`port:16`) so the wave bass connects pitches instead of hopping.
+
+## Named effect presets
+
+Writing `<vib:6,4>` inline is fine for one-offs. For the finished song we name the three settings once and reuse them in patterns:
+
+```bax
+effect wobble = vib:6,4
+effect spark  = arp:4,7
+effect slide  = port:16
+```
+
+Apply a preset by putting its **name** in the brackets:
+
+```bax
+# Same idea as the final song (simplified to two channels here)
+pat lead_line = C5:4 E5<wobble>:8 G5<spark>:4
+pat bass_line = C3:4 E3<slide>:4 G3<slide>:4 C4<slide>:4
+```
+
+<BaxPlayer title="Named presets — wobble, spark, and slide" code={namedEffectsDemoBax} />
+
+Clear names keep patterns readable: `wobble` is easier to scan than raw `vib:6,4` everywhere.
 
 > Note: you can also attach a named preset as a [sequence modifier](/docs/tutorial/modifiers) so every note in a phrase gets it: `seq lead = melody:wobble`.
 
-## Tutorial Groove — finished
-
-**Tutorial Groove** now uses the three presets above: vibrato on the lead’s high note, arpeggios on the pulse2 harmony, and portamento on the wave bass. Press **Play** for the complete song:
-
-<BaxPlayer title="Tutorial Groove — effects" code={effectsBax} />
-
-Our **Tutorial Groove** song is now complete — feel free to **Copy** it into a `.bax` file and experiment further. Some ideas:
-
-- Change `bpm 140` to something slower or faster and hear how the drums and lead sit
-- Swap duty cycles on the pulse instruments (`12.5`, `25`, `50`, `75`) or try a different wave table for the bass
-- Add another lead phrase (`lead_d`) and extend `lead_seq`, or reorder A/B patterns so the form feels less regular
-- Tweak effect presets — deepen vibrato (`vib:8,6`), try a minor arpeggio (`arp:3,7`), or slow the portamento (`port:8`)
-- Apply a modifier from the previous section, e.g. `lead_b:oct(+1)` or `drums_b:rev`, on one occurrence in a sequence
-- Pan a phrase or add another effect from the [Effects reference](/docs/language/effects) (tremolo, note cut, …)
-
-## Other sound chips
-
-The notes, patterns, sequences, and most effects in **Tutorial Groove** are chip-agnostic — the same musical material can
-target another backend by changing `chip` and rewriting the **instruments** (and channel map) for that hardware. 
-
-For example, on the NES you might keep `lead_a` / `bass_seq` as-is but define `type=pulse1`, `type=triangle`, and 
-`type=noise` voices with NES fields instead of Game Boy `duty` / `wave=` / `uge_note`. Channel counts differ too 
-(NES has five voices including DMC; SMS has three tones plus noise). Start from the Game Boy song, then follow the 
-guide for your target chip under [Sound Chip Plugins](/docs/chips/overview).
-
 ## More effects
 
-Deep reference for panning, tremolo, note cut, retrigger, echo, volume slide, and export behaviour: [Effects reference](/docs/language/effects).
+Panning, tremolo, note cut, retrigger, echo, volume slide, and export behaviour are covered in the [Effects reference](/docs/language/effects).
+
+## Next
+
+Continue with [Final Song](/docs/tutorial/final-song) — hear the complete **Tutorial Groove** with modifiers and `wobble` / `spark` / `slide` together.
 
 ## See also
 
 - [Modifiers](/docs/tutorial/modifiers)
+- [Final Song](/docs/tutorial/final-song)
 - [Effects reference](/docs/language/effects)
 - [Sound Chip Plugins](/docs/chips/overview)

@@ -54,7 +54,7 @@ Channel locks restrict notes on a per-channel basis when `scale` is declared:
 
 ### Example
 
-```
+```bax
 chip gameboy
 bpm 140
 volume 0.5
@@ -79,7 +79,7 @@ Multiline strings
 
 Use triple quotes for values that span lines. Example:
 
-```
+```bax
 song description """This song demonstrates
 multiline metadata values and preserves
 newlines inside the description."""
@@ -87,7 +87,7 @@ newlines inside the description."""
 
 Tags may be provided as a single quoted string with commas, or inside a triple-quoted string with newlines:
 
-```
+```bax
 song tags "demo,metadata,example"
 
 # or

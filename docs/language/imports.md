@@ -36,7 +36,7 @@ BeatBax validates import paths to prevent path traversal and unauthorized file a
 
 All imports must use explicit prefixes:
 
-```
+```bax
 // ✅ VALID - Local file import (CLI only)
 import "local:lib/common.ins"
 import "local:instruments/drums.ins"
@@ -60,7 +60,7 @@ This requirement ensures:
 
 When running in a browser environment, BeatBax automatically blocks local file imports:
 
-```
+```bax
 // In browser - BLOCKED with security error
 import "local:lib/common.ins"
 // Error: Local imports are not supported in the browser for security reasons.
@@ -87,7 +87,7 @@ When using `--browser` flag with songs containing local imports, the CLI display
 
 Import paths containing `..` **as a path segment** are rejected to prevent directory traversal attacks:
 
-```
+```bax
 # ❌ REJECTED - path traversal with .. segments
 import "local:../../../etc/passwd"
 import "local:lib/../../secrets/keys.txt"
@@ -110,7 +110,7 @@ This prevents path traversal attacks while allowing legitimate filenames that ha
 
 By default, absolute paths are **not allowed** in import statements:
 
-```
+```bax
 // ❌ REJECTED by default - Unix absolute path
 import "/etc/passwd"
 import "/var/www/data.ins"
@@ -131,7 +131,7 @@ Even after passing initial validation, the **resolved** path must be within one 
 
 If the resolved path falls outside these directories, the import is rejected:
 
-```
+```bax
 // Example: importing from /project/main.bax
 import "lib/common.ins"  // ✅ resolves to /project/lib/common.ins (allowed)
 ```
@@ -170,7 +170,7 @@ const resolved = resolveImports(ast, {
 
 ### Local Imports (CLI Only)
 
-```
+```bax
 // Import from same directory
 import "local:common.ins"
 
@@ -184,7 +184,7 @@ import "local:lib/chiptune/gameboy/pulse.ins"
 
 ### Remote Imports (CLI and Browser)
 
-```
+```bax
 // HTTPS URL
 import "https://raw.githubusercontent.com/user/repo/main/instruments.ins"
 
@@ -315,7 +315,7 @@ For high-security environments or running untrusted code:
 
 **Breaking Change (February 2026)**: All local imports now require the `local:` prefix.
 
-```
+```bax
 # Before (no longer accepted)
 import "lib/common.ins"
 import "instruments/drums.ins"

@@ -1,6 +1,9 @@
-import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import {
+  beatbaxPrismDark,
+  beatbaxPrismLight,
+} from './src/theme/prism-bax-theme';
 
 const config: Config = {
   title: 'BeatBax',
@@ -193,8 +196,9 @@ const config: Config = {
       copyright: `BeatBax Copyright © ${new Date().getFullYear()} <a href="https://github.com/kadraman">Kevin A. Lee</a>.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      // Align with BeatBax Desktop Monaco themes (beatbax-light / beatbax-dark).
+      theme: beatbaxPrismLight,
+      darkTheme: beatbaxPrismDark,
       additionalLanguages: ['bash', 'powershell'],
     },
   } satisfies Preset.ThemeConfig,
