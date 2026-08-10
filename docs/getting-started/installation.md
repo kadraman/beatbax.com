@@ -23,7 +23,7 @@ Supported platforms:
 > See README.txt in the install folder for more details.
 >
 > macOS installers are Developer ID signed and notarized, but may still 
-> may ask you to click <b>'Open anyway'</b> to proceed.
+> ask you to click <b>'Open anyway'</b> to proceed.
 
 To check installer integrity with `SHA256SUMS` (GitHub Releases or itch.io), see [Verify downloads](/docs/tools/verify-downloads).
 

@@ -41,12 +41,11 @@ export default function DownloadPage(): ReactNode {
 
         <div className="noticeBox">
           <strong>Code signing:</strong> Please note Windows installers are not
-          currently Authenticode-signed — SmartScreen may warn when run the installer.
-          Click <b>'More info'</b> and <b>'Run anyway'</b> to proceed.
+          currently Authenticode-signed — SmartScreen may warn when you run the installer.          Click <b>'More info'</b> and <b>'Run anyway'</b> to proceed.
           See README.txt in the install folder for more details.
 
-          macOS installers are Developer ID signed and notarized, but may still 
-          may ask you to click <b>'Open anyway'</b> to proceed.
+          macOS installers are Developer ID signed and notarized, but may still ask you to 
+          click <b>'Open anyway'</b> to proceed.
         </div>
 
         <DownloadCard title="BeatBax web-lite client">
