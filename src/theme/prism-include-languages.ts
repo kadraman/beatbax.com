@@ -30,6 +30,6 @@ export default function prismIncludeLanguages(
   // Clean up and eventually restore former globalThis.Prism object (if any)
   delete (globalThis as {Prism?: typeof PrismObject}).Prism;
   if (typeof PrismBefore !== 'undefined') {
-    (globalThis as {Prism?: typeof PrismObject}).Prism = PrismObject;
+    (globalThis as {Prism?: typeof PrismObject}).Prism = PrismBefore;
   }
 }

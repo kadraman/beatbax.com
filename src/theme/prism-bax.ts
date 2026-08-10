@@ -76,13 +76,21 @@ export default function registerBaxLanguage(
       greedy: true,
     },
 
-    // Song metadata (`song artist "…"`) and `key=` properties
-    // Note: prism-react-renderer breaks many lookaheads; prefer lookbehind here.
-    property: {
-      pattern:
-        /(?<=\bsong\s+)(?:name|artist|author|description|tags)\b|\b[A-Za-z_][\w:-]*(?=\s*=)/,
-      alias: 'attr-name',
-    },
+    // Song metadata (`song artist "…"`) and `key=` properties.
+    // Avoid RegExp lookbehind ((?<=...)) — unsupported in older Safari (browserslist).
+    property: [
+      {
+        pattern: /\bsong\s+(?:name|artist|author|description|tags)\b/,
+        inside: {
+          keyword: /^song\b/,
+          'attr-name': /(?:name|artist|author|description|tags)\b/,
+        },
+      },
+      {
+        pattern: /\b[A-Za-z_][\w:-]*(?=\s*=)/,
+        alias: 'attr-name',
+      },
+    ],
 
     keyword:
       /\b(?:song|chip|bpm|volume|stepsPerBar|time|ticksPerStep|scale|inst|subpat|pat|seq|effect|channel|import|from|lock|auto|repeat)\b/,
