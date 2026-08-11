@@ -27,6 +27,8 @@ Optional region qualifiers: `chip sms ntsc|pal`, `chip nes ntsc|pal`. Spectrum/C
 - [SMS / Game Gear](/docs/chips/sms)
 - [ZX Spectrum 128 / CPC](/docs/chips/spectrum-128)
 - [Instrument macros](/docs/language/instrument-macros)
+- [Instruments](/docs/language/instruments) (generic syntax)
 - [Instrument note mapping](/docs/language/instrument-note-mapping) (Game Boy percussion / `uge_note`)
+- [Metadata directives](/docs/language/metadata-directives)
 
 More backends are planned — see the [toolchain roadmap](https://github.com/kadraman/beatbax/blob/main/ROADMAP.md).

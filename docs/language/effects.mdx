@@ -1,0 +1,194 @@
+---
+sidebar_position: 8
+title: Effects
+mdx:
+  format: mdx
+---
+
+import {
+  fxArpBax,
+  fxPanBax,
+  fxPortBax,
+  fxVibBax,
+  fxVolSlideBax,
+  fxTremBax,
+  fxCutBax,
+  fxRetrigBax,
+  fxEchoBax,
+  fxNamedBax,
+  fxChannelSpeedBax,
+} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Effects Reference
+
+Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview).
+
+For a Game Boy walkthrough of vibrato, arpeggio, and portamento, see [Tutorial — Effects](/docs/tutorial/effects).
+
+```bax
+effect wobble   = vib:8,4
+effect arpMajor = arp:4,7
+
+pat melody = C5<wobble> E4 G4<arpMajor> C5
+# or as a sequence/pattern modifier:
+# seq lead = melody:wobble
+```
+
+## Catalog
+
+| Effect | Syntax sketch | Behaviour | Notes |
+|--------|---------------|-----------|-------|
+| Arpeggio | `<arp:a,b,…>` | Cycle semitone offsets (omit leading `0`) | UGE: first two offsets → `0xy` |
+| Pan | `<pan:n>` / `<gb:pan:L\|R\|C>` | Stereo position | Numeric or GB NR51 |
+| Portamento | `<port:speed>` | Pitch slide from previous note (legato) | UGE `3xx` |
+| Vibrato | `<vib:depth,rate[,wave[,rows]]>` | Periodic pitch modulation | UGE `4xy` |
+| Volume slide | `<volSlide:±delta[,steps]>` | Fade in/out | Smooth or stepped |
+| Tremolo | `<trem:depth,rate[,wave[,rows]]>` | Periodic amplitude modulation | Preview/WAV; meta in UGE |
+| Note cut | `<cut:ticks>` | Gate / staccato after N ticks | UGE `E0x` |
+| Retrigger | `<retrig:interval[,volDelta]>` | Restart note on interval | WebAudio only |
+| Echo | `<echo:delay[,fb[,mix]]>` | Delay with feedback | WebAudio only |
+
+Parameters are comma-separated; empty slots keep defaults (e.g. `vib:6,5,,2`).
+
+## Named presets
+
+Define once, reuse inline or as a sequence modifier:
+
+<BaxPlayer title="Named effect presets" code={fxNamedBax} />
+
+## Arpeggio (`arp`)
+
+Cycles semitone offsets at chip frame rate. List only steps **above** the root — do not include `0`.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| offsets | yes | Semitone steps (e.g. `4,7` major) |
+
+**Export:** UGE maps the first two offsets to hUGE `0xy`.
+
+<BaxPlayer title="Arpeggio major vs minor" code={fxArpBax} />
+
+## Panning (`pan`)
+
+| Form | Meaning |
+|------|---------|
+| `gb:pan=<L\|R\|C>` | Game Boy NR51 terminals |
+| `pan=<num>` / `<pan:num>` | Numeric pan in `[-1.0, 1.0]` |
+| `seq:pan(value)` | Apply to a whole sequence occurrence |
+
+**Export:** UGE maps `gb:pan` to NR51 bits; numeric pan snaps to L/C/R unless `--strict-gb` rejects it.
+
+<BaxPlayer title="Stereo pan" code={fxPanBax} />
+
+## Portamento (`port`)
+
+Smooth pitch glide from the previous note. Notes with portamento do **not** retrigger the envelope (legato). First note in a pattern never receives portamento.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `speed` | yes | `0`–`255` (higher = faster) |
+
+**Export:** UGE `3xx`; WAV uses smoothstep pitch curves.
+
+<BaxPlayer title="Portamento" code={fxPortBax} />
+
+## Vibrato (`vib`)
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `depth` | yes | Amplitude `0`–`15` |
+| `rate` | yes | Modulation speed |
+| `waveform` | no | `sine` / `triangle` / `square` / `saw` (default none) |
+| `durationRows` | no | Length in pattern rows (default: full note) |
+
+Waveform aliases: `sin`→triangle (smoothest available in hUGE), `sqr`/`pulse`→square, `tri`→triangle, `sawtooth`→saw.
+
+**Export:** UGE `4xy` (waveform + depth).
+
+<BaxPlayer title="Vibrato" code={fxVibBax} />
+
+## Volume slide (`volSlide`)
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `delta` | yes | Positive = fade in; negative = fade out |
+| `steps` | no | Discrete steps (omit for smooth ramp) |
+
+Tips: start near-silent instruments at `env=1` (not `0`); insert `.` between identical pitches to re-trigger on monophonic channels.
+
+**Export:** UGE volume-slide opcode; MIDI CC #7.
+
+<BaxPlayer title="Volume slide" code={fxVolSlideBax} />
+
+## Tremolo (`trem`)
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `depth` | yes | `0`–`15` (maps to ~0–50% amplitude) |
+| `rate` | yes | Pulsation speed |
+| `waveform` | no | `sine` (default), `triangle`, `square`, `saw` |
+| `durationRows` | no | Length in pattern rows |
+
+**Export:** Full in WebAudio/WAV; UGE/MIDI as meta only (no native tremolo).
+
+<BaxPlayer title="Tremolo" code={fxTremBax} />
+
+## Note cut (`cut`)
+
+Terminates a note after N ticks (staccato / gate). Works well with `flat` envelopes.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `ticks` | yes | `0`–`255` delay before cut |
+
+**Export:** UGE `E0x`.
+
+<BaxPlayer title="Note cut" code={fxCutBax} />
+
+## Retrigger (`retrig`)
+
+**WebAudio only** — not supported in UGE export (warning + omitted). PCM/CLI may require `--browser`.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `interval` | yes | Ticks between restarts |
+| `volumeDelta` | no | Envelope units per retrig (`-15`–`+15`) |
+
+For UGE-compatible stuttering, expand to explicit notes instead (e.g. `C4:4 C4:4 C4:4 C4:4`).
+
+<BaxPlayer title="Retrigger" code={fxRetrigBax} />
+
+## Echo / delay (`echo`)
+
+**WebAudio only** — not in PCM/CLI or UGE (warnings). Delay time `< 10` = beat fractions; `≥ 10` = absolute seconds.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `delayTime` | yes | Beat fraction or seconds |
+| `feedback` | no | `0`–`100` (default `50`) |
+| `mix` | no | Wet/dry `0`–`100` (default `30`) |
+
+Slapback (feedback `0`, high `mix`) on a busy melody makes the delayed copy obvious — each note is followed by a quieter ghost. Leave trailing rests so playback does not stop before the last repeats finish.
+
+<BaxPlayer title="Echo (slapback)" code={fxEchoBax} />
+
+## Tempo and per-channel speed
+
+Master tempo is the top-level `bpm` directive (see [Metadata Directives](/docs/language/metadata-directives)).
+
+Channels can also take a **`speed=`** multiplier (`speed=2` or `speed=2x`) so that channel runs at `bpm × speed`. The parser and WebAudio player support this; there are almost no published example songs using it — relative pacing is more often done with sequence modifiers like `:fast` / `:slow` (see [Sequence modifiers](/docs/language/modifiers)).
+
+| Form | Meaning |
+|------|---------|
+| *(omit)* | Channel uses master `bpm` |
+| `speed=2` / `speed=2x` | Twice master tempo |
+| `speed=0.5` | Half master tempo |
+
+<BaxPlayer title="Per-channel speed=2x" code={fxChannelSpeedBax} />
+
+## See also
+
+- [Tutorial — Effects](/docs/tutorial/effects)
+- [Tutorial — Final song](/docs/tutorial/final-song)
+- [Sequence modifiers](/docs/language/modifiers)
+- [Game Boy wave `volume=`](/docs/chips/gameboy#wave-channel-volume) (instrument hardware, not an effect preset)

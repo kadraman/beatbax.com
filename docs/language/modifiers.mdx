@@ -1,13 +1,24 @@
 ---
 sidebar_position: 5
 title: Sequence Modifiers
+mdx:
+  format: mdx
 ---
+
+import {
+  modRotBax,
+  modRevPalBax,
+  modOctBax,
+  modSlowFastBax,
+  modEveryBax,
+  modLagBax,
+  modShuffleBax,
+  modEffectBax,
+} from '@site/src/components/BaxPlayer/demos/languageRef';
 
 # Sequence Modifiers
 
-BeatBax supports colon-chained modifiers on sequence and pattern references. They apply at expansion time over a flat token array (notes, rests, sustains, inline-effect tokens).
-
-Example:
+Colon-chained modifiers reshape pattern and sequence references at expansion time over a flat token array (notes, rests, sustains, inline-effect tokens).
 
 ```bax
 seq a = lead:rot(1):pal:transpose(+2)
@@ -15,12 +26,14 @@ seq b = motif:every(2,oct(+1)):lag(1)
 seq c = riff:shuffle(42)
 ```
 
-Modifiers are applied **left-to-right**. Transpose family (`oct`, `+N`, `semitone`, …) accumulates and applies once at the end of the chain. Unknown modifiers warn and are ignored.
+Modifiers apply **left-to-right**. Transpose family (`oct`, `+N`, `semitone`, …) accumulates and applies once at the end of the chain. Unknown modifiers warn and are ignored.
 
-## Modifier table
+For a narrative walkthrough with the Tutorial Groove, see [Tutorial — Modifiers](/docs/tutorial/modifiers).
 
-| Modifier | Aliases | Behavior |
-|----------|---------|----------|
+## Modifier catalog
+
+| Modifier | Aliases | Behaviour |
+|----------|---------|-----------|
 | `oct(N)` | — | Octave transpose (`N × 12` semitones) |
 | `+N` / `-N` | `semitone(N)`, `st(N)`, `trans(N)`, `transpose(N)` | Semitone transpose |
 | `rot(N)` | `rotate(N)` | Cyclic left rotation by `N` tokens |
@@ -48,21 +61,53 @@ Modifiers are applied **left-to-right**. Transpose family (`oct`, `+N`, `semiton
 - Nested parentheses in modifier arguments support **one** level (e.g. `every(2,oct(+1))`).
 - `shuffle` requires an explicit seed for deterministic export.
 
-## Examples
+## Details with demos
 
-```bax
-effect stacc = cut:2
+### Rotate (`rot`)
 
-seq core = lead_pat:rot(1):pal:transpose(+2)
-seq delayed = fill:lag(2)
-seq sparse = riff:pick(1,3,5)
-seq inverted = motif:invert
-seq octaveHits = motif:every(2,oct(+1))
-seq scrambled = riff:shuffle(42)
-seq stabs = chord_pat:stacc
-```
+Cyclic left shift by N tokens.
+
+<BaxPlayer title="rot(2)" code={modRotBax} />
+
+### Reverse and palindrome
+
+<BaxPlayer title="rev and pal" code={modRevPalBax} />
+
+### Octave and transpose
+
+<BaxPlayer title="oct(+1) and transpose(+2)" code={modOctBax} />
+
+### Slow and fast
+
+`slow` repeats tokens (lengthens); `fast` keeps every Nth token (shortens). Prefer length-preserving modifiers when locking multiple channels.
+
+<BaxPlayer title="slow(2) and fast(2)" code={modSlowFastBax} />
+
+### Every
+
+Apply an inner modifier on every Nth token (1-based).
+
+<BaxPlayer title="every(2,oct(+1))" code={modEveryBax} />
+
+### Lag / off
+
+Prepend rest tokens.
+
+<BaxPlayer title="lag(2)" code={modLagBax} />
+
+### Shuffle
+
+Deterministic reorder with an explicit seed.
+
+<BaxPlayer title="shuffle(42)" code={modShuffleBax} />
+
+### Named effect as modifier
+
+Any defined `effect` preset can be applied as a modifier (e.g. `:stacc` for `effect stacc = cut:2`).
+
+<BaxPlayer title="Named effect modifier" code={modEffectBax} />
 
 ## See also
 
 - [Modifiers tutorial](/docs/tutorial/modifiers)
-- [Effects](/docs/tutorial/effects)
+- [Effects](/docs/language/effects)

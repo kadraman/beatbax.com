@@ -1,7 +1,11 @@
 ---
-sidebar_position: 3
-title: Instrument Note Mapping
+sidebar_position: 1
+title: Note Mapping
+mdx:
+  format: mdx
 ---
+
+import {noteMappingKitBax} from '@site/src/components/BaxPlayer/demos/languageRef';
 
 # Instrument Note Mapping
 
@@ -14,26 +18,11 @@ inst <name> type=<type> [<params>...] note=<note>
 inst <name> type=noise ... uge_note=C-6 note=C6
 ```
 
-## Example: Percussion Kit
+## Percussion kit
 
-```bax
-chip gameboy
-bpm 140
+Named tokens play the instrument’s default pitch (`note=` / `uge_note=`):
 
-inst kick       type=pulse1 duty=12.5 env=15,down,1 note=C2
-inst snare      type=noise  gb:width=7  env=13,down,1 uge_note=C-7 note=C6
-inst hihat_cl   type=noise  gb:width=15 env=6,down,1  uge_note=C-7 note=C6
-inst hihat_op   type=noise  gb:width=15 env=8,down,3  uge_note=D-7 note=D6
-inst tom_low    type=noise  gb:width=7  env=14,down,5 uge_note=C-6 note=C5
-inst tom_high   type=noise  gb:width=7  env=12,down,3 uge_note=E-6 note=E5
-
-pat kick_pat  = kick . . . kick . . .
-pat snare_pat = . . . . snare . . .
-pat hh_pat    = hihat_cl hihat_cl hihat_op hihat_cl
-
-channel 1 => inst kick pat kick_pat
-channel 4 => inst snare pat snare_pat hh_pat
-```
+<BaxPlayer title="Named percussion kit" code={noteMappingKitBax} />
 
 ## How it works
 
@@ -49,35 +38,31 @@ Optional `divisor` / `shift` on noise instruments can still override the clock f
 
 The Game Boy noise channel does not use melodic pitch the way pulse/wave do. Timbre still comes from `gb:width` (and related LFSR settings), but the **noise period / clock** is selected from the hUGE note table via `uge_note` (or derived mapping) so BeatBax matches hUGETracker listening levels and export.
 
-```bax
-inst snare type=noise gb:width=7 env=13,down uge_note=C-7 note=C6
-
-# Playback: LFSR clock from uge_note; timbre from width/envelope
-# UGE export: stored as C-7 in hUGETracker
-pat drums = snare . . .
-```
-
-Prefer `uge_note=C-6` for kicks when using large negative `pitch_env` drops — the GB noise note table is non-monotonic at some high bases.
+Prefer `uge_note=C-6` for kicks when using large negative `pitch_env` drops — the GB noise note table is non-monotonic at some high bases. See [Game Boy](/docs/chips/gameboy) and [Instrument macros](/docs/language/instrument-macros).
 
 ## UGE display octave
 
 hUGETracker displays notes **one octave higher** than BeatBax MIDI-style `note=` values:
 
-- `note=C6` → typically C-7 in hUGETracker
-- `note=C2` → typically C-3 in hUGETracker
+| BeatBax `note=` | Typical hUGE display |
+|-----------------|----------------------|
+| `C6` | C-7 |
+| `C2` | C-3 |
 
 Writing `uge_note=C-7` uses the tracker’s own notation directly.
 
-## Recommended ranges
+## Recommended ranges (Game Boy)
 
 | Role | Typical setup |
 |------|----------------|
 | Kicks (pulse) | `note=C2` |
 | Kicks (noise) | `uge_note=C-6` (often with `pitch_env`) |
-| Snares (7-bit) | `uge_note=C-7`, `note=C6` |
+| Snares (7-bit) | `uge_note=C-7`, `note=C6`, often `pitch_env=[0,7,0]` `vol_env=[13,10,6,2]` `length=16` |
 | Closed hats (15-bit) | `uge_note=C-7`–`D-7` |
 | Open hats | `uge_note=D-7`–`E-7` |
 | Toms | `uge_note=C-6`–`E-6` |
+
+NES and other chips use `note=` the same way for named tokens; see [NES](/docs/chips/nes#named-instrument-tokens).
 
 ## Sharp notes in `note=`
 
@@ -87,5 +72,5 @@ Avoid `#` inside `note=` values (comment parsing). Use flats or naturals: `note=
 
 - [Instruments](/docs/language/instruments)
 - [Instrument macros](/docs/language/instrument-macros)
+- [Game Boy](/docs/chips/gameboy)
 - [UGE export](/docs/exports/uge)
-- [Technical specification](https://github.com/kadraman/beatbax/blob/main/docs/features/complete/instrument-note-mapping-spec.md)

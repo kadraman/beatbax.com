@@ -27,7 +27,7 @@ Work through these sections in order:
 | [Effects](/docs/tutorial/effects) | Vibrato, arpeggio, portamento — with playable demos |
 | [Final Song](/docs/tutorial/final-song) | Complete **Tutorial Groove** — modifiers + effects |
 
-Optional language topics outside this walkthrough: [Scale awareness](/docs/language/scale), [Imports](/docs/language/imports), [Effects reference](/docs/language/effects).
+Optional language topics outside this walkthrough: [Metadata directives](/docs/language/metadata-directives) (including scale), [Imports](/docs/language/imports), [Effects reference](/docs/language/effects).
 
 ## Next
 

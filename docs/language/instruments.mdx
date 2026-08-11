@@ -1,0 +1,78 @@
+---
+sidebar_position: 2
+title: Instruments
+mdx:
+  format: mdx
+---
+
+import {
+  instrumentsBasicBax,
+  instrumentsSharedBax,
+} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Instruments
+
+Instruments are named voice definitions. You assign them to channels and reference them from patterns and sequences. Field names and legal `type=` values depend on the active `chip`.
+
+## Syntax
+
+```bax
+inst <name> type=<type> [<field>=<value> ...]
+```
+
+| Concept | Notes |
+|---------|-------|
+| `name` | Identifier used in `channel … => inst <name>` and as a pattern token when `note=` is set |
+| `type=` | Chip-specific voice (e.g. Game Boy `pulse1`, NES `triangle`, SMS `tone1`) |
+| Fields | Chip-specific parameters (`duty`, `env`, `wave=`, macros, …) |
+
+```bax
+channel 1 => inst lead seq melody
+```
+
+## Shared ideas (all chips)
+
+| Feature | Where documented |
+|---------|------------------|
+| Software macros (`vol_env`, `pitch_env`, `arp_env`, `duty_env`, …) | [Instrument macros](/docs/language/instrument-macros) |
+| Default pitch / named drum tokens (`note=`, Game Boy `uge_note=`) | [Instrument note mapping](/docs/language/instrument-note-mapping) |
+| Reusable `.ins` libraries | [Imports](/docs/language/imports) |
+
+Chip pages list which types accept which fields.
+
+## Chip-specific settings
+
+Instrument `type=` and hardware fields live in **Sound Chip Plugins**:
+
+| Chip | Guide |
+|------|-------|
+| Game Boy | [Game Boy](/docs/chips/gameboy) |
+| NES | [NES](/docs/chips/nes) |
+| SMS / Game Gear | [SMS](/docs/chips/sms) |
+| Spectrum 128 / CPC | [Spectrum 128](/docs/chips/spectrum-128) |
+
+## Minimal example
+
+<BaxPlayer title="Two instruments" code={instrumentsBasicBax} />
+
+## Importing instrument libraries
+
+Pull shared definitions from a `.ins` file so songs stay short:
+
+```bax
+import "local:lib/drums.ins"                 # CLI / desktop
+import "github:user/repo/main/melodic.ins"   # CLI, desktop, browser
+import "https://example.com/kit.ins"         # CLI, desktop, browser
+```
+
+Merging is **last-wins**: a local `inst` with the same name overrides an imported one. Full syntax, platforms, and security rules: [Imports](/docs/language/imports).
+
+The playable kit below is the *result* of a shared drum library (instruments inlined so the demo runs in the docs player):
+
+<BaxPlayer title="Shared drum kit (inline)" code={instrumentsSharedBax} />
+
+## See also
+
+- [Instrument macros](/docs/language/instrument-macros)
+- [Instrument note mapping](/docs/language/instrument-note-mapping)
+- [Tutorial — Instruments](/docs/tutorial/instruments)

@@ -1,0 +1,201 @@
+---
+sidebar_position: 1
+title: Global Directives
+mdx:
+  format: mdx
+---
+
+import {
+  bpmSlowBax,
+  bpmFastBax,
+  volumeFullBax,
+  volumeDenseBax,
+  scaleFreeBax,
+  scaleLockScaleBax,
+  scaleLockChordBax,
+  scaleLockChord7Bax,
+  scaleLockFifthBax,
+  scaleLockOctavesBax,
+} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Global Directives
+
+There are a number of global directives available in `.bax` files that can be used for defining human-readable song metadata,
+configuring sound chip plugins or defining song playback.
+
+## Song metadata
+
+The following directives define song metadata.
+
+| Directive | Purpose |
+|-----------|---------|
+| `song name "<name>"` | The song title (this is also used as the default name of files when saving). |
+| `song artist "<artist>"` | Creator(s) of the song. |
+| `song description "<description>"` | A description of the song. Multline strings are supported (see the example below). |
+| `song tags "<tag>, <tag>"` | A command separated list of tags. Note: this information is not yet used. |
+
+The following `.bax` file illustrates the use of all of the directives described above
+```bax
+song name "My song"
+song author "The BeatBax Team"
+song description """This song demonstrates
+multiline metadata values."""
+song tags "demo,metadata,example"
+```
+
+## Song directives
+
+The following global directives are available to be used.
+
+| Directive | Purpose | Default |
+|-----------|---------|---------|
+| `chip <name>` | The sound chip that is being emulated. **This is a required directive**. | gameboy |
+| `bpm <number>` | The tempo of the song in beats per minute. | `120` |
+| `volume <float>` | The master output level (`0.0`–`1.0`) of the song. | `1.0` |
+| `stepsPerBar <number>` | How many steps the editor treats as one bar (display only) | `4` |
+| `scale <root> <mode> [warn\|error\|off]` | Declare the song key for validation, locks, and MIDI snap | *(none)* |
+| `play [auto] [repeat]` | End-of-file playback hints for the editor / web UI | *(none)* |
+
+### Chip
+
+`chip` selects the audio backend for the song. Names, aliases, region qualifiers (`ntsc` / `pal`), and per-chip details are listed under [Sound Chip Plugins](/docs/chips/overview).
+
+### BPM
+
+`bpm` sets the song’s **master tempo** in beats per minute (default `120`). Each **step** in a pattern lasts one beat at that tempo, so higher values make the same phrase play faster and lower values slower.
+
+```bax
+bpm 140
+```
+
+Tempo applies to live playback and to time-based exports (for example WAV duration). 
+The [BeatBax Desktop](/docs/tools/desktop) can nudge BPM from the transport bar without editing the `.bax` file; 
+changing the `bpm` line clears that override.
+
+For a single channel at a different rate, use `speed=` on the channel (or sequence modifiers like `:fast` / `:slow`) — see [Effects — Tempo and per-channel speed](/docs/language/effects#tempo-and-per-channel-speed).
+
+The following examples illustrate the same phrase being played back but at different `bpm` tempos:
+<BaxPlayer title="BPM 90" code={bpmSlowBax} />
+
+<BaxPlayer title="BPM 140" code={bpmFastBax} />
+
+### Master volume
+
+`volume` scales the whole mix after per-channel processing (range `0.0`–`1.0`, values outside that are clamped). Default is `1.0`.
+
+Use a lower master when several channels play loudly at once — stacked envelopes can push the mix into clipping (harsh distortion) on playback and export. Turn this down instead of rewriting every instrument; for WAV files you can also rely on [normalization](/docs/exports/wav) at export time.
+
+| Mix density | Recommended `volume` |
+|-------------|----------------------|
+| Sparse (1–2 channels) | `1.0` |
+| Moderate (2–3 channels) | `0.8`–`1.0` |
+| Dense (3–4 channels, high envelopes) | `0.4`–`0.6` |
+| Extremely dense (all channels hot) | `0.25`–`0.35` |
+
+> Note: This is separate from instrument loudness such as Game Boy wave [`volume=`](/docs/chips/gameboy#wave-channel-volume) or envelope levels on an `inst` — those shape individual voices; `volume` scales the final mix.
+
+The following examples mix at full master versus reduced:
+
+<BaxPlayer title="Volume 1.0" code={volumeFullBax} />
+
+<BaxPlayer title="Volume 0.35" code={volumeDenseBax} />
+
+### Steps per bar
+
+`stepsPerBar` tells the editor how many pattern steps make up one **bar** for display (default `4`). It does **not** change how the song sounds, how long notes last, or pattern length.
+
+Set it so bar markers in the editor match how you count the song while writing — so the grid is easier to read and navigate. For most chiptune work that means **`4`**, **`8`**, or **`16`** (tracker-style bar lengths). Use something like `3` only when patterns are deliberately built in groups of three:
+
+```bax
+stepsPerBar 8
+```
+
+### Scale and channel locks
+
+Chiptune parts are easy to knock out of key when you’re typing note names by hand or entering them from a MIDI keyboard. **`scale`** and **`lock=`** give the song a declared key so BeatBax can catch (or prevent) wrong notes while you write.
+
+Declare a song-level scale with a root note, a mode name, and an optional diagnostics mode:
+
+```bax
+scale C major warn
+# scale A minor error
+# scale F# dorian off
+```
+
+| Mode | Behaviour |
+|------|-----------|
+| `warn` (default) | Notes outside the channel’s lock produce **warnings** (song still plays) |
+| `error` | Notes outside the lock produce **errors** (stricter authoring) |
+| `off` | Keep the scale for the UI / MIDI helpers, but skip diagnostics |
+
+`scale` alone does not change or filter notes. You opt each channel in with **`lock=...`**, which limits that voice to certain **scale degrees**. Writing (or MIDI-entering) a pitch outside the lock triggers warn/error according to the mode above. In [BeatBax Desktop](/docs/tools/desktop), the same metadata snaps/filters MIDI step entry onto the allowed degrees.
+
+`lock` without a song-level `scale` is a parser error.
+
+#### Hearing the locks
+
+`lock=` does not rewrite a pattern at playback — it constrains what you’re allowed to put on that channel. The demos below keep the **same 8-step rhythm** and rewrite the pitches to only what each lock permits in **C major**, so you can hear how tight each constraint sounds.
+
+Start with an unlocked chromatic phrase (no `lock=` — notes outside C major are fine):
+
+<BaxPlayer title="No lock (chromatic)" code={scaleFreeBax} />
+
+Then the same rhythm under each lock:
+
+| Lock | Allowed degrees (in C major) |
+|------|------------------------------|
+| `lock=scale` | Any note in the scale (C D E F G A B) |
+| `lock=chord` | 1 + 3 + 5 (C E G) |
+| `lock=chord7` | 1 + 3 + 5 + 7 (C E G B) |
+| `lock=root+fifth` | 1 + 5 (C G) |
+| `lock=octaves` | Root only (C, any octave) |
+
+<BaxPlayer title="lock=scale" code={scaleLockScaleBax} />
+
+<BaxPlayer title="lock=chord" code={scaleLockChordBax} />
+
+<BaxPlayer title="lock=chord7" code={scaleLockChord7Bax} />
+
+<BaxPlayer title="lock=root+fifth" code={scaleLockFifthBax} />
+
+<BaxPlayer title="lock=octaves" code={scaleLockOctavesBax} />
+
+A common setup is a lead on `lock=scale` (or `chord7`) and a bass on `lock=root+fifth` or `lock=octaves`, so each voice stays in a useful pitch set for the key.
+
+### Playback
+
+End the song with a **`play`** directive. It marks the file as a complete, playable song and can carry 
+optional flags that the [BeatBax Desktop](/docs/tools/desktop)  and web UI honour:
+
+```bax
+play
+play auto
+play repeat
+play auto repeat
+```
+
+| Form | Meaning |
+|------|---------|
+| `play` | Song is ready to play (press Play in the UI / use the CLI). |
+| `play auto` | Request **auto-start** when the file is loaded in the web UI or Desktop. |
+| `play repeat` | Request **continuous looping** of the whole song while playing. |
+| `play auto repeat` | Both: start on load and keep looping. |
+
+`auto` and `repeat` are playback **hints for the host UI**, not changes to pattern data or tempo. Browsers often block audible autoplay until you interact with the page; when that happens the UI prompts you to enable sound. The CLI `beatbax play` command plays the file when you invoke it — it does not need `auto` to start.
+
+Flags can appear in either order (`play repeat auto` is the same as `play auto repeat`).
+
+## Comments
+
+You can use `#` for line comments. Everything from `#` to the end of the line is ignored.
+
+```bax
+# Song header
+chip gameboy
+bpm 120  # tempo
+
+# Lead voice
+inst lead type=pulse1 duty=50 env=gb:15,down,2
+```
+
+Avoid `#` inside values such as `note=` (as it starts a comment). Prefer flats (`note=Db7`) or, where supported, `uge_note=` for tracker-style sharps — see [Instrument note mapping](/docs/language/instrument-note-mapping#sharp-notes-in-note).

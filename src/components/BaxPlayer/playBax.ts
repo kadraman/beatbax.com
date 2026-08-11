@@ -52,6 +52,27 @@ export async function playBaxSource(
     }
 
     const resolved = resolveSong(resolvedAst as Parameters<typeof resolveSong>[0]);
+
+    // resolveSong currently omits channel `speed` from its output model; the
+    // WebAudio player still honors `ch.speed` when present. Re-attach it from
+    // the AST so per-channel tempo multipliers work in the docs player.
+    const astChannels = (resolvedAst as {channels?: Array<{id?: number; speed?: number}>})
+      .channels;
+    if (Array.isArray(astChannels) && Array.isArray(resolved.channels)) {
+      const speedById = new Map<number, number>();
+      for (const ch of astChannels) {
+        if (typeof ch?.id === 'number' && typeof ch.speed === 'number') {
+          speedById.set(ch.id, ch.speed);
+        }
+      }
+      for (const ch of resolved.channels as Array<{id?: number; speed?: number}>) {
+        const speed = typeof ch?.id === 'number' ? speedById.get(ch.id) : undefined;
+        if (typeof speed === 'number') {
+          ch.speed = speed;
+        }
+      }
+    }
+
     await resumePromise;
 
     const playbackCtx = ctx;

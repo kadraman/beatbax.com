@@ -1,0 +1,76 @@
+---
+sidebar_position: 3
+title: Imports
+mdx:
+  format: mdx
+---
+
+import {instrumentsSharedBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Imports
+
+Import shared instrument collections from external `.ins` files so songs stay short and libraries stay reusable.
+
+## Syntax
+
+| Form | Environments |
+|------|----------------|
+| `import "local:path/to/file.ins"` | CLI / Desktop only |
+| `import "github:user/repo/branch/file.ins"` | CLI, Desktop, browser |
+| `import "https://example.com/path/file.ins"` | CLI, Desktop, browser |
+
+```bax
+import "local:lib/common.ins"
+import "github:user/repo/main/drums.ins"
+import "https://example.com/instruments/kit.ins"
+```
+
+| Rule | Behaviour |
+|------|-----------|
+| Prefix required | Bare paths like `"lib/x.ins"` are rejected |
+| `local:` paths | Relative to the song file (fallback: cwd) |
+| Recursion | Allowed; cycles are detected |
+| Merge | **Last-wins** — song-local `inst` overrides imported names |
+
+## Platform matrix
+
+| Prefix | CLI | Desktop | Browser / web-lite |
+|--------|-----|---------|---------------------|
+| `local:` | Yes | Yes | Blocked |
+| `github:` / `https:` | Yes | Yes | Yes |
+
+See [CLI](/docs/tools/cli), [Desktop](/docs/tools/desktop), and [Web client](/docs/tools/web-client).
+
+## Security constraints
+
+| Rule | Detail |
+|------|--------|
+| Explicit prefix | Every import must use `local:`, `github:`, or `https://` |
+| Browser | Local filesystem imports are blocked |
+| Path traversal | `..` segments and absolute paths are rejected for `local:` |
+| Allowed roots | Local resolution stays under the song directory / configured roots |
+
+## Authoring example
+
+```bax
+import "github:user/repo/main/drums.ins"
+
+chip gameboy
+bpm 140
+
+# Local override wins over an imported name
+inst hat type=noise gb:width=15 env=gb:5,down,1 uge_note=C-8 note=C6
+
+pat drums = kick . hat . snare . hat hat
+channel 4 => inst snare seq drums
+play
+```
+
+The docs player cannot load arbitrary `local:` files. The kit below shows the **result** of a shared drum library with instruments inlined:
+
+<BaxPlayer title="Shared kit result (inline)" code={instrumentsSharedBax} />
+
+## See also
+
+- [Instruments](/docs/language/instruments)
+- [Tutorial — Instruments](/docs/tutorial/instruments)

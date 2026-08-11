@@ -75,14 +75,21 @@ const sidebars: SidebarsConfig = {
       label: 'Language Reference',
       items: [
         'language/metadata-directives',
-        'language/scale',
-        'language/instruments',
-        'language/instrument-macros',
-        'language/instrument-note-mapping',
+        {
+          type: 'category',
+          label: 'Instruments',
+          link: {
+            type: 'doc',
+            id: 'language/instruments',
+          },
+          items: [
+            'language/instrument-macros',
+            'language/instrument-note-mapping',
+            'language/imports',
+          ],
+        },
         'language/modifiers',
         'language/effects',
-        'language/imports',
-        'language/volume-directive',
       ],
     },
     {

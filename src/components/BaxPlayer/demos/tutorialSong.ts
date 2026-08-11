@@ -145,15 +145,15 @@ channel 4 => inst snare seq hits
 
 play`;
 
-/** Kick with macros — held notes so pitch_env / vol_env are audible. */
+/** Kick with macros — short hits so pitch_env / vol_env read as a thump. */
 export const kickProgramBax = `${META}
 
 # @show
 inst kick_plain type=noise gb:width=7 uge_note=C-6 length=16
 inst kick       type=noise gb:width=7 uge_note=C-6 length=16 pitch_env=[0,-2,-4,-6] vol_env=[15,12,8,4]
 
-# Several plain hits, then the same notes with macros (pitch drop + volume decay)
-pat kicks = inst(kick_plain) C5:4 . C5:4 . C5:4 . C5:4 . inst(kick) C5:4 . C5:4 . C5:4 . C5:4 .
+# Plain clicks, then the same rhythm with pitch drop + volume decay
+pat kicks = inst(kick_plain) C5 . . . C5 . . . C5 . . . C5 . . . inst(kick) C5 . . . C5 . . . C5 . . . C5 . . .
 # @end
 
 channel 4 => inst kick_plain seq kicks
