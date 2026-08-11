@@ -1,0 +1,70 @@
+---
+sidebar_position: 4
+title: Patterns
+mdx:
+  format: mdx
+---
+
+import {patternsBasicsBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Patterns
+
+A **pattern** (`pat`) is a named list of tokens — notes, rests, instrument names, temporary instrument overrides, and inline effects. Pattern length is the sum of token durations; BeatBax does not force a fixed bar size.
+
+In multi-channel songs, keep patterns that play together the **same length** so phrases stay locked when sequences chain them.
+
+## Syntax
+
+```bax
+pat name = <pattern RHS>
+```
+
+Shorthand (identifier that is not a reserved word):
+
+```bax
+riff = C5 E5 G5 C5
+```
+
+The RHS is a whitespace-separated list of pattern items. Each item may be a single token, a grouped list, and/or a `*N` repeat.
+
+## Pattern tokens
+
+| Form | Meaning |
+|------|---------|
+| Note / rest / sustain | See [Notes and lengths](/docs/language/notes) |
+| Instrument name as a token | Plays that instrument’s default `note=` |
+| `inst(name)` / `inst(name,N)` | Temporary instrument override — see below |
+| Inline effect suffix | e.g. `C5` + effect body in angle brackets — see [Effects](/docs/language/effects) |
+| `"tok tok …"` | Quoted string split on whitespace into tokens |
+
+## Instrument overrides
+
+| Form | Meaning |
+|------|---------|
+| `inst(name)` | Instrument override for the rest of the pattern |
+| `inst(name,N)` | Override for the next **N non-rest** hits (rests do not consume the count) |
+| `inst name` | Inline instrument switch (space form) |
+
+## Groups and repeats
+
+| Form | Meaning |
+|------|---------|
+| `(C5 E5 G5)*2` | Repeat the group twice |
+| `C5*4` | Repeat a single token four times |
+
+```bax
+pat riff = (C5 E5 G5)*2 C5:4
+pat drums = kick . hat . snare . hat hat
+pat mixed = C5 E5 inst(snare,2) C6 C6 .
+```
+
+## Demo
+
+<BaxPlayer title="Groups, named hits, inst() overrides" code={patternsBasicsBax} />
+
+## See also
+
+- [Sequences](/docs/language/sequences)
+- [Channels](/docs/language/channels)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)
+- [Instrument note mapping](/docs/language/instrument-note-mapping)

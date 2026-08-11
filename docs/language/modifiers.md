@@ -64,5 +64,9 @@ seq stabs = chord_pat:stacc
 
 ## See also
 
+- [Language overview](/docs/language/overview)
+- [Sequences](/docs/language/sequences)
+- [Patterns](/docs/language/patterns)
+- [Effects](/docs/language/effects)
 - [Modifiers tutorial](/docs/tutorial/modifiers)
-- [Effects](/docs/tutorial/effects)
+

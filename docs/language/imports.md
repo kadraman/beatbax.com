@@ -5,7 +5,7 @@ title: Imports
 
 # Imports
 
-Import shared instrument collections from external `.ins` files so songs stay short and libraries stay reusable.
+Import shared instrument collections from external `.ins` files so songs stay short and libraries stay reusable. See also the [Language overview](/docs/language/overview) and [Instruments](/docs/language/instruments).
 
 ## Syntax
 

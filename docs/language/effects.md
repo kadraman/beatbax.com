@@ -7,7 +7,9 @@ title: Effects
 
 Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview) for other backends.
 
-For a Game Boy walkthrough of vibrato, arpeggio, and portamento (with playable demos), see [Tutorial — Effects](/docs/tutorial/effects). For the complete **Tutorial Groove** song, see [Final Song](/docs/tutorial/final-song).
+Built-in effect types recognized by the parser include: `arp`, `pan`, `port`, `vib`, `volSlide`, `trem`, `cut`, `retrig`, `bend`, `sweep`, `echo`, plus instrument-macro names used as inline effects (`vol_env`, `pitch_env`, `arp_env`, …). Chip plugins may register additional names.
+
+For a Game Boy walkthrough of vibrato, arpeggio, and portamento (with playable demos), see [Tutorial — Effects](/docs/tutorial/effects). For the complete **Tutorial Groove** song, see [Final Song](/docs/tutorial/final-song). Language map: [Overview](/docs/language/overview).
 
 ```bax
 effect wobble   = vib:8,4
@@ -461,6 +463,52 @@ See `songs/effects/echo.bax` for a complete working example.
 
 **Important:** Remember that echo effects only work in WebAudio/browser playback. CLI/PCM renderer and UGE export will display warnings.
 
+### Pitch bend (`bend`)
+
+Smoothly bends pitch by a number of semitones on a single note (unlike portamento, which slides between discrete notes).
+
+**Syntax:** `<bend:semitones[,curve[,delay[,time]]]>`
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `semitones` | yes | Bend amount (positive = up, negative = down; fractional values allowed) |
+| `curve` | no | `linear` (default), `exp` / `exponential`, `log` / `logarithmic`, `sine` / `sin` |
+| `delay` | no | Seconds before the bend starts (default: 50% of note duration) |
+| `time` | no | Bend duration in seconds (default: remaining note duration after delay) |
+
+```bax
+# Guitar-style bend: hold, then bend up 2 semitones
+pat bend_up = C4:8 C4<bend:+2>:8
+
+# Immediate dive bomb
+pat dive = C5:4 C5<bend:-12,linear,0>:12
+
+# Named preset
+effect scoop = bend:-2,sine,0.1,0.3
+pat scoop_hit = C4<scoop>:8
+```
+
+**Export notes:** UGE approximates with tone portamento (`3xx`) or piecewise steps; MIDI can use pitch-wheel events.
+
+### Frequency sweep (`sweep`) — inline effect
+
+Inline Game Boy NR10-style frequency sweep on a note (separate from the Pulse 1 instrument `sweep=` field — see [Instruments](/docs/language/instruments)).
+
+**Syntax:** `<sweep:time,direction,shift>`
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `time` | yes | Sweep step time in 1/128 Hz units (`0`–`7`; `0` disables) |
+| `direction` | yes | `up` / `down` (aliases: `dec` or `1` for down) |
+| `shift` | yes | Sweep shift (`0`–`7`) |
+
+```bax
+pat pew = C5<sweep:2,down,5>:8
+pat rise = C4<sweep:6,up,4>:8
+```
+
+Instrument-level Pulse 1 sweep uses `sweep=time,direction,shift` on `inst … type=pulse1` and is validated only for `pulse1`.
+
 **Tempo & Per-Channel Speed**
 
 - Set a master tempo with a top-level directive: `bpm 128` or `bpm=128`.
@@ -479,6 +527,8 @@ channel 1 => inst leadA seq lead
 # Channel 2 runs twice as fast (240 BPM effective) using a speed multiplier
 channel 2 => inst leadB seq bass speed=2x
 ```
+
+See [Channels](/docs/language/channels#speed) for the full channel RHS.
 
 **Example pattern snippet**
 ```bax
@@ -514,3 +564,12 @@ channel 3 => seq hold_seq
 ```
 
 In this example the first `hold` plays at the loud output level; the second `hold` is retriggered and plays at the softer level.
+
+## See also
+
+- [Language overview](/docs/language/overview)
+- [Sequence modifiers](/docs/language/modifiers)
+- [Channels](/docs/language/channels)
+- [Tutorial — Effects](/docs/tutorial/effects)
+- [Instruments (Pulse 1 `sweep=`)](/docs/language/instruments)
+

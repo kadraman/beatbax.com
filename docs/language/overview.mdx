@@ -1,0 +1,51 @@
+---
+sidebar_position: 0
+title: Overview
+mdx:
+  format: mdx
+---
+
+# Language Reference Overview
+
+A BeatBax song is a `.bax` text file: a sequence of top-level **statements** that declare metadata, instruments, patterns, sequences, and channel wiring. The interactive map below follows the Peggy grammar used by the engine (`grammar.peggy` on [kadraman/beatbax](https://github.com/kadraman/beatbax)) — click a box to open that topic.
+
+<GrammarRailroad />
+
+## Song shape
+
+Most songs follow this shape (order is flexible; this is the usual reading order):
+
+```bax
+song name "My Song"
+song artist "You"
+chip gameboy
+bpm 140
+volume 0.8
+
+inst lead type=pulse1 duty=50 env=gb:13,down,1
+pat motif = C5 E5 G5 C5
+seq main = motif*4
+channel 1 => inst lead seq main
+play
+```
+
+| Layer | Statements | Reference |
+|-------|------------|-----------|
+| Metadata & globals | `song …`, `chip`, `bpm`, `volume`, `stepsPerBar`, `scale`, `play` | [Global directives](/docs/language/metadata-directives) |
+| Imports | `import "…"` | [Imports](/docs/language/imports) |
+| Instruments | `inst`, macros, `subpat` | [Instruments](/docs/language/instruments) |
+| Music data | notes in `pat` / `seq` | [Notes](/docs/language/notes), [Patterns](/docs/language/patterns), [Sequences](/docs/language/sequences) |
+| Arrangement | `channel N => …` | [Channels](/docs/language/channels) |
+| Expression | `:modifiers`, `effect`, inline `<…>` | [Modifiers](/docs/language/modifiers), [Effects](/docs/language/effects) |
+
+Comments start with `#` or `//` and run to end of line. Prefer flats (`Bb`) over `#` inside `note=` instrument fields because `#` begins a comment.
+
+## Learn by doing
+
+For a guided Game Boy walkthrough, start with the [Tutorial](/docs/tutorial/overview). Use this Language Reference when you need the exact form of a construct.
+
+## See also
+
+- [Appendix — statement & lexical index](/docs/language/appendix)
+- [Sound Chip Plugins](/docs/chips/overview)
+- [Export Plugins](/docs/exports/wav)

@@ -7,12 +7,22 @@ title: Instruments
 
 Instrument `type=` and fields are **chip-specific**. This page focuses on **Game Boy** (`chip gameboy`). For other targets see:
 
+- [Language overview](/docs/language/overview)
 - [Game Boy chip guide](/docs/chips/gameboy)
 - [NES](/docs/chips/nes)
 - [SMS / Game Gear](/docs/chips/sms)
 - [Spectrum 128 / CPC](/docs/chips/spectrum-128)
 - [Instrument macros](/docs/language/instrument-macros) (`pitch_env`, `vol_env`, `subpat`, …)
+- [Imports](/docs/language/imports)
 - [Game Boy tutorial](/docs/tutorial/overview)
+
+Shared form:
+
+```bax
+inst <name> type=<chipType> <field>=<value> …
+```
+
+Chip-specific fields live on the chip guides; macros and note mapping are covered in the linked Language Reference pages.
 
 ## Pulse (Duty)
 

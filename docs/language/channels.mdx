@@ -1,0 +1,80 @@
+---
+sidebar_position: 6
+title: Channels
+mdx:
+  format: mdx
+---
+
+import {channelsBasicsBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Channels
+
+A **`channel`** statement wires one chip voice: which default instrument to use, what pattern or sequence to play, and optional per-channel options.
+
+```bax
+channel 1 => inst lead seq lead_seq
+```
+
+## Syntax
+
+```bax
+channel N => <channel RHS>
+```
+
+`N` is the channel number expected by the active chip (for Game Boy: 1–4). The RHS is a space-separated list of clauses:
+
+| Clause | Meaning |
+|--------|---------|
+| `inst name` | Default instrument for this channel |
+| `pat …` | Play a pattern (name, or inline list) |
+| `seq …` | Play a sequence (named `seq`, or inline pattern list) |
+| `speed=n` / `speed=nx` | Play this channel at a multiple of the master `bpm` |
+| `lock=mode` | Scale lock when a song-level `scale` is declared |
+
+`pat` and `seq` both populate the channel’s playlist; prefer one clear form per channel.
+
+### Forms
+
+| Form | Example |
+|------|---------|
+| Single pattern | `channel 1 => inst lead pat melody` |
+| Named sequence | `channel 1 => inst lead seq lead_seq` |
+| Inline sequence | `channel 1 => inst lead seq pat1 pat2` |
+
+## Speed
+
+`speed=2` or `speed=2x` plays the channel twice as fast as the master `bpm`. Channel-level **`bpm` is not supported** — the parser errors if you write `bpm=` on a channel. Use the top-level `bpm` directive or sequence transforms (`fast` / `slow`) instead.
+
+## Locks
+
+When `scale` is declared, optional `lock=` restricts notes on that channel:
+
+| Value | Meaning |
+|-------|---------|
+| `scale` | Any note in the declared scale |
+| `root+fifth` | Degrees 1 + 5 |
+| `chord` | Degrees 1 + 3 + 5 |
+| `chord7` | Degrees 1 + 3 + 5 + 7 |
+| `octaves` | Root only (all octaves) |
+
+`lock` without a song-level `scale` is an error. Details: [Scale awareness](/docs/language/scale).
+
+## Chip voice numbering
+
+| Chip | Channels |
+|------|----------|
+| Game Boy | 1 pulse1, 2 pulse2, 3 wave, 4 noise |
+| Other chips | See [Sound Chip Plugins](/docs/chips/overview) |
+
+Each channel ID may be declared only once.
+
+## Demo
+
+<BaxPlayer title="Channel lock and wiring" code={channelsBasicsBax} />
+
+## See also
+
+- [Sequences](/docs/language/sequences)
+- [Scale awareness](/docs/language/scale)
+- [Effects — per-channel speed](/docs/language/effects)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)

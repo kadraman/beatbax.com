@@ -1,0 +1,40 @@
+---
+sidebar_position: 9
+title: Export directive
+mdx:
+  format: mdx
+---
+
+# Export directive
+
+The grammar accepts an in-file export statement:
+
+```bax
+export FORMAT "path"
+```
+
+Examples:
+
+```bax
+export wav "out/song.wav"
+export uge "out/song.uge"
+```
+
+`FORMAT` is an identifier (for example `wav`, `uge`, `midi`). The path is a quoted or triple-quoted string.
+
+## Current behaviour
+
+The Peggy grammar parses `ExportStmt`, but the engine’s semantic pass currently **does not act on it** (it is ignored after parse). Day-to-day export is done with:
+
+- [BeatBax CLI](/docs/tools/cli) — `beatbax export …`
+- [BeatBax Desktop](/docs/tools/desktop)
+- Format-specific guides under [Export Plugins](/docs/exports/wav)
+
+Document the directive here so the Language Reference matches the grammar; prefer the CLI/Desktop workflows for producing files today.
+
+## See also
+
+- [WAV export](/docs/exports/wav)
+- [UGE export](/docs/exports/uge)
+- [CLI](/docs/tools/cli)
+- [Appendix](/docs/language/appendix)

@@ -73,16 +73,36 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Language Reference',
+      link: {
+        type: 'doc',
+        id: 'language/overview',
+      },
       items: [
+        'language/overview',
         'language/metadata-directives',
+        'language/volume-directive',
         'language/scale',
-        'language/instruments',
-        'language/instrument-macros',
-        'language/instrument-note-mapping',
+        'language/notes',
+        'language/patterns',
+        'language/sequences',
+        'language/channels',
+        {
+          type: 'category',
+          label: 'Instruments',
+          link: {
+            type: 'doc',
+            id: 'language/instruments',
+          },
+          items: [
+            'language/instrument-macros',
+            'language/instrument-note-mapping',
+            'language/imports',
+          ],
+        },
         'language/modifiers',
         'language/effects',
-        'language/imports',
-        'language/volume-directive',
+        'language/export',
+        'language/appendix',
       ],
     },
     {

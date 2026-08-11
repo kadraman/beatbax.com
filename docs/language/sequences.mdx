@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+title: Sequences
+mdx:
+  format: mdx
+---
+
+import {sequencesBasicsBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Sequences
+
+A **sequence** (`seq`) is an ordered playlist of pattern (or nested sequence) references. Where a `pat` is one phrase, a `seq` chains phrases so a part can vary over time.
+
+## Syntax
+
+```bax
+seq name = <sequence RHS>
+```
+
+The RHS is a list of items separated by spaces or commas. Each item is a name, optionally followed by colon-chained [modifiers](/docs/language/modifiers), and optionally a `*N` repeat. Groups `( … )*N` are supported.
+
+```bax
+pat lead_a = E5 . G5 C6 . G5 E5 . D5 . F5 A5 . G5 . .
+pat lead_b = C5 . E5 G5 . E5 C5 . A4 . C5 E5 . D5 C5 .
+
+seq lead_seq = lead_a lead_b lead_a lead_b
+seq lead_seq = lead_a, lead_b*2
+seq drums_seq = (drums_a drums_b)*2
+```
+
+## Rules
+
+- Every `seq` needs at least one item. An empty RHS (`seq name =` with nothing after `=`) is treated as an error/warning by the parser.
+- Each referenced name must exist as a `pat` or `seq`.
+- Modifiers apply left-to-right on the expanded token list — see [Sequence modifiers](/docs/language/modifiers). Nested parentheses in modifier arguments support **one** level (e.g. `every(2,oct(+1))`).
+
+## Demo
+
+<BaxPlayer title="Sequence repeats and groups" code={sequencesBasicsBax} />
+
+## See also
+
+- [Patterns](/docs/language/patterns)
+- [Channels](/docs/language/channels)
+- [Sequence modifiers](/docs/language/modifiers)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)

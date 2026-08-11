@@ -1,0 +1,65 @@
+---
+sidebar_position: 10
+title: Appendix
+mdx:
+  format: mdx
+---
+
+# Reference appendix
+
+Compact index of top-level statements and lexical rules grounded in `packages/engine/src/parser/peggy/grammar.peggy` (BeatBax engine).
+
+## Statement index
+
+| Statement | Form (sketch) | Topic |
+|-----------|---------------|-------|
+| `ChipStmt` | `chip <name> [region]` | [Directives](/docs/language/metadata-directives) |
+| `BpmStmt` | `bpm <int>` | [Directives](/docs/language/metadata-directives) |
+| `VolumeStmt` | `volume <float>` | [Volume](/docs/language/volume-directive) |
+| `TimeStmt` | `time <int>` | **Deprecated** — alias of `stepsPerBar` |
+| `StepsPerBarStmt` | `stepsPerBar <int>` | [Directives](/docs/language/metadata-directives) |
+| `TicksPerStepStmt` | `ticksPerStep <int>` | **Deprecated** — ignored |
+| `ScaleStmt` | `scale <root> <mode> [warn\|error\|off]` | [Scale](/docs/language/scale) |
+| `SongMetaStmt` | `song <key> <string>` | [Directives](/docs/language/metadata-directives) |
+| `ImportStmt` | `import <string>` | [Imports](/docs/language/imports) |
+| `InstStmt` | `inst <name> <fields…>` | [Instruments](/docs/language/instruments) |
+| `EffectStmt` | `effect <name> = <rhs>` | [Effects](/docs/language/effects) |
+| `SubPatStmt` | `subpat <name> = <rows>` | [Instrument macros](/docs/language/instrument-macros) |
+| `PatStmt` | `pat <name> = <rhs>` | [Patterns](/docs/language/patterns) |
+| `PatShorthandStmt` | `<name> = <rhs>` | [Patterns](/docs/language/patterns) |
+| `SeqStmt` | `seq <name> = <rhs>` | [Sequences](/docs/language/sequences) |
+| `ChannelStmt` | `channel <n> => <rhs>` | [Channels](/docs/language/channels) |
+| `PlayStmt` | `play [auto] [repeat]` | [Directives](/docs/language/metadata-directives) |
+| `ExportStmt` | `export <fmt> <path>` | [Export](/docs/language/export) |
+
+## Reserved words
+
+These identifiers cannot start a pattern-shorthand declaration (`name = …` without `pat`):
+
+`chip`, `bpm`, `scale`, `time`, `stepsPerBar`, `ticksPerStep`, `song`, `inst`, `subpat`, `pat`, `seq`, `channel`, `effect`, `play`, `export`
+
+## Lexical notes
+
+| Element | Rules |
+|---------|-------|
+| Identifiers | `[A-Za-z_][A-Za-z0-9_\-]*` |
+| Strings | `"…"`, `'…'`, or `"""…"""` (multiline) |
+| Comments | `# …` or `// …` to end of line |
+| Integers | Digits `[0-9]+` |
+| Floats | `1`, `1.0`, `.5` |
+| Notes | `[A-Ga-g][#b]?-?[0-9]+` |
+| Rest/sustain | `.` `_` `-` |
+| Duration | `:N` or `/N` |
+| Effect suffix | `<…>` attached to a note or identifier token |
+| Seq modifiers | `:name` or `:name(args)` after a sequence item |
+
+## Deprecated directives
+
+| Directive | Status |
+|-----------|--------|
+| `time` | Parsed; warns; aliases `stepsPerBar` if that was not set |
+| `ticksPerStep` | Parsed; warns; **no effect** (fixed engine tick resolution) |
+
+## Navigable map
+
+Return to the [Overview railroad map](/docs/language/overview).

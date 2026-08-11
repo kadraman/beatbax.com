@@ -52,5 +52,8 @@ play
 
 ## See also
 
+- [Language overview](/docs/language/overview)
 - [Metadata directives](/docs/language/metadata-directives)
+- [Channels](/docs/language/channels)
 - [Sequencing](/docs/tutorial/sequencing)
+

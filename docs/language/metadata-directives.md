@@ -11,7 +11,7 @@ title: Metadata Directives
 > **`time`** is a deprecated alias for `stepsPerBar` (parser warning). **`ticksPerStep`** is deprecated and **ignored** (parser warning).  
 > Feature specs under `docs/features/complete/` link here for timing behavior. Peggy grammar excerpts may still list `time` / `ticksPerStep` as parseable tokens (backward compatibility); they are **not** active song settings.
 
-BeatBax supports top-level directives inside `.bax` files to:
+Start from the [Language Reference overview](/docs/language/overview) for the navigable grammar map. This page covers song metadata and global playback directives.
 
 1. Configure global playback settings (`chip`, `bpm`, `volume`, `stepsPerBar`)
 2. Capture human-readable song metadata (`song name`, `song artist`, etc.)
@@ -110,3 +110,12 @@ Notes
 
 - Metadata parsing happens at parse/expansion time and is preserved into the resolved `SongModel.metadata` used by the player and exporters.
 - Multiline descriptions preserve newline characters; tags are normalized and trimmed.
+
+## See also
+
+- [Language overview](/docs/language/overview)
+- [Volume directive](/docs/language/volume-directive)
+- [Scale awareness](/docs/language/scale)
+- [Channels (`lock=`, `speed=`)](/docs/language/channels)
+- [Appendix](/docs/language/appendix)
+
