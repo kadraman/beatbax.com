@@ -10,6 +10,7 @@ import {
   macroVolEnvBax,
   macroArpEnvBax,
   macroDutyEnvBax,
+  macroSubpatBax,
 } from '@site/src/components/BaxPlayer/demos/languageRef';
 
 # Instrument Macros
@@ -45,7 +46,7 @@ One macro frame is typically **1/60 s** on NTSC-style playback (chip guides note
 | [NES](/docs/chips/nes) | `vol_env`, `arp_env`, `pitch_env`, `duty_env` | FamiTracker-style; `vol_env` overrides hardware `env` decay |
 | [SMS / Game Gear](/docs/chips/sms) | `vol_env`, `arp_env`, `pitch_env`, `noise_rate_env` | No hardware ADSR — macros are the main articulation |
 | [Spectrum 128 / CPC](/docs/chips/spectrum-128) | `arp_env`, `pitch_env`; `vol_env` is often the **shared hardware envelope** | Watch R6 / R11–R13 conflicts |
-| [Game Boy](/docs/chips/gameboy) | `pitch_env`, `vol_env`, `duty_env`, `arp_env` | Also exports to hUGE **subpatterns**; optional native `subpat` (below) |
+| [Game Boy](/docs/chips/gameboy) | `pitch_env`, `vol_env`, `duty_env`, `arp_env` | Also exports to hUGE **subpatterns**; optional native `subpat` ([below](#subpat)) |
 
 Chip pages list which instrument types accept which macros.
 
@@ -69,22 +70,11 @@ Chip pages list which instrument types accept which macros.
 
 <BaxPlayer title="duty_env wah" code={macroDutyEnvBax} />
 
-## Game Boy only: UGE subpatterns (`subpat`)
+### Native `subpat` {/* #subpat */}
 
-On `chip gameboy`, macros and/or native `subpat` lower into a shared tick program that drives **preview / WAV** and **hUGETracker UGE instrument subpatterns**.
-
-hUGETracker reference: [Subpatterns](https://superdisk.github.io/hUGETracker/hUGETracker/subpatterns.html).
+On Game Boy you can author a tick program directly with `subpat` (instead of macro arrays). Attach it with `subpat=name` on an `inst`. Native `subpat` **wins** if macros are also set on that instrument.
 
 ```bax
-chip gameboy
-bpm 128
-
-# Macros → tick program (preview + UGE subpatterns)
-inst kick type=noise gb:width=7 uge_note=C-6 pitch_env=[0,-2,-4,-6] vol_env=[15,12,8,4]
-inst wah  type=pulse1 duty=50 env=12,flat duty_env=[2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0|0]
-inst arp  type=pulse2 duty=25 env=10,flat arp_env=[0,4,7|0]
-
-# Native subpat — wins over macros on that instrument
 subpat kick_body =
   .
   +0 vol:15
@@ -94,26 +84,12 @@ subpat kick_body =
   -6 vol:0
   halt
 
-inst kick2 type=noise gb:width=7 uge_note=C-6 subpat=kick_body
+inst kick type=noise gb:width=7 uge_note=C-6 subpat=kick_body
 ```
 
-### Game Boy field lowering (UGE)
+<BaxPlayer title="Native subpat kick" code={macroSubpatBax} />
 
-| Field / syntax | Lowers to |
-|----------------|-----------|
-| `pitch_env` | Offset column |
-| `vol_env` | Effect `Cxy` (wins over `duty_env` on the same tick) |
-| `duty_env` | Effect `9xx` (duty index 0–3 → pulse width) |
-| `arp_env` | Offset column when `pitch_env` is absent |
-| `subpat name = …` + `subpat=name` | Native rows (`.`, `jump:`, `vol:`, `timbre:`, `fx:`, `halt`) |
-
-### Game Boy notes
-
-- Noise base pitch uses **`uge_note=`**; macro offsets are relative to that note. Prefer `uge_note=C-6` for kicks — large negative offsets from a very high base are unreliable (non-monotonic noise table).
-- Macros without a loop point append silence + halt so UGE subpatterns do not auto-restart. Prefer ending `vol_env` at `0` or use explicit `halt` in `subpat`.
-- Native `subpat` **wins** over macros when both are set on the same instrument.
-- Wave instruments honour `volume=` in preview/PCM; tick programs apply to wave for preview and UGE export.
-- Exact hUGE row timing often uses BPM values like 224, 128, 112, 64, 56. Clamp warnings may appear when offsets or `jump:` targets exceed UGE ranges.
+How macros and `subpat` map into hUGETracker instrument subpatterns is covered under [UGE export](/docs/exports/uge#instrument-subpatterns).
 
 ## See also
 
@@ -122,4 +98,4 @@ inst kick2 type=noise gb:width=7 uge_note=C-6 subpat=kick_body
 - [NES macros](/docs/chips/nes#software-macros)
 - [SMS / Game Gear](/docs/chips/sms)
 - [Spectrum 128 / CPC](/docs/chips/spectrum-128)
-- [UGE export](/docs/exports/uge)
+- [UGE export — instrument subpatterns](/docs/exports/uge#instrument-subpatterns)

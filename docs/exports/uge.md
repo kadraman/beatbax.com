@@ -7,7 +7,7 @@ title: UGE Export
 
 ## Overview
 
-BeatBax exports Game Boy songs to **hUGETracker v6** (`.uge`), including instrument **subpatterns** when you use macros (`pitch_env`, `vol_env`, `duty_env`, `arp_env`) or native `subpat`. Preview/WAV and UGE subpatterns share the same tick-program IR — see [Instrument macros](/docs/language/instrument-macros#game-boy-only-uge-subpatterns-subpat).
+BeatBax exports Game Boy songs to **hUGETracker v6** (`.uge`), including instrument **subpatterns** when you use macros (`pitch_env`, `vol_env`, `duty_env`, `arp_env`) or native `subpat`. Preview/WAV and UGE subpatterns share the same tick-program IR — authoring details in [Instrument macros](/docs/language/instrument-macros); export mapping in [Instrument subpatterns](#instrument-subpatterns).
 
 Noise instruments should set **`uge_note=`** so playback and export use the same LFSR clock. Wave tables accept 32-nibble arrays or **32-character hex strings** (native hUGE format).
 
@@ -125,6 +125,25 @@ BeatBax instruments are converted to UGE instruments based on type:
 - `type=pulse1` or `type=pulse2` → Duty instruments
 - `type=wave` → Wave instruments
 - `type=noise` → Noise instruments
+
+### Instrument subpatterns
+
+Macros and/or native `subpat` lower into one shared tick program used for preview/WAV and for hUGETracker instrument subpatterns on export.
+
+hUGETracker reference: [Subpatterns](https://superdisk.github.io/hUGETracker/hUGETracker/subpatterns.html). Authoring: [Instrument macros](/docs/language/instrument-macros) (including [native `subpat`](/docs/language/instrument-macros#subpat)).
+
+| Field / syntax | Lowers to |
+|----------------|-----------|
+| `pitch_env` | Offset column |
+| `vol_env` | Effect `Cxy` (wins over `duty_env` on the same tick) |
+| `duty_env` | Effect `9xx` (duty index 0–3 → pulse width) |
+| `arp_env` | Offset column when `pitch_env` is absent |
+| `subpat name = …` + `subpat=name` | Native rows (`.`, `jump:`, `vol:`, `timbre:`, `fx:`, `halt`) |
+
+- Noise base pitch uses **`uge_note=`**; macro offsets are relative to that note. Prefer `uge_note=C-6` for kicks — large negative offsets from a very high base are unreliable (non-monotonic noise table).
+- Macros without a loop point append silence + halt so UGE subpatterns do not auto-restart. Prefer ending `vol_env` at `0` or use explicit `halt` in `subpat`.
+- Wave instruments honour `volume=` in preview/PCM; tick programs apply to wave for preview and UGE export.
+- Exact hUGE row timing often uses BPM values like 224, 128, 112, 64, 56. Clamp warnings may appear when offsets or `jump:` targets exceed UGE ranges.
 
 ### Note Format
 Notes use standard pitch notation:

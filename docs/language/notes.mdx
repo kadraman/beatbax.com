@@ -1,0 +1,49 @@
+---
+sidebar_position: 2
+title: Notes
+mdx:
+  format: mdx
+---
+
+import {notesBasicBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Notes
+
+Pattern atoms for pitch and silence. Grammar rules: `NoteToken`, `RestToken`, `DurationSuffix`.
+
+## NoteToken {/* #notetoken */}
+
+| Token | Meaning |
+|-------|---------|
+| `C4`, `E5`, `G#5`, `Db3` | Note — letter `A`–`G`, optional `#` / `b`, then octave digits (scientific pitch). Default length **1 step**. |
+
+Notes may carry inline effect suffixes (`C5<vib:8,4>`) — see [Effects](/docs/language/effects).
+
+## DurationSuffix {/* #duration */}
+
+| Token | Meaning |
+|-------|---------|
+| `C4:4` or `C4/4` | Duration — hold for **N** steps (`:` and `/` are equivalent) |
+
+A **step** lasts one beat at the song’s `bpm`. Bare notes and rests last one step; `C3:8` lasts eight.
+
+## RestToken {/* #resttoken */}
+
+| Token | Meaning |
+|-------|---------|
+| `.` | Rest — silence; also cuts the previous note |
+| `_` or `-` | Sustain — keep the previous note sounding for one more step |
+
+```bax
+C3:16                 # hold C3 for 16 steps
+E5 . G5 C6 . G5 E5 .  # one-step notes and rests
+C4 _ _ _              # same duration as C4:4
+```
+
+<BaxPlayer title="Notes, rests, and durations" code={notesBasicBax} />
+
+## See also
+
+- [Tutorial — Notes and lengths](/docs/tutorial/notes)
+- [Patterns](/docs/language/patterns)
+- [Effects](/docs/language/effects)

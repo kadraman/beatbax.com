@@ -1,0 +1,59 @@
+---
+sidebar_position: 4
+title: Sequences
+mdx:
+  format: mdx
+---
+
+import {sequencesBasicBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Sequences
+
+A **sequence** (`seq`) is an ordered playlist of pattern (or nested sequence) references. Where a `pat` is one phrase, a `seq` chains several phrases over time.
+
+```bax
+seq name = <SeqRhs>
+```
+
+Empty sequences (`seq name =` with nothing after `=`) are **errors** — every `seq` needs at least one reference.
+
+## Sequence RHS {/* #sequence-rhs */}
+
+### Pattern references {/* #pat-refs */}
+
+| Form | Meaning |
+|------|---------|
+| `patName` | Play that pattern once |
+| `name:mod(…)` | Apply [modifiers](/docs/language/modifiers#modifier-catalog) (chainable) |
+
+### Repeats (`*N`) {/* #repeat */}
+
+| Form | Meaning |
+|------|---------|
+| `patName*N` | Repeat the reference `N` times |
+
+### Groups {/* #groups */}
+
+| Form | Meaning |
+|------|---------|
+| `(a b)*N` | Group and repeat |
+
+```bax
+pat lead_a = E5 . G5 C6 . G5 E5 .
+pat lead_b = C5 . E5 G5 . E5 C5 .
+
+seq lead_seq  = lead_a lead_b*2
+seq drums_seq = (drums_a drums_b)*2
+seq lifted    = lead_a:oct(+1):rot(2)
+```
+
+Items may be separated by spaces or commas. Comments (`#` / `//`) are allowed between items.
+
+<BaxPlayer title="Sequence refs, groups, and repeats" code={sequencesBasicBax} />
+
+## See also
+
+- [Patterns](/docs/language/patterns)
+- [Channels](/docs/language/channels)
+- [Modifiers](/docs/language/modifiers)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)
