@@ -73,8 +73,17 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Language Reference',
+      link: {
+        type: 'doc',
+        id: 'language/overview',
+      },
       items: [
+        'language/overview',
         'language/metadata-directives',
+        'language/notes',
+        'language/patterns',
+        'language/sequences',
+        'language/channels',
         {
           type: 'category',
           label: 'Instruments',
@@ -90,6 +99,8 @@ const sidebars: SidebarsConfig = {
         },
         'language/modifiers',
         'language/effects',
+        'language/export',
+        'language/appendix',
       ],
     },
     {

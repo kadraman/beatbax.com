@@ -1,0 +1,68 @@
+---
+sidebar_position: 5
+title: Channels
+mdx:
+  format: mdx
+---
+
+import {channelsBasicBax} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Channels
+
+A **`channel`** line assigns one chip voice: default instrument, what to play, and optional per-channel options.
+
+```bax
+channel <N> => inst <name> seq <SeqRhs>
+channel <N> => inst <name> pat <name>
+channel <N> => inst <name> seq <pat1> <pat2>   # inline playlist
+```
+
+| Part | Meaning |
+|------|---------|
+| `channel N` | Chip voice index (1-based). Mapping depends on `chip` — see [Sound Chip Plugins](/docs/chips/overview). |
+| `inst name` | Default instrument for this voice |
+| `seq` / `pat` | [What to play](#pat-seq) (named sequence, named pattern, or inline sequence items) |
+| `speed=` | [Tempo multiplier](#speed) relative to master `bpm` |
+| `lock=` | Scale-degree lock when a song-level `scale` is set — see [Global directives](/docs/language/metadata-directives#scale-and-channel-locks) |
+
+### Pattern or sequence {#pat-seq}
+
+```bax
+channel 1 => inst lead seq lead_seq
+channel 2 => inst harm pat motif
+channel 3 => inst bass seq bass_a bass_b   # inline playlist
+```
+
+### Speed {#speed}
+
+Tempo multiplier relative to master `bpm` (`speed=2`, `speed=2x`, `speed=0.5`). Also covered under [Effects — per-channel speed](/docs/language/effects#tempo-and-per-channel-speed).
+
+```bax
+channel 2 => inst harm pat motif speed=2x
+channel 3 => inst bass seq bass_p lock=root+fifth
+```
+
+### Not supported
+
+- **Channel-level `bpm=`** — rejected by the parser. Use top-level `bpm` plus `speed=` (or sequence modifiers like `:fast` / `:slow`).
+
+### Game Boy voice numbers
+
+| Channel | Typical role | Instrument type |
+|---------|--------------|-----------------|
+| 1 | Lead / sweep | `pulse1` |
+| 2 | Harmony | `pulse2` |
+| 3 | Bass / pad | `wave` |
+| 4 | Drums | `noise` |
+
+Other chips expose different counts and roles — see the chip pages.
+
+<BaxPlayer title="Channels with speed= and lock=" code={channelsBasicBax} />
+
+## See also
+
+- [Sequences](/docs/language/sequences)
+- [Instruments](/docs/language/instruments)
+- [Global directives — scale and locks](/docs/language/metadata-directives#scale-and-channel-locks)
+- [Effects — per-channel speed](/docs/language/effects#tempo-and-per-channel-speed)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)

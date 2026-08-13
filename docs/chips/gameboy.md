@@ -121,9 +121,10 @@ Typical percussion: snares use `width=7`, `uge_note=C-7`, `length=16`, and a sho
 
 ## Software macros and UGE subpatterns
 
-Game Boy supports `pitch_env`, `vol_env`, `duty_env`, and `arp_env`. Those macros (and optional native `subpat`) lower into a tick program for preview/WAV **and** hUGETracker instrument subpatterns.
+Game Boy supports `pitch_env`, `vol_env`, `duty_env`, and `arp_env`, plus optional native `subpat`.
 
-See [Instrument macros](/docs/language/instrument-macros) — especially the Game Boy `subpat` section.
+- Authoring and demos: [Instrument macros](/docs/language/instrument-macros)
+- How they lower into hUGETracker instrument subpatterns: [UGE export](/docs/exports/uge#instrument-subpatterns)
 
 ## Export
 

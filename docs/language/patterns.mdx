@@ -1,0 +1,64 @@
+---
+sidebar_position: 3
+title: Patterns
+mdx:
+  format: mdx
+---
+
+import {
+  patternsBasicBax,
+  patternsInstSwitchBax,
+} from '@site/src/components/BaxPlayer/demos/languageRef';
+
+# Patterns
+
+A **pattern** (`pat`) is a named list of tokens. Length is the sum of token durations — BeatBax does not require a fixed size.
+
+```bax
+pat name = <PatternRhs>
+name = <PatternRhs>          # shorthand (same as pat; name must not be a reserved word)
+```
+
+Keep patterns on different channels the **same length** when you chain them in sequences so parts stay locked.
+
+## Pattern RHS {#pattern-rhs}
+
+| Form | Meaning |
+|------|---------|
+| notes / rests | See [Notes](/docs/language/notes) |
+| `(…)*N` | [Groups and repeats](#groups) |
+| `token*N` | [Repeat](#groups) a single atom |
+| `inst(name,N)` / `inst(name)` / `inst name` | [Temporary / inline instrument](#temp-inst) |
+| `name<…>` | Identifier or note with [effect](/docs/language/effects#effect) suffixes |
+| `"tok tok …"` | Quoted whitespace-split token list |
+
+### Groups and repeats {#groups}
+
+```bax
+pat rise     = (C5 E5 G5)*2 C6:4
+pat lead_pat = E5 . G5 C6 . G5 E5 .
+riff         = C5 . E5 . G5 .     # shorthand
+```
+
+<BaxPlayer title="Groups, repeats, shorthand" code={patternsBasicBax} />
+
+### Temporary instrument (`inst(…)`) {#temp-inst}
+
+| Form | Meaning |
+|------|---------|
+| `inst(name,N)` | Temporary instrument for the next **N** non-rest hits |
+| `inst(name)` | Instrument override for the rest of the pattern |
+| `inst name` | Inline instrument switch (space form) |
+
+> The count `N` in `inst(name,N)` applies only to notes/sustains — rests (`.`) do **not** consume from the count.
+
+<BaxPlayer title="Temporary instrument override" code={patternsInstSwitchBax} />
+
+Pattern names can include colon modifiers in the left-hand name (`pat motif:rot(1) = …`) — see [Modifiers](/docs/language/modifiers).
+
+## See also
+
+- [Sequences](/docs/language/sequences)
+- [Tutorial — Sequencing](/docs/tutorial/sequencing)
+- [Modifiers](/docs/language/modifiers)
+- [Effects](/docs/language/effects)

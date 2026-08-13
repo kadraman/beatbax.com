@@ -8,6 +8,7 @@ mdx:
 import {
   bpmSlowBax,
   bpmFastBax,
+  stepsPerBarBax,
   volumeFullBax,
   volumeDenseBax,
   scaleFreeBax,
@@ -23,7 +24,7 @@ import {
 There are a number of global directives available in `.bax` files that can be used for defining human-readable song metadata,
 configuring sound chip plugins or defining song playback.
 
-## Song metadata
+## Song metadata {/* #song-metadata */}
 
 The following directives define song metadata.
 
@@ -37,7 +38,7 @@ The following directives define song metadata.
 The following `.bax` file illustrates the use of all of the directives described above
 ```bax
 song name "My song"
-song author "The BeatBax Team"
+song artist "The BeatBax Team"
 song description """This song demonstrates
 multiline metadata values."""
 song tags "demo,metadata,example"
@@ -49,18 +50,27 @@ The following global directives are available to be used.
 
 | Directive | Purpose | Default |
 |-----------|---------|---------|
-| `chip <name>` | The sound chip that is being emulated. **This is a required directive**. | gameboy |
+| `chip <name> [region]` | The sound chip that is being emulated. **This is a required directive**. Optional region (e.g. `ntsc` / `pal`) where the chip supports it. | gameboy |
 | `bpm <number>` | The tempo of the song in beats per minute. | `120` |
 | `volume <float>` | The master output level (`0.0`–`1.0`) of the song. | `1.0` |
 | `stepsPerBar <number>` | How many steps the editor treats as one bar (display only) | `4` |
 | `scale <root> <mode> [warn\|error\|off]` | Declare the song key for validation, locks, and MIDI snap | *(none)* |
 | `play [auto] [repeat]` | End-of-file playback hints for the editor / web UI | *(none)* |
+| `time <number>` | **Deprecated** — aliases `stepsPerBar` (parser warning) | — |
+| `ticksPerStep <number>` | **Deprecated** — parsed but has **no effect** (parser warning) | — |
 
-### Chip
+### Chip {/* #chip */}
 
-`chip` selects the audio backend for the song. Names, aliases, region qualifiers (`ntsc` / `pal`), and per-chip details are listed under [Sound Chip Plugins](/docs/chips/overview).
+`chip` selects the audio backend for the song. An optional second identifier sets the **region** when the chip plugin supports it (for example `chip nes ntsc` or `chip nes pal`):
 
-### BPM
+```bax
+chip gameboy
+chip nes ntsc
+```
+
+Names, aliases, region qualifiers, and per-chip details are listed under [Sound Chip Plugins](/docs/chips/overview).
+
+### BPM {/* #bpm */}
 
 `bpm` sets the song’s **master tempo** in beats per minute (default `120`). Each **step** in a pattern lasts one beat at that tempo, so higher values make the same phrase play faster and lower values slower.
 
@@ -79,7 +89,7 @@ The following examples illustrate the same phrase being played back but at diffe
 
 <BaxPlayer title="BPM 140" code={bpmFastBax} />
 
-### Master volume
+### Master volume {/* #master-volume */}
 
 `volume` scales the whole mix after per-channel processing (range `0.0`–`1.0`, values outside that are clamped). Default is `1.0`.
 
@@ -100,7 +110,7 @@ The following examples mix at full master versus reduced:
 
 <BaxPlayer title="Volume 0.35" code={volumeDenseBax} />
 
-### Steps per bar
+### Steps per bar {/* #steps-per-bar */}
 
 `stepsPerBar` tells the editor how many pattern steps make up one **bar** for display (default `4`). It does **not** change how the song sounds, how long notes last, or pattern length.
 
@@ -110,7 +120,16 @@ Set it so bar markers in the editor match how you count the song while writing �
 stepsPerBar 8
 ```
 
-### Scale and channel locks
+<BaxPlayer title="stepsPerBar 8 (display only)" code={stepsPerBarBax} />
+
+### Deprecated: `time` and `ticksPerStep`
+
+| Directive | Behaviour |
+|-----------|-----------|
+| `time N` | Alias for `stepsPerBar N`. Prefer `stepsPerBar`. The parser emits a warning. |
+| `ticksPerStep N` | Accepted for backwards compatibility but **ignored**. The engine uses a fixed tick resolution. The parser emits a warning. |
+
+### Scale and channel locks {/* #scale-and-channel-locks */}
 
 Chiptune parts are easy to knock out of key when you’re typing note names by hand or entering them from a MIDI keyboard. **`scale`** and **`lock=`** give the song a declared key so BeatBax can catch (or prevent) wrong notes while you write.
 
@@ -162,7 +181,7 @@ Then the same rhythm under each lock:
 
 A common setup is a lead on `lock=scale` (or `chord7`) and a bass on `lock=root+fifth` or `lock=octaves`, so each voice stays in a useful pitch set for the key.
 
-### Playback
+### Playback {/* #playback */}
 
 End the song with a **`play`** directive. It marks the file as a complete, playable song and can carry 
 optional flags that the [BeatBax Desktop](/docs/tools/desktop)  and web UI honour:
@@ -187,15 +206,22 @@ Flags can appear in either order (`play repeat auto` is the same as `play auto r
 
 ## Comments
 
-You can use `#` for line comments. Everything from `#` to the end of the line is ignored.
+Line comments use `#` or `//`. Everything from the marker to the end of the line is ignored.
 
 ```bax
 # Song header
 chip gameboy
-bpm 120  # tempo
+bpm 120  // tempo
 
 # Lead voice
 inst lead type=pulse1 duty=50 env=gb:15,down,2
 ```
 
 Avoid `#` inside values such as `note=` (as it starts a comment). Prefer flats (`note=Db7`) or, where supported, `uge_note=` for tracker-style sharps — see [Instrument note mapping](/docs/language/instrument-note-mapping#sharp-notes-in-note).
+
+## See also
+
+- [Language overview](/docs/language/overview)
+- [Notes](/docs/language/notes)
+- [Channels](/docs/language/channels)
+- [Appendix](/docs/language/appendix)

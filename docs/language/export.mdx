@@ -1,0 +1,38 @@
+---
+sidebar_position: 9
+title: Export
+mdx:
+  format: mdx
+---
+
+# Export directive (deprecated)
+
+:::warning Deprecated
+The in-file `export` directive is **deprecated**. Prefer exporting from the [CLI](/docs/tools/cli), [BeatBax Desktop](/docs/tools/desktop), or [web client](/docs/tools/web-client). Format options and plugin behaviour are documented under [Export Plugins](/docs/exports/wav).
+:::
+
+The parser still accepts the statement for older songs. Hosts may ignore it or treat it as a legacy request only.
+
+```bax
+export <format> "<path>"
+```
+
+| Part | Meaning |
+|------|---------|
+| `format` | Exporter id (e.g. `wav`, `uge`, `vgm`, `midi`) |
+| `path` | Output path as a quoted or triple-quoted string |
+
+```bax
+# Legacy — prefer CLI / Desktop / web export instead
+export wav "out/demo.wav"
+export uge "out/demo.uge"
+```
+
+## See also
+
+- [WAV](/docs/exports/wav)
+- [UGE](/docs/exports/uge)
+- [VGM](/docs/exports/vgm)
+- [FamiTracker text](/docs/exports/famitracker-text)
+- [Arkos](/docs/exports/arkos)
+- [CLI](/docs/tools/cli)

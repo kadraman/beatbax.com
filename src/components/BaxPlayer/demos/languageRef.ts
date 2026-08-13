@@ -218,6 +218,31 @@ pat hold = C5:16
 channel 1 => inst wah seq hold
 play`;
 
+/** Native `subpat` (Game Boy) — tick program with jump + volume decay. */
+export const macroSubpatBax = `${CHIP}
+bpm 128
+
+# @show
+# Native subpat: empty first row, pitch offsets, mid-program jump, volume decay
+subpat kick_body =
+  .
+  +0 vol:15
+  -2 vol:12 jump:5
+  -4 vol:10
+  -4 vol:8
+  -6 vol:4
+  -6 vol:0
+  halt
+
+inst kick type=noise gb:width=7 env=14,down,1 length=16 uge_note=C-6 subpat=kick_body
+
+# Instrument name as a pattern token triggers the subpat on each hit
+pat kicks = kick . . . kick . kick . kick . . . kick . . .
+# @end
+
+channel 4 => inst kick seq kicks
+play`;
+
 /** Note mapping — percussion kit with named tokens. */
 export const noteMappingKitBax = `${CHIP}
 bpm 140
@@ -493,4 +518,99 @@ pat bass_line = C3:4 E3<slide>:4 G3<slide>:4 C4<slide>:4
 
 channel 1 => inst lead pat lead_line
 channel 3 => inst bass pat bass_line
+play`;
+
+/** Notes — pitches, durations, rests, sustains. */
+export const notesBasicBax = `${CHIP}
+bpm 120
+
+${LEAD}
+# @show
+pat phrase = C5:2 E5 G5:2 . C6 _ _ _
+# @end
+
+channel 1 => inst lead seq phrase
+play`;
+
+/** Patterns — groups, repeats, shorthand. */
+export const patternsBasicBax = `${CHIP}
+bpm 120
+
+${LEAD}
+# @show
+pat rise = (C5 E5 G5)*2 C6:4
+riff = C5 . E5 . G5 . C6 .   # shorthand (no "pat" keyword)
+# @end
+
+channel 1 => inst lead seq rise riff
+play`;
+
+/** Patterns — temporary / inline instrument override. */
+export const patternsInstSwitchBax = `${CHIP}
+bpm 120
+
+${LEAD}
+${BASS}
+# @show
+pat call = C5 E5 G5 inst(bass,2) C3 E3 G5 C5
+# @end
+
+channel 1 => inst lead seq call
+play`;
+
+/** Sequences — refs, *N, groups. */
+export const sequencesBasicBax = `${CHIP}
+bpm 120
+
+${LEAD}
+# @show
+pat a = C5 E5 G5 C5
+pat b = E5 G5 C6 E5
+seq lead_seq = a (b)*2 a
+# @end
+
+channel 1 => inst lead seq lead_seq
+play`;
+
+/** Channels — speed= and lock=. */
+export const channelsBasicBax = `${CHIP}
+bpm 100
+scale C major warn
+
+${LEAD}
+${BASS}
+pat phrase = C5 E5 G5 C6 E5 G5 A5 G5
+pat bass_p = C3:4 G2:4
+
+# @show
+channel 1 => inst lead seq phrase lock=scale
+channel 3 => inst bass seq bass_p speed=0.5 lock=root+fifth
+# @end
+
+play`;
+
+/** Effects — pitch bend (musical semitone bend). */
+export const fxBendBax = `${CHIP}
+bpm 100
+
+# @show
+inst lead type=pulse1 duty=50 env=gb:15,down,0
+# Hold, then bend +2 semitones (guitar-style)
+pat phrase = C5<bend:+2>:8 E5<bend:+2,linear,0>:8
+# @end
+
+channel 1 => inst lead seq phrase
+play`;
+
+/** Effects — hardware-style pulse sweep (Pulse 1). */
+export const fxSweepBax = `${CHIP}
+bpm 100
+
+# @show
+inst lead type=pulse1 duty=50 env=gb:15,down,1
+# Classic GB "pew": time, direction, shift
+pat pew = C5<sweep:2,down,5>:8 . . . C6<sweep:4,up,3>:8 . . .
+# @end
+
+channel 1 => inst lead seq pew
 play`;

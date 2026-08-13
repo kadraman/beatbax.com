@@ -1,0 +1,60 @@
+---
+sidebar_position: 10
+title: Appendix
+mdx:
+  format: mdx
+---
+
+# Appendix
+
+Compact index of top-level statements, lexical rules, and reserved words as implemented by the Peggy grammar in `@beatbax/engine`.
+
+## Statement index
+
+| Statement | Doc |
+|-----------|-----|
+| `chip` | [Global directives](/docs/language/metadata-directives) |
+| `bpm` | [Global directives](/docs/language/metadata-directives) |
+| `volume` | [Global directives](/docs/language/metadata-directives) |
+| `stepsPerBar` | [Global directives](/docs/language/metadata-directives) |
+| `scale` | [Global directives](/docs/language/metadata-directives) |
+| `song` | [Global directives](/docs/language/metadata-directives) |
+| `play` | [Global directives](/docs/language/metadata-directives) |
+| `time` | **Deprecated** — aliases `stepsPerBar`; prefer `stepsPerBar` |
+| `ticksPerStep` | **Deprecated** — parsed, warns, no effect |
+| `import` | [Imports](/docs/language/imports) |
+| `inst` | [Instruments](/docs/language/instruments) |
+| `subpat` | [Instrument macros](/docs/language/instrument-macros#subpat) |
+| `effect` | [Effects](/docs/language/effects) |
+| `pat` / shorthand `name = …` | [Patterns](/docs/language/patterns) |
+| `seq` | [Sequences](/docs/language/sequences) |
+| `channel` | [Channels](/docs/language/channels) |
+| `export` | **Deprecated** — prefer CLI / Desktop / web; see [Export](/docs/language/export) |
+
+Not in the current grammar (do not use): `alias`, `section`, `form`, `include`, `cat`.
+
+## Lexical notes
+
+| Kind | Form |
+|------|------|
+| Identifiers | `[A-Za-z_][A-Za-z0-9_\-]*` |
+| Strings | `"…"`, `'…'`, or `"""…"""` (multiline) |
+| Comments | `# …` or `// …` to end of line |
+| Integers / floats | Decimal digits; floats allow a fractional part |
+
+## Reserved words
+
+These cannot start a pattern-shorthand statement (`name = …` without `pat`):
+
+`chip`, `bpm`, `scale`, `time`, `stepsPerBar`, `ticksPerStep`, `song`, `inst`, `subpat`, `pat`, `seq`, `channel`, `effect`, `play`, `export`
+
+(`volume` and `import` are statement keywords but are not in the shorthand reserved list — prefer explicit `pat` when in doubt.)
+
+## Comments
+
+Line comments with `#` or `//` are allowed anywhere whitespace is. Avoid `#` inside unquoted values such as `note=` — see [Instrument note mapping](/docs/language/instrument-note-mapping#sharp-notes-in-note).
+
+## See also
+
+- [Language overview](/docs/language/overview)
+- [Global directives](/docs/language/metadata-directives)

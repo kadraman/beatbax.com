@@ -1,0 +1,46 @@
+---
+sidebar_position: 0
+title: Overview
+mdx:
+  format: mdx
+---
+
+# Language Reference
+
+A BeatBax song is a sequence of top-level **statements**: chip and tempo, instruments, named patterns and sequences, channel wiring, then `play`. This reference documents the grammar as implemented by `@beatbax/engine` — not planned or retired design notes.
+
+For a narrative walkthrough that builds one Game Boy song, start with the [Tutorial](/docs/tutorial/overview).
+
+<GrammarRailroad />
+
+## Statement map
+
+| Topic | Covers |
+|-------|--------|
+| [Global directives](/docs/language/metadata-directives) | `chip`, `bpm`, `volume`, `stepsPerBar`, `scale`, `song`, `play`, comments |
+| [Notes](/docs/language/notes) | Pitches, durations, rests, sustains |
+| [Patterns](/docs/language/patterns) | `pat` / shorthand, groups, inline `inst`, effect suffixes |
+| [Sequences](/docs/language/sequences) | `seq`, refs, repeats, groups |
+| [Channels](/docs/language/channels) | `channel N => …`, `speed=`, `lock=` |
+| [Instruments](/docs/language/instruments) | `inst`, macros, note mapping, `subpat`, [imports](/docs/language/imports) |
+| [Modifiers](/docs/language/modifiers) | Colon-chained sequence/pattern transforms |
+| [Effects](/docs/language/effects) | Named `effect` presets and inline `<…>` |
+| [Export](/docs/language/export) | **Deprecated** in-file `export format "path"` |
+| [Appendix](/docs/language/appendix) | Statement index, reserved words, lexical notes |
+
+## Typical song shape
+
+```bax
+song name "Example"
+chip gameboy
+bpm 120
+
+inst lead type=pulse1 duty=50 env=gb:12,down,1
+pat phrase = C5 E5 G5 C6
+seq lead_seq = phrase*2
+
+channel 1 => inst lead seq lead_seq
+play
+```
+
+Order is flexible in the parser, but most songs follow **metadata → instruments → patterns/sequences → channels → play**.

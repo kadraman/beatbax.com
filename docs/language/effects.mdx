@@ -17,6 +17,8 @@ import {
   fxEchoBax,
   fxNamedBax,
   fxChannelSpeedBax,
+  fxBendBax,
+  fxSweepBax,
 } from '@site/src/components/BaxPlayer/demos/languageRef';
 
 # Effects Reference
@@ -24,6 +26,8 @@ import {
 Named `effect` presets and inline modifiers (e.g. `C4<wobble>`, `C4<arp:4,7>`) shape notes during playback and export. Availability can vary by chip — see [Sound Chip Plugins](/docs/chips/overview).
 
 For a Game Boy walkthrough of vibrato, arpeggio, and portamento, see [Tutorial — Effects](/docs/tutorial/effects).
+
+## Effect statement {#effect}
 
 ```bax
 effect wobble   = vib:8,4
@@ -47,6 +51,8 @@ pat melody = C5<wobble> E4 G4<arpMajor> C5
 | Note cut | `<cut:ticks>` | Gate / staccato after N ticks | UGE `E0x` |
 | Retrigger | `<retrig:interval[,volDelta]>` | Restart note on interval | WebAudio only |
 | Echo | `<echo:delay[,fb[,mix]]>` | Delay with feedback | WebAudio only |
+| Pitch bend | `<bend:semitones[,curve[,delay[,time]]]>` | Musical semitone bend | WebAudio / WAV; UGE approx. |
+| Sweep | `<sweep:time,dir,shift>` | Hardware-style frequency sweep | Pulse 1 / NR10-style |
 
 Parameters are comma-separated; empty slots keep defaults (e.g. `vib:6,5,,2`).
 
@@ -172,6 +178,41 @@ Slapback (feedback `0`, high `mix`) on a busy melody makes the delayed copy obvi
 
 <BaxPlayer title="Echo (slapback)" code={fxEchoBax} />
 
+## Pitch bend (`bend`)
+
+Smoothly bends pitch by a number of **semitones** (positive = up, negative = down). Unlike portamento (which glides between discrete notes), bend can target any interval from the base pitch.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `semitones` | yes | Semitone offset (e.g. `+2`, `-12`) |
+| `curve` | no | `linear` (default), `exp` / `exponential`, `log` / `logarithmic`, `sine` / `sin` |
+| `delay` | no | Seconds before the bend starts (default: 50% of note duration) |
+| `time` | no | Bend duration in seconds (default: remaining note duration after delay) |
+
+Musical default: hold the base pitch for half the note, then bend. Use `delay=0` for an immediate bend (`C4<bend:+2,linear,0>`).
+
+**Export:** UGE approximates with tone portamento / steps; MIDI uses pitch-wheel events.
+
+<BaxPlayer title="Pitch bend" code={fxBendBax} />
+
+## Frequency sweep (`sweep`)
+
+Hardware-style frequency sweep (Game Boy NR10 model). Prefer Pulse 1; other channels may warn.
+
+| Param | Required | Meaning |
+|-------|----------|---------|
+| `time` | yes | Sweep step period `0`–`7` (`0` = off; higher = slower steps, units of 1/128 Hz) |
+| `direction` | no | `up` / `+` / `1` or `down` / `-` / `0` (default `down`) |
+| `shift` | yes | Shift amount `0`–`7` (how dramatic each step is) |
+
+Examples: `<sweep:2,down,5>` (classic “pew”), `<sweep:4,down,7>` (fast dive), `<sweep:6,up,4>` (riser).
+
+Instrument-level `sweep=` on `inst … type=pulse1` is separate hardware config — see [Game Boy](/docs/chips/gameboy).
+
+**Export:** UGE maps to NR10 on Pulse 1.
+
+<BaxPlayer title="Hardware-style sweep" code={fxSweepBax} />
+
 ## Tempo and per-channel speed
 
 Master tempo is the top-level `bpm` directive (see [Metadata Directives](/docs/language/metadata-directives)).
@@ -191,4 +232,5 @@ Channels can also take a **`speed=`** multiplier (`speed=2` or `speed=2x`) so th
 - [Tutorial — Effects](/docs/tutorial/effects)
 - [Tutorial — Final song](/docs/tutorial/final-song)
 - [Sequence modifiers](/docs/language/modifiers)
+- [Patterns](/docs/language/patterns)
 - [Game Boy wave `volume=`](/docs/chips/gameboy#wave-channel-volume) (instrument hardware, not an effect preset)

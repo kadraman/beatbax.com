@@ -1,0 +1,114 @@
+.railroad {
+  margin: 1.5rem 0 2rem;
+  padding: 1rem 1.15rem 1.25rem;
+  border: 1px solid var(--beatbax-border-strong);
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color, var(--beatbax-surface));
+}
+
+.legend {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-content-secondary);
+}
+
+.panel {
+  margin-top: 1.15rem;
+}
+
+.panel:first-of-type {
+  margin-top: 0;
+}
+
+.panelTitle {
+  margin: 0 0 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--beatbax-accent-alt);
+}
+
+.track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  row-gap: 0.55rem;
+}
+
+.startCap,
+.endCap {
+  flex: 0 0 auto;
+  width: 0.85rem;
+  height: 2px;
+  background: var(--beatbax-border-strong);
+}
+
+.startCap {
+  border-radius: 2px 0 0 2px;
+}
+
+.endCap {
+  border-radius: 0 2px 2px 0;
+}
+
+.rail {
+  flex: 0 0 auto;
+  width: 0.65rem;
+  height: 2px;
+  background: var(--beatbax-border-strong);
+}
+
+.alt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 1.1rem;
+  padding: 0 0.15rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ifm-color-content-secondary);
+  user-select: none;
+}
+
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  padding: 0.35rem 0.65rem;
+  border: 1.5px solid var(--beatbax-border-strong);
+  border-radius: 4px;
+  background: var(--beatbax-bg, var(--ifm-background-color));
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: border-color 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+
+.box:hover {
+  border-color: var(--beatbax-accent);
+  color: var(--beatbax-accent);
+  text-decoration: none;
+}
+
+.box:focus-visible {
+  outline: 2px solid var(--beatbax-accent-alt);
+  outline-offset: 2px;
+}
+
+.terminal {
+  border-style: solid;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.nonterminal {
+  border-style: solid;
+  border-radius: 4px;
+}
