@@ -21,7 +21,7 @@ name = <PatternRhs>          # shorthand (same as pat; name must not be a reserv
 
 Keep patterns on different channels the **same length** when you chain them in sequences so parts stay locked.
 
-## Pattern RHS {/* #pattern-rhs */}
+## Pattern RHS {#pattern-rhs}
 
 | Form | Meaning |
 |------|---------|
@@ -32,7 +32,7 @@ Keep patterns on different channels the **same length** when you chain them in s
 | `name<…>` | Identifier or note with [effect](/docs/language/effects#effect) suffixes |
 | `"tok tok …"` | Quoted whitespace-split token list |
 
-### Groups and repeats {/* #groups */}
+### Groups and repeats {#groups}
 
 ```bax
 pat rise     = (C5 E5 G5)*2 C6:4
@@ -42,7 +42,7 @@ riff         = C5 . E5 . G5 .     # shorthand
 
 <BaxPlayer title="Groups, repeats, shorthand" code={patternsBasicBax} />
 
-### Temporary instrument (`inst(…)`) {/* #temp-inst */}
+### Temporary instrument (`inst(…)`) {#temp-inst}
 
 | Form | Meaning |
 |------|---------|

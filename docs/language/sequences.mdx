@@ -17,22 +17,22 @@ seq name = <SeqRhs>
 
 Empty sequences (`seq name =` with nothing after `=`) are **errors** — every `seq` needs at least one reference.
 
-## Sequence RHS {/* #sequence-rhs */}
+## Sequence RHS {#sequence-rhs}
 
-### Pattern references {/* #pat-refs */}
+### Pattern references {#pat-refs}
 
 | Form | Meaning |
 |------|---------|
 | `patName` | Play that pattern once |
 | `name:mod(…)` | Apply [modifiers](/docs/language/modifiers#modifier-catalog) (chainable) |
 
-### Repeats (`*N`) {/* #repeat */}
+### Repeats (`*N`) {#repeat}
 
 | Form | Meaning |
 |------|---------|
 | `patName*N` | Repeat the reference `N` times |
 
-### Groups {/* #groups */}
+### Groups {#groups}
 
 | Form | Meaning |
 |------|---------|

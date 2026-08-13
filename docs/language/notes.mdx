@@ -11,7 +11,7 @@ import {notesBasicBax} from '@site/src/components/BaxPlayer/demos/languageRef';
 
 Pattern atoms for pitch and silence. Grammar rules: `NoteToken`, `RestToken`, `DurationSuffix`.
 
-## NoteToken {/* #notetoken */}
+## NoteToken {#notetoken}
 
 | Token | Meaning |
 |-------|---------|
@@ -19,7 +19,7 @@ Pattern atoms for pitch and silence. Grammar rules: `NoteToken`, `RestToken`, `D
 
 Notes may carry inline effect suffixes (`C5<vib:8,4>`) — see [Effects](/docs/language/effects).
 
-## DurationSuffix {/* #duration */}
+## DurationSuffix {#duration}
 
 | Token | Meaning |
 |-------|---------|
@@ -27,7 +27,7 @@ Notes may carry inline effect suffixes (`C5<vib:8,4>`) — see [Effects](/docs/l
 
 A **step** lasts one beat at the song’s `bpm`. Bare notes and rests last one step; `C3:8` lasts eight.
 
-## RestToken {/* #resttoken */}
+## RestToken {#resttoken}
 
 | Token | Meaning |
 |-------|---------|

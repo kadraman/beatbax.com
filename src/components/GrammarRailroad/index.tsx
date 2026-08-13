@@ -42,10 +42,10 @@ function AltTrack({
   kind?: BoxKind;
 }) {
   return (
-    <div className={styles.track} role="list">
+    <div className={styles.track}>
       <span className={styles.startCap} aria-hidden />
       {items.map((item, i) => (
-        <span key={`${item.label}-${i}`} className={styles.track} role="listitem">
+        <span key={`${item.label}-${i}`} className={styles.track}>
           {i > 0 ? <span className={styles.alt} aria-hidden>|</span> : null}
           <span className={styles.rail} aria-hidden />
           <RailBox target={item} kind={kind} />
