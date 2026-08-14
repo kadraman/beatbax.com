@@ -5,9 +5,17 @@ title: BeatBax Copilot
 
 # BeatBax Copilot (AI Assistant)
 
-BeatBax Copilot is a **desktop-only** AI chat assistant. It understands the BeatBax language and can write songs, answer questions, and help debug errors — powered by any OpenAI-compatible REST API (OpenAI, Groq, Ollama, LM Studio, and others).
+BeatBax Copilot is a AI chat assistant. It understands the BeatBax language and can help you to write songs, answer questions, and help debug errors. It is powered by any OpenAI-compatible LLM (OpenAI, Groq, Ollama, LM Studio, and others).
 
-The hosted **BeatBax web-lite client** at [app.beatbax.com](https://app.beatbax.com) does **not** include Copilot. Use [BeatBax Desktop](/docs/tools/desktop).
+> BeatBax Copilot is only available in BeatBax Desktop.
+
+## Limitations
+
+Copilot is a helper for the BeatBax grammar — targeted edits, construction, and debugging — not a replacement for human inspiration and writing.
+
+It is **not** really intended to compose a complete song from scratch, or to make a comprehensive rework of an existing arrangement. Those requests often produce generic, incomplete, or structurally clumsy results. You are welcome to try; treat whatever comes back as a sketch to rewrite, not a finished track.
+
+It is more reliable on small, specific jobs: fix a parse error, add a complementary voice, explain a modifier, or suggest an instrument. Keep authorship with you.
 
 ## Enabling the assistant
 
@@ -126,3 +134,6 @@ Tips: clear Copilot chat before a large Edit; use Ask for explanations; raise `n
 
 - [BeatBax Desktop](/docs/tools/desktop)
 - [Settings](/docs/tools/settings)
+- [Channel Mixer](/docs/tools/channel-mixer)
+- [Song Visualizer](/docs/tools/song-visualizer)
+- [Pattern Grid](/docs/tools/pattern-grid)

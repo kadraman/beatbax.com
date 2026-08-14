@@ -29,7 +29,12 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Tools',
+      link: {
+        type: 'doc',
+        id: 'tools/overview',
+      },
       items: [
+        'tools/overview',
         'tools/cli',
         'tools/web-client',
         {
@@ -40,7 +45,13 @@ const sidebars: SidebarsConfig = {
             id: 'tools/desktop',
           },
           items: [
+            'tools/editor',
             'tools/settings',
+            'tools/channel-mixer',
+            'tools/song-visualizer',
+            'tools/pattern-grid',
+            'tools/midi-step-entry',
+            'tools/new-song-wizard',
             'tools/copilot',
             'tools/verify-downloads',
           ],
@@ -61,6 +72,10 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Export Plugins',
+      link: {
+        type: 'doc',
+        id: 'exports/overview',
+      },
       items: [
         'exports/wav',
         'exports/uge',

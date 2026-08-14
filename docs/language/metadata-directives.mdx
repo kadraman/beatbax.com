@@ -147,7 +147,7 @@ scale C major warn
 | `error` | Notes outside the lock produce **errors** (stricter authoring) |
 | `off` | Keep the scale for the UI / MIDI helpers, but skip diagnostics |
 
-`scale` alone does not change or filter notes. You opt each channel in with **`lock=...`**, which limits that voice to certain **scale degrees**. Writing (or MIDI-entering) a pitch outside the lock triggers warn/error according to the mode above. In [BeatBax Desktop](/docs/tools/desktop), the same metadata snaps/filters MIDI step entry onto the allowed degrees.
+`scale` alone does not change or filter notes. You opt each channel in with **`lock=...`**, which limits that voice to certain **scale degrees**. Writing (or MIDI-entering) a pitch outside the lock triggers warn/error according to the mode above. [MIDI step entry](/docs/tools/midi-step-entry) in Desktop snaps or filters those pitches onto the allowed degrees.
 
 `lock` without a song-level `scale` is a parser error.
 

@@ -3,8 +3,7 @@ sidebar_position: 1
 title: Installation
 ---
 
-**BeatBax** is available as [BeatBax Desktop](/docs/tools/desktop), the [BeatBax web-lite client](/docs/tools/web-client), or the [BeatBax CLI](/docs/tools/cli) — each serving slightly
-different needs.
+**BeatBax** is available as [BeatBax Desktop](/docs/tools/desktop), the [BeatBax web-lite client](/docs/tools/web-client), or the [BeatBax CLI](/docs/tools/cli) — each serving slightly different needs. See the [Tools overview](/docs/tools/overview) for a summary and feature comparison.
 
 ## BeatBax Desktop (recommended)
 
@@ -25,11 +24,11 @@ Supported platforms:
 > macOS installers are Developer ID signed and notarized, but may still 
 > ask you to click <b>'Open anyway'</b> to proceed.
 
-To check installer integrity with `SHA256SUMS` (GitHub Releases or itch.io), see [Verify downloads](/docs/tools/verify-downloads).
+To check installer integrity with `SHA256SUMS` on GitHub Releases (not itch.io), see [Verify downloads](/docs/tools/verify-downloads).
 
 ## BeatBax web-lite client
 
-No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For song exports, [BeatBax Copilot](/docs/tools/copilot), Song Visualizer, and the full Settings UI, use [BeatBax Desktop](/docs/tools/desktop) instead.
+No install required — open [app.beatbax.com](https://app.beatbax.com) in a modern browser for editing and playback. For song exports, [BeatBax Copilot](/docs/tools/copilot), [Song Visualizer](/docs/tools/song-visualizer), and the full Settings UI, use [BeatBax Desktop](/docs/tools/desktop) instead.
 
 ## BeatBax CLI
 

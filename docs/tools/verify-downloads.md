@@ -3,7 +3,10 @@ sidebar_position: 4
 title: Verify downloads
 ---
 
-Verify Desktop installer downloads with `SHA256SUMS` on [GitHub Releases](https://github.com/kadraman/beatbax/releases). Each Desktop release (tags `desktop-v*`) ships a `SHA256SUMS` file listing the SHA-256 digest of every installer asset.
+If required, you can verify Desktop installer downloads with `SHA256SUMS` on [GitHub Releases](https://github.com/kadraman/beatbax/releases). Each Desktop release (tags `desktop-v*`) ships a `SHA256SUMS` file listing the SHA-256 digest of every installer asset.
+
+> This does **not** apply to [itch.io](https://kadraman.itch.io/beatbax) downloads — itch.io does not publish `SHA256SUMS`, and those files are not covered by the GitHub checksums below.
+
 
 ## Checksums
 
@@ -48,13 +51,7 @@ A matching file prints `OK`. If digests differ, re-download before installing.
 
 ## itch.io downloads
 
-itch.io does not publish `SHA256SUMS`, but you can still verify an itch download against the GitHub release checksums when the file is the same binary as the release asset:
-
-1. Download `SHA256SUMS` from the matching [GitHub Release](https://github.com/kadraman/beatbax/releases).
-2. Hash the file you got from itch.io.
-3. Compare the digest to the matching line in `SHA256SUMS` (match by hash — itch listing titles may differ from GitHub filenames).
-
-If the digests do not match, prefer the GitHub release copy.
+itch.io does not publish `SHA256SUMS`, and the GitHub checksums do not apply to itch.io downloads. Verify GitHub Release assets only.
 
 ## Optional GPG
 

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: BeatBax Desktop
 ---
 
@@ -11,70 +11,72 @@ title: BeatBax Desktop
 
 > macOS GitHub Release installers are Developer ID signed and notarized. Windows installers are not Authenticode-signed — SmartScreen may warn (More info → Run anyway). See `README.txt` in the install folder.
 
-## Getting around
+> See the [Tools overview](/docs/tools/overview#feature-comparison) for a comparison with the web-lite client and the CLI.
 
-- **Toolbar** — Open/Save, export menu, theme / word wrap / fold
+## Navigating
+
+- **Toolbar** — Open/Save, chip specific export menu, theme / word wrap / fold
 - **Transport bar** — play, pause, stop, apply, BPM, loop, live, rewind, BPM nudge, master volume
-- **Editor** — Monaco with diagnostics; optional CodeLens, glyph margin, and command palette
-- **Panels** — Problems, Output, Visualizer, Help, and (when enabled) Mixer, Pattern Grid, [BeatBax Copilot](/docs/tools/copilot)
+- **[Editor](/docs/tools/editor)** — Monaco editor with diagnostics, CodeLens, glyph margin, and command palette
+- **Panels** — Problems, Output, [Song Visualizer](/docs/tools/song-visualizer), Help, and (when enabled) [Channel Mixer](/docs/tools/channel-mixer), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)
 - **Status bar** — cursor position, parse status, chip/BPM, panel menu, diagnostics counts
-- **New Song Wizard** — **File → New** / toolbar New; first-run chip picker (Stable / Beta / Experimental)
+- **New Song Wizard** — [New Song Wizard](/docs/tools/new-song-wizard) (**File → New** / toolbar New; first-run chip picker)
 
 Native Open/Save dialogs, recent files, and file associations are built in. **File → Open** starts in the bundled songs directory shipped with the installer.
 
 ## Playback
 
 1. Open a `.bax` song (**File → Open**, or paste into the editor).
-2. **Apply** (or enable **Live** for debounced auto-apply).
-3. **Play** / **Pause** / **Stop** from the transport bar.
+2. **Apply** or **Play** (or enable **Live** for debounced auto-apply).
+3.  **Pause** / **Stop** from the transport bar.
 
 **BPM nudge:** transport `«` / `»` steps tempo by 1 BPM without editing the source. Editing the `bpm` line or loading another file clears the override.
 
 **Mute / Solo:** per-channel controls after a song is applied.
 
-## Editor features
+## The Editor
 
-### CodeLens previews
+The Desktop editor is the full [BeatBax Editor](/docs/tools/editor): it includes syntax highlighting, completions, diagnostics, CodeLens previews, glyph margin, beat decorations, and a command palette. Please see [BeatBax Editor](/docs/tools/editor) for full details
 
-When enabled (Settings → Editor), above `pat` / `seq` / `inst` / `effect` lines you can:
+> The [web-lite client](/docs/tools/web-client) uses the same editor without CodeLens, the glyph margin, or the command palette.
 
-- **Preview** / **Loop** / **Stop** isolated pattern or sequence playback
-- Audition notes on `inst` lines (`C3`–`C7`)
-- Audition effect presets on `effect` lines
+## Settings
 
-Only one preview plays at a time.
+Desktop preferences live in a single [Settings](/docs/tools/settings) modal. Open it with `Ctrl+,` (Windows / Linux) / `Cmd+,` (macOS), **View → Settings…**, or the toolbar `…` menu.
 
-### Command palette
+Use it to set theme and editor behaviour, playback (audio backend, sample rate, loop), feature flags ([Channel Mixer](/docs/tools/channel-mixer), [Song Visualizer](/docs/tools/song-visualizer), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)), [sound chip](/docs/chips/overview) and [export](/docs/exports/overview) plugins, and the Copilot provider. Most changes apply immediately. See [Settings](/docs/tools/settings) for every tab and the shortcuts that need a reload.
 
-`F1` or `Ctrl+Shift+P` / `Cmd+Shift+P`, then type `BeatBax` for Play Selected, Verify, Export, Generate Sample Instruments/Pattern, Insert Transform, Instrument Override, Format Document, Mute/Solo Channel, and more.
+> The [web-lite client](/docs/tools/web-client) has no Settings modal — theme and word wrap are toolbar-only.
 
-### MIDI step entry
+## Sound Chip Plugins
 
-Enable MIDI input in Settings, then use the transport record control to step notes into the editor.
+[Sound Chip Plugins](/docs/chips/overview) are enabled in [Settings](/docs/tools/settings) (**Plugins**). Built-in chips are always available; optional chips can be turned on or off there. See [Sound Chip Plugins](/docs/chips/overview) for supported backends, voices, and chip-specific details.
 
-## Export
+## Exporting
 
-Use the toolbar or menu to export JSON, MIDI, UGE, WAV, and chip-specific formats (FamiTracker text, VGM, Arkos) when available for the active song’s chip.
+[Export Plugins](/docs/exports/overview) are enabled in [Settings](/docs/tools/settings) (**Plugins**). JSON and MIDI are built in for every chip; WAV and chip-specific formats (UGE, FamiTracker text, VGM, Arkos, and others) can be turned on or off there. Use the toolbar or menu to export when a format is available for the active song’s chip. See [Export Plugins](/docs/exports/overview) for format ids and chip-specific guides.
 
-## Settings and Copilot
+## Panels
 
-- [Settings](/docs/tools/settings) — theme, editor, playback, feature flags, AI provider
-- [BeatBax Copilot](/docs/tools/copilot) — AI assistant (enable under Settings → Features)
+BeatBax Desktop docks extra views around the editor. Show or hide them from the status bar **panel menu** or the **View** menu. Mixer, Visualizer, Pattern Grid, and Copilot are also gated under [Settings → Features](/docs/tools/settings).
 
-## Compared with the web-lite client
+- **Problems** / **Output** — parser diagnostics and log (bottom pane)
+- **Help** — syntax reference (`H` / `?`; click-to-insert)
+- [Channel Mixer](/docs/tools/channel-mixer) — channel strips, VU meters, mute/solo (bottom panel)
+- [Song Visualizer](/docs/tools/song-visualizer) — per-channel waveforms and performance mode (right pane)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline above the editor (Experimental)
+- [BeatBax Copilot](/docs/tools/copilot) — AI assistant (right pane)
 
-| Capability | BeatBax Desktop | [BeatBax web-lite client](/docs/tools/web-client) |
-|------------|-----------------|--------------------------------------------------|
-| Native Open/Save | Yes | Download-only Save |
-| Full export menu | Yes | No |
-| Settings modal | Yes | Theme / wrap via toolbar |
-| Copilot, mixer, pattern grid | Yes (gated) | No |
-| CodeLens / command palette | Yes | No |
+## MIDI step entry
+
+[MIDI step entry](/docs/tools/midi-step-entry) puts notes into a `pat` from a MIDI keyboard, one step at a time — it is not a realtime recorder. Enable **MIDI input** in [Settings → Editor](/docs/tools/settings), arm the transport **record** control, then play keys into the editor. Scale `lock=` on a channel snaps or filters incoming pitches. The [web-lite client](/docs/tools/web-client) has no MIDI step entry.
 
 ## Related docs
 
 - [Installation](/docs/getting-started/installation)
 - [Verify downloads](/docs/tools/verify-downloads)
+- [Tools overview](/docs/tools/overview)
+- [BeatBax Editor](/docs/tools/editor)
 - [BeatBax web-lite client](/docs/tools/web-client)
 - [BeatBax CLI](/docs/tools/cli)
 - [Desktop development](/docs/development/desktop-app)
