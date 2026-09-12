@@ -5,7 +5,7 @@ title: BeatBax CLI
 
 # BeatBax CLI
 
-The **BeatBax CLI** verifies, plays, exports, inspects, and converts songs.
+The **BeatBax CLI** verifies, plays, exports, inspects, extracts instruments, and converts songs.
 
 ## Install
 
@@ -40,6 +40,11 @@ beatbax play songs/sample.bax --browser
 beatbax export wav songs/sample.bax output.wav
 beatbax export uge songs/sample.bax output.uge
 beatbax export arkos songs/spectrum-128/song.bax --instruments   # .aki bank only
+
+# Extract instruments from hUGETracker .uge → .ins kit
+beatbax extract instrument song.uge
+beatbax extract instrument song.uge kit.ins
+beatbax extract instrument path/to/uges --out gameboy.ins --demo gameboy-instruments-demo.bax
 
 # WAV → NES DMC sample
 beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst
@@ -81,6 +86,55 @@ beatbax inspect output.uge --json
 beatbax inspect songs/sample.bax
 beatbax inspect output.uge --json
 ```
+
+### Extract instruments from UGE files
+
+`beatbax extract instrument` pulls duty / wave / noise instruments (plus `subpat` programs) from [hUGETracker](https://nickfa.ro/wiki/HUGETracker) `.uge` files into a BeatBax [`.ins` kit](/docs/language/imports). This is **not** full-song import — patterns and orders stay on a future `beatbax convert uge` command. Use extract when you want reusable patches from tracker songs to `import "local:….ins"` into new compositions.
+
+```powershell
+beatbax extract instrument song.uge
+beatbax extract instrument song.uge kit.ins
+beatbax extract instrument path/to/uges --out gameboy.ins --demo gameboy-instruments-demo.bax
+beatbax extract instrument dumped.bin --from uge --out dumped.ins
+```
+
+```text
+Usage: beatbax extract instrument [options] <inputs...> [output.ins]
+```
+
+**Inputs:** one or more `.uge` files and/or directories of `*.uge` (non-recursive). Mix of files and directories is allowed.
+
+**Kit path:**
+
+- Trailing `kit.ins` argument, or `--out <path>` — where to write the kit
+- For a **single** `.uge`, omit the output path to write `{basename}.ins` beside the source
+- Several files or a directory require `--out` (or a trailing `.ins` path)
+- When both a trailing `.ins` and `--out` are given, **`--out` wins** and the trailing `.ins` is not treated as an input
+
+A song then uses the kit:
+
+```bax
+chip gameboy
+import "local:kit.ins"
+bpm 128
+channel 1 => inst Lead pat hook
+```
+
+Keep the kit beside the song, or under a child folder such as `lib/` — parent `..` segments in `local:` paths are rejected by import security.
+
+| Flag | Description |
+|------|-------------|
+| `-o, --out <path>` | Write the `.ins` kit here (overrides a trailing `.ins` argument) |
+| `--from <format>` | Source format (`uge` in v1). Default: infer from extension |
+| `--stdout` | Print the kit to stdout; do not write a kit file |
+| `--summary` | Print counts and renames only; do not write a kit |
+| `--demo [path]` | Write a tour `.bax` that imports the kit and plays every name once (default: `{kitStem}-demo.bax`). Requires writing a kit file — cannot combine with `--summary` or `--stdout` |
+| `--type <list>` | Comma-separated kinds: `pulse`, `wave`, `noise` (default: all) |
+| `--strict` | Exit non-zero if any input is missing, unknown, or fails to parse |
+
+**Exit codes:** `0` success; `1` usage / missing files / unknown format; `2` parse failure (`--strict`, or every input failed).
+
+See also [UGE export](/docs/exports/uge) for the reverse direction (BeatBax → `.uge`).
 
 ### Sample conversion
 
@@ -128,6 +182,8 @@ If `speaker` did not build on install, playback may fall back or be unreliable �
 
 - [Installation](/docs/getting-started/installation)
 - [Tools overview](/docs/tools/overview)
+- [Instrument Imports](/docs/language/imports)
+- [UGE export](/docs/exports/uge)
 - [Export Plugins](/docs/exports/overview)
 - [CLI development](/docs/development/cli)
 - [BeatBax Desktop](/docs/tools/desktop)

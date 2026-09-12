@@ -33,9 +33,11 @@ A command-line client for scripted, utility and headless workflows. Install with
 | [Sound Chip Plugins](/docs/chips/overview) | Yes | Yes (Pre-configured) | Yes |
 | [Export Plugins](/docs/exports/overview) | Yes | No | Yes |
 | [Song inspection](/docs/tools/cli#inspect) | No | No | Yes (`inspect`) |
+| [Instrument extract](/docs/tools/cli#extract-instruments-from-uge-files) | No | No | Yes (`extract instrument`) |
 | [Sample conversion](/docs/tools/cli#sample-conversion) | No | No | Yes (`wav2dmc`) |
 | [Settings](/docs/tools/settings) | Full Settings modal | Theme and toolbar only | CLI flags |
 | [Channel Mixer](/docs/tools/channel-mixer) | Yes | Yes | N/A |
+| [Instrument Editor](/docs/tools/instrument-editor) | Yes (Experimental) | No | N/A |
 | [Pattern Grid](/docs/tools/pattern-grid) | Yes (Experimental) | No | N/A |
 | [Song Visualizer](/docs/tools/song-visualizer) | Yes | No | N/A |
 | [BeatBax Copilot](/docs/tools/copilot) | Yes | No | N/A |

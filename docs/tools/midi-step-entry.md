@@ -19,6 +19,8 @@ title: MIDI step entry
 
 Each MIDI note inserts a BeatBax pitch token at the cursor and advances, so you can build a phrase without typing note names.
 
+When the [Instrument Editor](/docs/tools/instrument-editor) **Instruments** tab is focused, MIDI prefers **audition** of the selected instrument over step entry unless transport **Record** is armed.
+
 ## Scale and lock
 
 If the song declares a [`scale`](/docs/language/metadata-directives#scale-and-channel-locks) and the channel has `lock=…`, Desktop snaps or filters MIDI step entry onto the allowed scale degrees. That matches typed notes: out-of-lock pitches warn or error according to the scale mode (`warn`, `error`, or `off`).
@@ -27,5 +29,6 @@ If the song declares a [`scale`](/docs/language/metadata-directives#scale-and-ch
 
 - [BeatBax Desktop](/docs/tools/desktop)
 - [Settings](/docs/tools/settings)
+- [Instrument Editor](/docs/tools/instrument-editor)
 - [Notes](/docs/language/notes)
 - [Scale and channel locks](/docs/language/metadata-directives#scale-and-channel-locks)

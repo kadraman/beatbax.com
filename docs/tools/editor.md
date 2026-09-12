@@ -48,6 +48,7 @@ CodeLens is **Desktop-only**. Enable it under **Settings → Editor**. Clickable
 
 - **Preview** / **Loop** / **Stop** on a `pat` or `seq` — play that pattern or sequence in isolation. Loop re-parses on each pass, so edits you make while looping are heard on the next iteration.
 - Note buttons **C3**–**C7** on an `inst` line — audition the instrument’s timbre without writing a pattern. Clicking the same note again restarts it.
+- **Edit** on an `inst` line — when the [Instrument Editor](/docs/tools/instrument-editor) feature is enabled, open the Instruments tab, select that instrument, and keep focus on the panel for graphical editing and preview.
 - **Preview** on an `effect` line — play a short ascending phrase with that preset applied (for example `vib`, `arp`, or `port`).
 
 The preview uses the instrument already associated with that pattern or sequence in a `channel` line; otherwise it uses the first declared instrument. Only one preview plays at a time — starting another stops the current one.
@@ -67,28 +68,75 @@ Beat decorations are **Desktop-only** (Settings → Editor). After a successful 
 
 ## Command palette
 
-The command palette is **Desktop-only**. Open it with `F1` or `Ctrl+Shift+P` / `Cmd+Shift+P`, then type `BeatBax`:
+The command palette is **Desktop-only**. Open it with `F1` or `Ctrl+Shift+P` / `Cmd+Shift+P`.
+
+BeatBax commands use short action names for common work (`Go to Definition`, `Quick Export`) and a light category for the rest (`Export: MIDI`, `Arrange: Split Monolithic Channel Sequences`). Many Monaco developer and generic IDE leftovers are hidden so the list stays focused on song authoring.
+
+Commands that need a selection, a symbol under the cursor, [Copilot](/docs/tools/copilot), [MIDI step entry](/docs/tools/midi-step-entry), or [Pattern Grid](/docs/tools/pattern-grid) appear only when those conditions are met.
+
+### Keyboard shortcuts
+
+| Shortcut | Command |
+|----------|---------|
+| `Ctrl+Shift+D` / `Cmd+Shift+D` | Go to Pattern Definition |
+| `Ctrl+Shift+E` / `Cmd+Shift+E` | Extract to Pattern |
+| `Ctrl+E` / `Cmd+E` | Quick Export (last format) |
+
+Verify from the toolbar or the app **Validate** shortcut (`Alt+V` on Desktop). Audition individual patterns and sequences with [CodeLens](#codelens-previews); use [Pattern Grid](/docs/tools/pattern-grid) section focus for multi-channel arrangement slices.
+
+### Right-click menu
+
+The editor context menu always includes a small BeatBax set (for example **Format Document**, **Quick Export**, **List All Definitions…**, **Insert Transform…**, **Syntax Reference…**) and adds more when useful:
+
+| When | Extra commands |
+|------|----------------|
+| Cursor on a `pat` / `seq` / `inst` / `subpat` reference | **Go to Definition**, **Find All References**, **Rename Definition…** |
+| Text selected | **Extract to Pattern**, **Add Selection to Copilot** (Copilot enabled) |
+| Cursor on a `pat` or `seq` definition line | **Duplicate Pattern** / **Duplicate Sequence** |
+| Pattern Grid feature on and panel visible | **Play Arrangement Slice** |
+
+**Go to Definition** jumps from a reference to its definition (including `subpat=…` on an instrument). It is hidden when the cursor is already on that definition.
+
+### Common commands
 
 | Command | Description |
 |---------|-------------|
-| Play Selected Sequence / Pattern | Play highlighted `seq` / `pat` lines (`Ctrl+Shift+Space`) |
-| Verify / Validate Song | Re-run the parser and show the Problems panel (`Ctrl+Shift+V`) |
-| Export → JSON / MIDI / UGE / WAV | Export the current song (see [Export Plugins](/docs/exports/overview)) |
-| Generate Sample Instruments | Insert a starter `inst` block for the song’s chip |
-| Generate Sample Pattern | Insert a placeholder `pat` with 4/4 notes |
-| Insert Transform… | Quick-pick a [modifier](/docs/language/modifiers) (`oct`, `rev`, `slow`, `fast`, `arp`, …) and insert it at the cursor |
-| Instrument Override… | Context-aware override: channel `inst`, sequence `:inst(name)`, or pattern `inst(...)` |
-| Format BeatBax Document | Normalise whitespace and align `=` in `pat` / `seq` blocks |
-| Toggle Mute Channel… / Solo Channel… | Quick-pick a channel to mute or solo |
+| **Go to Definition** | Jump to the `pat`, `seq`, `inst`, or `subpat` definition for the name under the cursor |
+| **Go to Pattern / Sequence / Instrument Definition** | Same jump, filtered by kind (pattern has a shortcut above) |
+| **Find All References** | Open Find on the symbol under the cursor |
+| **List All Definitions…** | Quick-pick every `pat` / `seq` / `inst` in the song |
+| **Extract to Pattern** | Turn the selection into a new `pat` and replace it with a reference |
+| **Duplicate Pattern** / **Duplicate Sequence** | Clone the definition under the cursor |
+| **Rename Definition…** | Rename a symbol and update references in the buffer |
+| **Format Document** | Normalise whitespace and align `=` in `pat` / `seq` blocks |
+| **Insert Transform…** | Quick-pick a [modifier](/docs/language/modifiers) (`oct`, `rev`, `slow`, `fast`, `arp`, …) and insert it at the cursor |
+| **Quick Export** | Re-export in the last format used (`Ctrl+E` / `Cmd+E`) |
+| **Export: JSON / MIDI / UGE / WAV / …** | Export the current song (see [Export Plugins](/docs/exports/overview)) |
+| **Export: Clipboard…** | Copy export text to the clipboard (merges `local:` imports on Desktop) |
+| **Validate: Verify Song** | Re-run the parser and show the Problems panel |
+| **Generate: Sample Instruments** | Insert a starter `inst` block for the song’s chip |
+| **Generate: Sample Pattern** | Insert a placeholder `pat` with 4/4 notes |
+| **Channel: Toggle Mute… / Solo…** | Quick-pick a channel to mute or solo |
+| **Channel: Instrument Override…** | Context-aware override: channel `inst`, sequence `:inst(name)`, or pattern `inst(...)` |
+| **Play Arrangement Slice** | Focus and play the [Pattern Grid](/docs/tools/pattern-grid) section at the cursor (Pattern Grid must be on and visible) |
+| **Arrange: Add Section Header Comments** | Insert `# --- Section N: … ---` markers for section focus |
+| **Arrange: Restructure Phased Sections into Headers** | Rewrite phased channel-grouped `seq` defs into section header blocks |
+| **Arrange: Split Monolithic Channel Sequences** | Split one long `seq` per channel into aligned section sequences |
+| **Add Selection to Copilot** | Attach the editor selection as a Copilot context chip |
+| **MIDI: Start / Stop / Toggle Step Entry** | Control [MIDI step entry](/docs/tools/midi-step-entry) |
+| **Syntax Reference…** | Open the in-app syntax help |
+
+Prefer **CodeLens ▶ Preview** for single-pattern audition. Prefer Pattern Grid section focus (or **Play Arrangement Slice** when the grid is open) for hearing a full arrangement column across channels.
 
 ## Related editor tools
 
 These sit around the editor rather than inside it:
 
 - [MIDI step entry](/docs/tools/midi-step-entry) — step notes from a MIDI keyboard (Desktop)
+- [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing and preview (Desktop, Experimental)
 - [New Song Wizard](/docs/tools/new-song-wizard) — chip picker and starter template
 - [BeatBax Copilot](/docs/tools/copilot) — AI edits applied to the buffer (Desktop)
-- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline above the editor (Desktop, Experimental)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline and section-focus playback (Desktop, Experimental)
 
 ## Related docs
 

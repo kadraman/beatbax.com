@@ -39,4 +39,5 @@ Drag the top edge of the mixer to change its height. The layout is remembered be
 - [BeatBax Desktop](/docs/tools/desktop)
 - [Song Visualizer](/docs/tools/song-visualizer)
 - [Pattern Grid](/docs/tools/pattern-grid)
+- [Instrument Editor](/docs/tools/instrument-editor)
 - [Settings](/docs/tools/settings)

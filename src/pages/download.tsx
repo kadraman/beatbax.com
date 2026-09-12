@@ -59,7 +59,7 @@ export default function DownloadPage(): ReactNode {
             </Link>
           </p>
           <p>
-            <i>Please note: Song export, <Link to="/docs/tools/copilot">BeatBax Copilot</Link>, Channel Mixer, Visualizer and other enhanced features require{' '}
+            <i>Please note: Song export, <Link to="/docs/tools/copilot">BeatBax Copilot</Link>, Channel Mixer, Visualizer, Instrument Editor and other enhanced features require{' '}
             <Link to="/docs/tools/desktop">BeatBax Desktop</Link></i>.
           </p>
         </DownloadCard>

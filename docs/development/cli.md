@@ -5,9 +5,9 @@ title: CLI
 
 # CLI Development
 
-The CLI wraps the engine for scripted playback, validation, inspection, conversion, and export.
+The CLI wraps the engine for scripted playback, validation, inspection, instrument extract, conversion, and export.
 
-Work here when changing commands, flags, terminal output, headless playback, conversion, or export wiring.
+Work here when changing commands, flags, terminal output, headless playback, extract, conversion, or export wiring.
 
 ## Commands
 

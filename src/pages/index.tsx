@@ -35,7 +35,7 @@ const features = [
     description: (
       <>
         Full Electron IDE for Windows, macOS, and Linux with code editor, channel
-        mixer, visualizer and{' '}
+        mixer, visualizer, instrument editor and{' '}
         <Link to="/docs/tools/copilot">BeatBax Copilot</Link> AI assistant.
       </>
     ),

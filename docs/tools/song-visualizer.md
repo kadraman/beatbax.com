@@ -44,5 +44,6 @@ Background effect choice is stored in app preferences.
 
 - [BeatBax Desktop](/docs/tools/desktop)
 - [Channel Mixer](/docs/tools/channel-mixer)
+- [Instrument Editor](/docs/tools/instrument-editor)
 - [Pattern Grid](/docs/tools/pattern-grid)
 - [Settings](/docs/tools/settings)

@@ -472,6 +472,8 @@ channel 4 => inst kick pat drums
 - [hUGETracker Official Site](https://github.com/SuperDisk/hUGETracker)
 - [UGE v6 Format Specification](https://github.com/kadraman/beatbax/blob/main/docs/formats/uge-v6-spec.md)
 - [BeatBax Tutorial](/docs/tutorial/overview)
+- [CLI — Extract instruments from UGE](/docs/tools/cli#extract-instruments-from-uge-files) — pull `.uge` instruments into a reusable `.ins` kit
+- [Instrument Imports](/docs/language/imports)
 - [Implementation Details](https://github.com/kadraman/beatbax/blob/main/DEVNOTES.md)
 
 ## Support

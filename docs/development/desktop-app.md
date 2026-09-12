@@ -35,8 +35,8 @@ Installers are published via git tags and CI — not npm.
 4. Tag and push:
 
 ```powershell
-git tag -a desktop-v0.2.0 -m "BeatBax Desktop v0.2.0"
-git push origin desktop-v0.2.0
+git tag -a desktop-v0.3.0 -m "BeatBax Desktop v0.3.0"
+git push origin desktop-v0.3.0
 ```
 
 The [Desktop: Build](https://github.com/kadraman/beatbax/actions/workflows/desktop-build.yaml) workflow packages on Windows, macOS, and Linux and publishes to GitHub Releases.

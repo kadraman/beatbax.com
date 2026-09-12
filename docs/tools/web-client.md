@@ -7,7 +7,7 @@ title: BeatBax web-lite client
 
 The **BeatBax web-lite client** is a browser editor and player at [app.beatbax.com](https://app.beatbax.com). Use it to try the language, play examples, and sketch `.bax` songs without installing anything.
 
-It is a **lite** host of the same grammar and playback engine — not the full IDE. There is no song export, no [BeatBax Copilot](/docs/tools/copilot), no [Song Visualizer](/docs/tools/song-visualizer), and no access to files on disk beyond what the browser allows. For those, use [BeatBax Desktop](/docs/tools/desktop) (recommended) or the [CLI](/docs/tools/cli). See the [Tools overview](/docs/tools/overview#feature-comparison) for a comparison of all three hosts.
+It is a **lite** host of the same grammar and playback engine — not the full IDE. There is no song export, no [BeatBax Copilot](/docs/tools/copilot), no [Song Visualizer](/docs/tools/song-visualizer), no [Instrument Editor](/docs/tools/instrument-editor), and no access to files on disk beyond what the browser allows. For those, use [BeatBax Desktop](/docs/tools/desktop) (recommended) or the [CLI](/docs/tools/cli). See the [Tools overview](/docs/tools/overview#feature-comparison) for a comparison of all three hosts.
 
 ## What it is for
 

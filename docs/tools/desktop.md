@@ -18,7 +18,7 @@ title: BeatBax Desktop
 - **Toolbar** — Open/Save, chip specific export menu, theme / word wrap / fold
 - **Transport bar** — play, pause, stop, apply, BPM, loop, live, rewind, BPM nudge, master volume
 - **[Editor](/docs/tools/editor)** — Monaco editor with diagnostics, CodeLens, glyph margin, and command palette
-- **Panels** — Problems, Output, [Song Visualizer](/docs/tools/song-visualizer), Help, and (when enabled) [Channel Mixer](/docs/tools/channel-mixer), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)
+- **Panels** — Problems, Output, [Song Visualizer](/docs/tools/song-visualizer), Help, and (when enabled) [Channel Mixer](/docs/tools/channel-mixer), [Instrument Editor](/docs/tools/instrument-editor), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)
 - **Status bar** — cursor position, parse status, chip/BPM, panel menu, diagnostics counts
 - **New Song Wizard** — [New Song Wizard](/docs/tools/new-song-wizard) (**File → New** / toolbar New; first-run chip picker)
 
@@ -34,6 +34,8 @@ Native Open/Save dialogs, recent files, and file associations are built in. **Fi
 
 **Mute / Solo:** per-channel controls after a song is applied.
 
+**Section focus:** with the [Pattern Grid](/docs/tools/pattern-grid) enabled, use the section lane, **F6**, or the command palette to focus and play one arrangement section across all channels. **F5** plays the focused section; **Alt+←** / **Alt+→** steps between sections; **Esc** exits focus. While a section is playing, the grid playhead tracks inside the focused column. See [Pattern Grid](/docs/tools/pattern-grid) for shortcuts, editing while focused, and supported song layouts.
+
 ## The Editor
 
 The Desktop editor is the full [BeatBax Editor](/docs/tools/editor): it includes syntax highlighting, completions, diagnostics, CodeLens previews, glyph margin, beat decorations, and a command palette. Please see [BeatBax Editor](/docs/tools/editor) for full details
@@ -44,7 +46,7 @@ The Desktop editor is the full [BeatBax Editor](/docs/tools/editor): it includes
 
 Desktop preferences live in a single [Settings](/docs/tools/settings) modal. Open it with `Ctrl+,` (Windows / Linux) / `Cmd+,` (macOS), **View → Settings…**, or the toolbar `…` menu.
 
-Use it to set theme and editor behaviour, playback (audio backend, sample rate, loop), feature flags ([Channel Mixer](/docs/tools/channel-mixer), [Song Visualizer](/docs/tools/song-visualizer), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)), [sound chip](/docs/chips/overview) and [export](/docs/exports/overview) plugins, and the Copilot provider. Most changes apply immediately. See [Settings](/docs/tools/settings) for every tab and the shortcuts that need a reload.
+Use it to set theme and editor behaviour, playback (audio backend, sample rate, loop), feature flags ([Channel Mixer](/docs/tools/channel-mixer), [Instrument Editor](/docs/tools/instrument-editor), [Song Visualizer](/docs/tools/song-visualizer), [Pattern Grid](/docs/tools/pattern-grid), [BeatBax Copilot](/docs/tools/copilot)), [sound chip](/docs/chips/overview) and [export](/docs/exports/overview) plugins, and the Copilot provider. Most changes apply immediately. See [Settings](/docs/tools/settings) for every tab and the shortcuts that need a reload.
 
 > The [web-lite client](/docs/tools/web-client) has no Settings modal — theme and word wrap are toolbar-only.
 
@@ -58,13 +60,14 @@ Use it to set theme and editor behaviour, playback (audio backend, sample rate, 
 
 ## Panels
 
-BeatBax Desktop docks extra views around the editor. Show or hide them from the status bar **panel menu** or the **View** menu. Mixer, Visualizer, Pattern Grid, and Copilot are also gated under [Settings → Features](/docs/tools/settings).
+BeatBax Desktop docks extra views around the editor. Show or hide them from the status bar **panel menu** or the **View** menu. Mixer, Instrument Editor, Visualizer, Pattern Grid, and Copilot are also gated under [Settings → Features](/docs/tools/settings).
 
 - **Problems** / **Output** — parser diagnostics and log (bottom pane)
 - **Help** — syntax reference (`H` / `?`; click-to-insert)
 - [Channel Mixer](/docs/tools/channel-mixer) — channel strips, VU meters, mute/solo (bottom panel)
+- [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing, waveforms, macros, and preview (right pane; Experimental)
 - [Song Visualizer](/docs/tools/song-visualizer) — per-channel waveforms and performance mode (right pane)
-- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline above the editor (Experimental)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline, section lane, and section-focus playback (Experimental)
 - [BeatBax Copilot](/docs/tools/copilot) — AI assistant (right pane)
 
 ## MIDI step entry

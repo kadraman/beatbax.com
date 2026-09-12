@@ -48,6 +48,7 @@ const sidebars: SidebarsConfig = {
             'tools/editor',
             'tools/settings',
             'tools/channel-mixer',
+            'tools/instrument-editor',
             'tools/song-visualizer',
             'tools/pattern-grid',
             'tools/midi-step-entry',

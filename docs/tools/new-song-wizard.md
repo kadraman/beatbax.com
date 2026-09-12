@@ -37,5 +37,6 @@ Pick the console you want to write for. The template’s voices and instrument t
 - [BeatBax Desktop](/docs/tools/desktop)
 - [BeatBax web-lite client](/docs/tools/web-client)
 - [Sound Chip Plugins](/docs/chips/overview)
+- [Instrument Editor](/docs/tools/instrument-editor)
 - [Song header](/docs/tutorial/song-header)
 - [Metadata directives](/docs/language/metadata-directives)
