@@ -49,9 +49,15 @@ CodeLens is **Desktop-only**. Enable it under **Settings → Editor**. Clickable
 - **Preview** / **Loop** / **Stop** on a `pat` or `seq` — play that pattern or sequence in isolation. Loop re-parses on each pass, so edits you make while looping are heard on the next iteration.
 - Note buttons **C3**–**C7** on an `inst` line — audition the instrument’s timbre without writing a pattern. Clicking the same note again restarts it.
 - **Edit** on an `inst` line — when the [Instrument Editor](/docs/tools/instrument-editor) feature is enabled, open the Instruments tab, select that instrument, and keep focus on the panel for graphical editing and preview.
-- **Preview** on an `effect` line — play a short ascending phrase with that preset applied (for example `vib`, `arp`, or `port`).
+- **Preview** / **Slow** / **Loop** on an `effect` line — play a short phrase with that preset applied (for example `vib`, `arp`, or `port`). **Slow** uses longer notes so slow or wide slides and bends have time to develop.
 
 The preview uses the instrument already associated with that pattern or sequence in a `channel` line; otherwise it uses the first declared instrument. Only one preview plays at a time — starting another stops the current one.
+
+### Choosing which previews appear
+
+Under **Settings → Editor**, **Show CodeLens previews** turns all previews on or off. Below it, separate toggles control **Pattern previews (pat)**, **Sequence previews (seq)**, **Instrument previews (inst)**, and **Effect previews (effect)**. All are on by default. For example, turn off sequence previews if you audition arrangements in [Pattern Grid](/docs/tools/pattern-grid) section focus, but keep the instrument note buttons.
+
+Changing any of these toggles stops the preview that is playing, so a looping preview never keeps going after its **Stop** button is hidden. The **Edit** lens on `inst` lines is not a preview and is not affected by these toggles.
 
 Web-lite has no CodeLens. To audition parts in isolation there, apply the song and use mute/solo, or switch to Desktop.
 

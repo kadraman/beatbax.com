@@ -72,7 +72,7 @@ Names, aliases, region qualifiers, and per-chip details are listed under [Sound 
 
 ### BPM {/* #bpm */}
 
-`bpm` sets the song’s **master tempo** in beats per minute (default `120`). Each **step** in a pattern lasts one beat at that tempo, so higher values make the same phrase play faster and lower values slower.
+`bpm` sets the song’s **master tempo** in beats per minute (default `120`). Each **step** in a pattern lasts one sixteenth note at that tempo (`60 / bpm / 4` seconds), so four steps make one beat and `C4:8` lasts two beats. Higher values make the same phrase play faster and lower values slower.
 
 ```bax
 bpm 140

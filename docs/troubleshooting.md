@@ -69,6 +69,16 @@ npm config set allow-scripts=speaker --location=user
 
 Only do that if you are comfortable letting `speaker`’s known install script run (normal for this package).
 
+### Desktop: NES DMC sample is silent
+
+If a `type=dmc` instrument makes no sound, open the **Output** panel after pressing Play. A sample that could not be loaded is reported there as a `[playback]` warning starting with `NES DMC: failed to load sample '<reference>':`, followed by the reason.
+
+- **"Remote asset host '…' is not in the Desktop allowlist"** — add the hostname under **Settings → Advanced → Remote host allowlist** and play again. `github:` references and `raw.githubusercontent.com` URLs are always allowed. See [Remote host allowlist](/docs/tools/settings#remote-host-allowlist).
+- **HTTP errors or timeouts** — check the URL in a browser, and that it points at the raw `.dmc` file rather than a web page.
+- **"local sample not found"** — Desktop looks for a `local:` path next to the saved song and in its parent folders, and the warning lists the paths it tried. Save the song to disk first.
+
+See [NES → DMC samples](/docs/chips/nes#dmc-samples) for the supported references.
+
 That's all — for developer notes, see `DEVNOTES.md`.
 
 ## Importing UGE Files

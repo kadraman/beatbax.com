@@ -5,7 +5,7 @@ title: BeatBax CLI
 
 # BeatBax CLI
 
-The **BeatBax CLI** verifies, plays, exports, inspects, extracts instruments, and converts songs.
+The **BeatBax CLI** verifies, plays, exports, inspects, extracts instruments, imports MIDI files, and converts samples.
 
 ## Install
 
@@ -45,6 +45,11 @@ beatbax export arkos songs/spectrum-128/song.bax --instruments   # .aki bank onl
 beatbax extract instrument song.uge
 beatbax extract instrument song.uge kit.ins
 beatbax extract instrument path/to/uges --out gameboy.ins --demo gameboy-instruments-demo.bax
+
+# Import Standard MIDI → .bax (Game Boy or NES)
+beatbax import midi song.mid --inspect
+beatbax import midi song.mid song.bax --chip gameboy
+beatbax convert midi2bax song.mid song.bax --chip nes --config song.import.json
 
 # WAV → NES DMC sample
 beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst
@@ -136,9 +141,37 @@ Keep the kit beside the song, or under a child folder such as `lib/` — parent 
 
 See also [UGE export](/docs/exports/uge) for the reverse direction (BeatBax → `.uge`).
 
+### Import MIDI files
+
+`beatbax import midi` (alias `beatbax convert midi2bax`) turns a Standard MIDI File into an editable `.bax` song for **Game Boy** or **NES**. Tracks are auto-mapped from GM programs and names, or overridden with `--config`. This is not [MIDI step entry](/docs/tools/midi-step-entry) and is not a round-trip of `beatbax export midi`.
+
+```powershell
+beatbax import midi song.mid --inspect
+beatbax import midi song.mid song.bax --chip gameboy
+beatbax import midi song.mid --chip nes --dry-run
+beatbax import midi song.mid song.bax --chip gameboy --config song.import.json --annotate
+```
+
+```text
+Usage: beatbax import midi [options] <input.mid> [output.bax]
+```
+
+| Flag | Description |
+|------|-------------|
+| `--chip <chip>` | **Required** (except with `--inspect`). `gameboy` or `nes` |
+| `--config <file>` | Optional JSON mapping / quantize / arrangement override |
+| `--section-bars <N>` | Pattern Grid section size (default `8`; `0` = monolithic) |
+| `--quantize` / `--grid` | Quantize mode and grid |
+| `--dry-run` / `--strict` / `--title` | Preview, fail on errors, song name |
+| `--inspect` | Print a per-track report of the MIDI file and exit; writes nothing |
+| `--json` | With `--inspect`: print the report as JSON |
+| `--annotate` | Start the output with a comment block explaining channel mappings, drops and timing |
+
+Full options, config schema, arrangement options, and generated names: [Import MIDI files](/docs/tools/midi-import).
+
 ### Sample conversion
 
-`beatbax convert` turns audio samples into chip-ready formats. NES DMC (`wav2dmc`) is available today; more converters may follow.
+`beatbax convert wav2dmc` turns audio samples into NES DMC data. MIDI **file** import is a separate command (`import midi` / `convert midi2bax` — see above); use `wav2dmc` only for sample conversion.
 
 #### NES DMC (`wav2dmc`)
 
@@ -182,6 +215,7 @@ If `speaker` did not build on install, playback may fall back or be unreliable �
 
 - [Installation](/docs/getting-started/installation)
 - [Tools overview](/docs/tools/overview)
+- [Import MIDI files](/docs/tools/midi-import)
 - [Instrument Imports](/docs/language/imports)
 - [UGE export](/docs/exports/uge)
 - [Export Plugins](/docs/exports/overview)

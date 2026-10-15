@@ -20,7 +20,9 @@ Register chip plugins and exporter plugins **explicitly** with the engine/host r
 
 Exporters should prefer **payload-first** returns (`ExportPayload` / bytes / string) when `outputPath` is omitted so desktop and browser hosts can download results.
 
-Optional chip hooks: `configureForSong(ChipSongContext)`, `validateSong()`, `getMeterDisplayGain()`, wizard metadata (`NewSongWizardMetadata`, `status`).
+Optional chip hooks: `configureForSong(ChipSongContext)`, `validateSong()`, `getMeterDisplayGain()`, `preloadForPCM(insts, options?)`, wizard metadata (`NewSongWizardMetadata`, `status`).
+
+Implement `preloadForPCM` when the chip loads samples asynchronously (for example NES DMC). Load failures should not throw: report each one through the optional `options.onWarn({ component, message })` callback (types `ChipPreloadOptions` and `ChipWarning`), and fall back to `console.warn` when no callback is passed. The engine `Player` exposes the same warnings as `player.onWarn`, and Desktop shows them in the Output panel.
 
 ## Development Flow
 

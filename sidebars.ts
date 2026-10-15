@@ -36,6 +36,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'tools/overview',
         'tools/cli',
+        'tools/midi-import',
         'tools/web-client',
         {
           type: 'category',

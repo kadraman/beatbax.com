@@ -7,6 +7,8 @@ title: MIDI step entry
 
 **MIDI step entry** is a alternative way to enter notes into a `.bax` pattern from a MIDI keyboard. Notes are stepped into the editor one at a time — it is not a realtime piano-roll recorder.
 
+To convert an existing Standard MIDI File (`.mid`) into a `.bax` song, use [Import MIDI files](/docs/tools/midi-import) on the CLI instead.
+
 > The [BeatBax web-lite client](/docs/tools/web-client) has no MIDI step entry. Use [BeatBax Desktop](/docs/tools/desktop).
 
 ## Enabling MIDI input
@@ -30,5 +32,6 @@ If the song declares a [`scale`](/docs/language/metadata-directives#scale-and-ch
 - [BeatBax Desktop](/docs/tools/desktop)
 - [Settings](/docs/tools/settings)
 - [Instrument Editor](/docs/tools/instrument-editor)
+- [Import MIDI files](/docs/tools/midi-import)
 - [Notes](/docs/language/notes)
 - [Scale and channel locks](/docs/language/metadata-directives#scale-and-channel-locks)

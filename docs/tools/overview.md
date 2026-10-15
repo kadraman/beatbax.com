@@ -28,6 +28,7 @@ A command-line client for scripted, utility and headless workflows. Install with
 | Play songs | Yes | Yes | Yes — [with limitations](/docs/tools/cli#headless-audio) |
 | [BeatBax Editor](/docs/tools/editor) | Full (CodeLens, command palette) | Syntax, completions, diagnostics | No |
 | [MIDI step entry](/docs/tools/midi-step-entry) | Yes | No | N/A |
+| [MIDI file import](/docs/tools/midi-import) | No | No | Yes (`import midi`) |
 | Native file access | Yes (**File → Open** / **Save**, recents, associations) | No (Save downloads a `.bax` file) | Yes (filesystem paths) |
 | [Instrument Imports](/docs/language/imports) | Yes. `local:`, `github:`, `https://` | Yes. `github:` and `https://` only | Yes. `local:`, `github:`, `https://` |
 | [Sound Chip Plugins](/docs/chips/overview) | Yes | Yes (Pre-configured) | Yes |

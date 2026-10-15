@@ -62,7 +62,7 @@ Use it to set theme and editor behaviour, playback (audio backend, sample rate, 
 
 BeatBax Desktop docks extra views around the editor. Show or hide them from the status bar **panel menu** or the **View** menu. Mixer, Instrument Editor, Visualizer, Pattern Grid, and Copilot are also gated under [Settings → Features](/docs/tools/settings).
 
-- **Problems** / **Output** — parser diagnostics and log (bottom pane)
+- **Problems** / **Output** — parser diagnostics, and a log that includes playback warnings such as [DMC samples that failed to load](/docs/chips/nes#dmc-samples) (bottom pane)
 - **Help** — syntax reference (`H` / `?`; click-to-insert)
 - [Channel Mixer](/docs/tools/channel-mixer) — channel strips, VU meters, mute/solo (bottom panel)
 - [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing, waveforms, macros, and preview (right pane; Experimental)

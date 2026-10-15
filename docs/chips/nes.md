@@ -54,6 +54,31 @@ inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
 - Noise pitch is determined by `noise_period` (0–15), not by the note name in the pattern
 - Channel 5 (DMC) plays sample files, not synthesised tones
 
+## DMC samples
+
+`dmc_sample=` accepts these references:
+
+| Reference | Source |
+|-----------|--------|
+| `@nes/<name>` | A sample bundled with BeatBax, for example `@nes/bass_c2` |
+| `local:<path>` | A `.dmc` file on disk. Desktop looks next to the saved song and in its parent folders; the CLI resolves the path from the working directory. Not available in the web client |
+| `github:<owner>/<repo>/<path>` | A file in a GitHub repository, read from the `main` branch |
+| `https://…` | Any HTTPS URL. GitHub `blob` / `raw` links are converted to `raw.githubusercontent.com` |
+
+```bax
+inst kick  type=dmc  dmc_rate=15  dmc_loop=false  dmc_sample="github:kadraman/beatbax-samples/dmc/kick.dmc"
+```
+
+In [BeatBax Desktop](/docs/tools/desktop), remote samples are downloaded only from hosts in the [remote host allowlist](/docs/tools/settings#remote-host-allowlist). `raw.githubusercontent.com` is always allowed, so `github:` references work out of the box. Other hosts must be added under **Settings → Advanced → Remote host allowlist**.
+
+A sample that cannot be loaded (blocked host, HTTP error, timeout, missing file) does not stop playback; that instrument is silent. Desktop reports it once per play as a `[playback]` warning in the **Output** panel, for example:
+
+```text
+NES DMC: failed to load sample 'https://example.com/snare.dmc': Remote asset host 'example.com' is not in the Desktop allowlist. Add it under Settings → Advanced → Remote host allowlist.
+```
+
+The CLI and WAV export print the failure to the console instead.
+
 ## Named instrument tokens
 
 Add `note=` to use the instrument name as a pattern token (useful for drums):

@@ -19,12 +19,12 @@ The **Settings** modal is part of [BeatBax Desktop](/docs/tools/desktop). Open i
 | Tab | What it controls |
 |---|---|
 | **General** | Theme (dark / light / system), toolbar style, panel visibility, compact mixer |
-| **Editor** | Auto-save, word wrap, [CodeLens](/docs/tools/editor#codelens-previews), [beat decorations](/docs/tools/editor#beat-decorations), default BPM, font size, [MIDI step entry](/docs/tools/midi-step-entry) |
+| **Editor** | Auto-save, word wrap, [CodeLens](/docs/tools/editor#codelens-previews) (master toggle plus per-category toggles for `pat`, `seq`, `inst`, and `effect` previews), [beat decorations](/docs/tools/editor#beat-decorations), default BPM, font size, [MIDI step entry](/docs/tools/midi-step-entry) |
 | **Playback** | Audio backend, sample rate, default loop, offline render buffer size |
 | **Features** | Pattern Grid, Hot Reload, AI Copilot, Channel Mixer, Instrument Editor, Song Visualizer |
 | **Plugins** | [Sound Chip Plugins](/docs/chips/overview) and [Export Plugins](/docs/exports/overview) — built-in plus optional backends |
-| **AI** | Provider, endpoint, API key, model, interaction mode, Ask song excerpt, model token window — see [BeatBax Copilot](/docs/tools/copilot) |
-| **Advanced** | Log level, debug overlay, debug player exposure, reset-all |
+| **AI** | Provider, endpoint, API key, model, interaction mode, Ask song excerpt, model token window, and an **Advanced** section with Edit / Ask reply budgets and reasoning effort — see [BeatBax Copilot](/docs/tools/copilot#reply-budget-and-reasoning-effort) |
+| **Advanced** | Log level, debug overlay, debug player exposure, [remote host allowlist](#remote-host-allowlist), reset-all |
 
 Most changes apply **immediately**. Exceptions (noted inline): **Auto-save** and **Audio backend / Sample rate** need a reload. Each tab has **Reset section to defaults**. **Advanced → Reset all settings** clears BeatBax preference keys after confirmation.
 
@@ -38,6 +38,12 @@ Most changes apply **immediately**. Exceptions (noted inline): **Auto-save** and
 | **Channel Mixer** | — | Channel strips and meters when enabled — [Channel Mixer](/docs/tools/channel-mixer) |
 | **Instrument Editor** | Experimental | Graphical `inst` editing in the right pane (off by default) — [Instrument Editor](/docs/tools/instrument-editor) |
 | **Song Visualizer** | — | Per-channel waveforms in the right pane — [Song Visualizer](/docs/tools/song-visualizer) |
+
+## Remote host allowlist
+
+Desktop downloads remote assets, such as [NES DMC samples](/docs/chips/nes#dmc-samples), only from approved hosts. `raw.githubusercontent.com` is always allowed, which covers `github:` references. To use another host, add its hostname (one per line, no scheme, path, or wildcard) under **Advanced → Remote host allowlist** and click **Save allowlist**. **Reset allowlist** returns to the built-in default.
+
+A sample on a host that is not in the list does not play. During playback the **Output** panel shows a `[playback]` warning naming the sample and the host, with a pointer back to this setting.
 
 ## Related docs
 
