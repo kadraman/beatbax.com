@@ -38,7 +38,13 @@ Optional `divisor` / `shift` on noise instruments can still override the clock f
 
 The Game Boy noise channel does not use melodic pitch the way pulse/wave do. Timbre still comes from `gb:width` (and related LFSR settings), but the **noise period / clock** is selected from the hUGE note table via `uge_note` (or derived mapping) so BeatBax matches hUGETracker listening levels and export.
 
+In the Desktop [Instrument Editor](/docs/tools/instrument-editor), Game Boy noise uses a **Trigger** (named hit) plus an optional UGE / noise-clock strip for audition — not the melodic octave keyboard. Strip keys audition only; they do not rewrite `uge_note=` unless you edit the Defaults field.
+
 Prefer `uge_note=C-6` for kicks when using large negative `pitch_env` drops — the GB noise note table is non-monotonic at some high bases. See [Game Boy](/docs/chips/gameboy) and [Instrument macros](/docs/language/instrument-macros).
+
+## Spectrum / AY percussion
+
+Spectrum 128 has no dedicated noise instrument type. Percussion is usually a tone channel with `tone_mix=true` (shared noise into that voice). `note=` still sets the tone click/stick pitch on named hits. In the Instrument Editor, `tone_mix=true` switches preview to **Trigger** (oneshot named hit) instead of the chromatic keyboard. See [Spectrum 128](/docs/chips/spectrum-128).
 
 ## UGE display octave
 

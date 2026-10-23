@@ -53,6 +53,7 @@ inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
 - Triangle has no hardware volume; `vol=0` is a software mute, any other value = full amplitude
 - Noise pitch is determined by `noise_period` (0–15), not by the note name in the pattern
 - Channel 5 (DMC) plays sample files, not synthesised tones
+- In the Desktop [Instrument Editor](/docs/tools/instrument-editor), noise and DMC use **Trigger** (oneshot named hit) instead of a chromatic keyboard; triangle preview defaults to octave **2**
 
 ## DMC samples
 
@@ -60,7 +61,7 @@ inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
 
 | Reference | Source |
 |-----------|--------|
-| `@nes/<name>` | A sample bundled with BeatBax, for example `@nes/bass_c2` |
+| `@nes/<name>` | A sample bundled with BeatBax, for example `@nes/bass_c2` (Instrument Editor may show designed rate / base note as guidance only) |
 | `local:<path>` | A `.dmc` file on disk. Desktop looks next to the saved song and in its parent folders; the CLI resolves the path from the working directory. Not available in the web client |
 | `github:<owner>/<repo>/<path>` | A file in a GitHub repository, read from the `main` branch |
 | `https://…` | Any HTTPS URL. GitHub `blob` / `raw` links are converted to `raw.githubusercontent.com` |

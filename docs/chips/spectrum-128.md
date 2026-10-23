@@ -97,6 +97,8 @@ inst snare type=tone2 tone_mix=true noise_rate=6 vol_env=[15,10,6,2,0] tone_fram
 
 Stagger hits so only one noise timbre is needed per tick.
 
+In the Desktop [Instrument Editor](/docs/tools/instrument-editor), instruments with `tone_mix=true` preview with **Trigger** (named hit) rather than a chromatic keyboard — noise is shared across AY channels, so pitch keys would be misleading.
+
 ## Export
 
 - **WAV** — rendered PCM

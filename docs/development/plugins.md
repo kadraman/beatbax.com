@@ -38,7 +38,9 @@ Useful upstream guides:
 
 - [SMS plugin README](https://github.com/kadraman/beatbax/blob/main/packages/plugins/chip-sms/README.md)
 - [Spectrum plugin README](https://github.com/kadraman/beatbax/blob/main/packages/plugins/chip-spectrum-128/README.md)
-- [Creating plugins](https://github.com/kadraman/beatbax/blob/main/docs/contributing/creating-plugins.md)
+- [Creating plugins](https://github.com/kadraman/beatbax/blob/main/docs/contributing/creating-plugins.md) — includes Desktop **Instrument Editor** schema fields (`previewMode`, `previewOctave`, optional `bundledSampleMeta`)
+
+Chip `instrumentEditor` schemas may set per-type preview behaviour for Desktop: melodic piano octave, oneshot **Trigger** (noise/DMC), or Game Boy noise `uge_note` strip. Hosts also treat Spectrum/AY `tone_mix=true` as oneshot preview. See [Instrument Editor](/docs/tools/instrument-editor).
 
 ## Related Docs
 

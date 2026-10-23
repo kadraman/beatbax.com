@@ -20,6 +20,8 @@ Status: **Beta**.
 
 There are no hardware envelopes or LFO — articulation uses software macros and inline effects.
 
+Tone periods are **10-bit**: pitches below about **A2** clamp to the same register value. In the Desktop [Instrument Editor](/docs/tools/instrument-editor), tone3 preview defaults to octave **3** so keyboard notes stay distinct; noise instruments preview with **Trigger**.
+
 ## Instrument fields
 
 ### Common
