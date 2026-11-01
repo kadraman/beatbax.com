@@ -32,7 +32,7 @@ Most changes apply **immediately**. Exceptions (noted inline): **Auto-save** and
 
 | Feature | Badge | Notes |
 |---|---|---|
-| **Pattern Grid** | Experimental | Arrangement timeline with section-focus playback — [Pattern Grid](/docs/tools/pattern-grid) |
+| **Pattern Grid** | Experimental | Arrangement timeline with section focus, Pos-ruler seek/loop, and zoom — [Pattern Grid](/docs/tools/pattern-grid) |
 | **Hot Reload** | Experimental | Auto-replay on editor changes (debounced) |
 | **AI Copilot** | Beta | Configure provider on the **AI** tab; see [BeatBax Copilot](/docs/tools/copilot) |
 | **Channel Mixer** | — | Channel strips and meters when enabled — [Channel Mixer](/docs/tools/channel-mixer) |

@@ -88,7 +88,7 @@ Commands that need a selection, a symbol under the cursor, [Copilot](/docs/tools
 | `Ctrl+Shift+E` / `Cmd+Shift+E` | Extract to Pattern |
 | `Ctrl+E` / `Cmd+E` | Quick Export (last format) |
 
-Verify from the toolbar or the app **Validate** shortcut (`Alt+V` on Desktop). Audition individual patterns and sequences with [CodeLens](#codelens-previews); use [Pattern Grid](/docs/tools/pattern-grid) section focus for multi-channel arrangement slices.
+Verify from the toolbar or the app **Validate** shortcut (`Alt+V` on Desktop). Audition individual patterns and sequences with [CodeLens](#codelens-previews); use [Pattern Grid](/docs/tools/pattern-grid) section focus for multi-channel arrangement slices, or the Pos ruler to seek and loop on the full song.
 
 ### Right-click menu
 
@@ -142,7 +142,7 @@ These sit around the editor rather than inside it:
 - [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing and preview (Desktop, Experimental)
 - [New Song Wizard](/docs/tools/new-song-wizard) — chip picker and starter template
 - [BeatBax Copilot](/docs/tools/copilot) — AI edits applied to the buffer (Desktop)
-- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline and section-focus playback (Desktop, Experimental)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline, section focus, Pos-ruler seek/loop, and zoom (Desktop, Experimental)
 
 ## Related docs
 

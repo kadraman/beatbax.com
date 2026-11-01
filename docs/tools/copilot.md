@@ -124,6 +124,8 @@ While review is open, the applied message also offers an **Actions** menu:
 - **Keep remaining** / **Discard remaining** — settle all pending hunks at once.
 - **Revert entire edit** — restore the whole song to its pre-edit state.
 
+**Discard remaining** rebuilds the song from the **pre-edit snapshot**, then reapplies only the definitions you already **kept**. Comment lines, blank lines, and other non-definition text the model added are removed with the discarded hunks — the editor does not leave leftover notes from a partial review. If you kept nothing, the buffer matches the song before the Edit exactly. **Revert entire edit** always restores that same pre-edit snapshot.
+
 A reply with no line changes skips the banner and shows **⚠ Not applied — editor unchanged**. `Ctrl+Z` / `Cmd+Z` still works in the editor; the transcript is not updated automatically when you undo.
 
 ## How Edit results are reported

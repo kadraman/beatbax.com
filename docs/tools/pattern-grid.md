@@ -5,9 +5,9 @@ title: Pattern Grid
 
 # Pattern Grid (Experimental)
 
-The **Pattern Grid** is a **desktop-only** timeline of the resolved song: one row per chip channel, with pattern blocks laid out in time and a playhead that follows playback.
+The **Pattern Grid** is a **desktop** timeline of the resolved song: one row per chip channel, with pattern blocks laid out in time and a playhead that follows playback.
 
-It is also the main surface for **section focus** — hearing one arrangement section (for example all four `theme_*` parts together) across every channel without editing your `.bax` source.
+It is the main surface for **section focus** (hearing one arrangement section across every channel), **Pos-ruler seek and loop** on the full song, and **zoom / scroll** so long arrangements stay readable.
 
 > The Pattern Grid is marked **Experimental** in [Settings](/docs/tools/settings) and disabled by default.
 
@@ -118,17 +118,48 @@ Open the [command palette](/docs/tools/editor#command-palette) (`F1` or `Ctrl+Sh
 | **Alt+←** | Previous section (while focused) |
 | **Alt+→** | Next section (while focused) |
 
-## What section focus is not
+## Pos ruler — seek and loop
 
-Section focus is **Phase 0** timeline interaction: play a named section column on all channels via a temporary song slice.
+Above the section lane, the **Pos** row is an interactive timeline for the **full song** (separate from section focus).
 
-It is **not** yet:
+| Gesture | Result |
+| --- | --- |
+| **Click** the ruler | Sets a green **pending start** flag. **Play** begins there; **Stop** returns to the beginning. |
+| **Click** while playing | Seeks playback to that block (ahead or behind). |
+| **Click** while paused | Stops at the clicked position. |
+| **Drag** across the ruler | Sets a blue **loop range** on all rows and turns transport **Loop** on. **Play** repeats that range; drag the handles to adjust; **✕** clears it. |
+| Transport **Loop** off | The range dims and **Play** ignores it until Loop is on again. |
+| **Alt+click** / **Alt+drag** | Snaps to steps instead of pattern boundaries. |
 
-- Drag-to-set a pending start point on the full song timeline
-- Drag-to-select an arbitrary loop range on the unresolved song
-- Step-accurate seek inside the full song without section focus
+While a loop is active, clicking the ruler turns Loop off and sets a new start flag. Pause / resume inside the loop does not drift. Seeking mid-note retriggers the remaining sustain from that point.
 
-Those behaviours are planned as a later Pattern Grid enhancement (engine `startStep` / `endStep` on the full resolved song).
+Section focus still uses a temporary song slice for one column. The Pos ruler seeks and loops the **resolved full song**.
+
+## Zoom and scroll
+
+For long songs, the grid no longer always stretch-fits every step into the panel (which made blocks too small to click). Desktop Pattern Grid zoom (session-only; resets when you open another song or create a new file):
+
+| Control | Behaviour |
+| --- | --- |
+| **Auto** (default) | Keeps a readable minimum scale from the panel width. Short songs still fit with no scrollbar; long songs use the minimum scale and **scroll horizontally**. Widening the panel shows more of the song before scrolling. |
+| **Fit** | Forces the whole arrangement into the viewport (blocks may shrink below the readable minimum). |
+| **−** / **+** | Zoom out / in (leaves Auto for an explicit scale). |
+| **Ctrl+wheel** / **Cmd+wheel** | Zooms about the step under the pointer. |
+| **Shift+wheel** / trackpad horizontal scroll | Pans when content overflows. |
+
+Channel mute/solo labels stay sticky while the ruler, section lane, and channel tracks scroll together. Playhead, loop range, start flag, and section-focus column stay aligned with the underlying steps at every zoom. Dragging a loop or start handle near the edge of the visible track **autoscrolls** so you can keep adjusting.
+
+These controls are separate from the Monaco **View → Zoom In / Out / Reset** shortcuts (`Cmd+=` / `Cmd+-` / `Cmd+0`), which only change editor font size.
+
+Web-lite Pattern Grid zoom is not available yet.
+
+## Section focus vs Pos ruler
+
+| | Section focus | Pos ruler |
+| --- | --- | --- |
+| Scope | One named section column (temporary song slice) | Full resolved song |
+| How you set it | Section lane, **F6**, command palette | Click / drag on **Pos** |
+| Loop | Transport Loop repeats the focused section | Dragged blue range, gated by transport Loop |
 
 ## Related docs
 
