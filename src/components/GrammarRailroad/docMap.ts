@@ -27,6 +27,9 @@ export const STATEMENT_LINKS: DocTarget[] = [
   {label: 'effect', docId: 'language/effects', hash: 'effect'},
   {label: 'pat', docId: 'language/patterns', hash: 'pattern-rhs'},
   {label: 'seq', docId: 'language/sequences', hash: 'sequence-rhs'},
+  {label: 'alias', docId: 'language/composition', hash: 'alias'},
+  {label: 'section', docId: 'language/composition', hash: 'section'},
+  {label: 'form', docId: 'language/composition', hash: 'form'},
   {label: 'channel', docId: 'language/channels', hash: 'pat-seq'},
   {label: 'export', docId: 'language/export'},
 ];
@@ -44,12 +47,14 @@ export const SEQUENCE_RHS_LINKS: DocTarget[] = [
   {label: 'pat refs', docId: 'language/sequences', hash: 'pat-refs'},
   {label: '*N', docId: 'language/sequences', hash: 'repeat'},
   {label: 'groups', docId: 'language/sequences', hash: 'groups'},
+  {label: 'cat()', docId: 'language/composition', hash: 'cat'},
   {label: ':modifiers', docId: 'language/modifiers', hash: 'modifier-catalog'},
 ];
 
 export const CHANNEL_RHS_LINKS: DocTarget[] = [
   {label: 'inst', docId: 'language/instruments', hash: 'syntax'},
   {label: 'pat / seq', docId: 'language/channels', hash: 'pat-seq'},
+  {label: 'role / form', docId: 'language/composition', hash: 'section'},
   {label: 'speed=', docId: 'language/channels', hash: 'speed'},
   {label: 'lock=', docId: 'language/metadata-directives', hash: 'scale-and-channel-locks'},
 ];

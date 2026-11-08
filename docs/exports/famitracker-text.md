@@ -31,7 +31,7 @@ BeatBax instrument macros align with FamiTracker 2A03 macro sequences (60 Hz NTS
 | `duty_env` | Duty sequence (index 0–3) |
 | Pulse / triangle / noise / DMC channels | Matching 2A03 tracks |
 
-Hardware sweep fields map to pattern `Hxy` effects where applicable. Triangle `linear=` gating is approximated with note-cut style behaviour in the text export path.
+Hardware sweep fields map to pattern `Hxy` effects where applicable. Triangle `linear=` gating is approximated with note-cut style behaviour in the text export path. Optional `dmc_level=` (0–127) on DMC instruments is written for FamiTracker; BeatBax playback itself always starts the DAC at 64.
 
 ## Tips
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: SMS / Game Gear
+description: SN76489 — three tone channels plus noise; VGM export. Beta.
 ---
 
 # Sega Master System / Game Gear (SN76489)
@@ -19,6 +20,8 @@ Status: **Beta**.
 | 4 | `noise` | 15-bit LFSR (white or periodic) |
 
 There are no hardware envelopes or LFO — articulation uses software macros and inline effects.
+
+Tone periods are **10-bit**: pitches below about **A2** clamp to the same register value. In the Desktop [Instrument Editor](/docs/tools/instrument-editor), tone3 preview defaults to octave **3** so keyboard notes stay distinct; noise instruments preview with **Trigger**.
 
 ## Instrument fields
 

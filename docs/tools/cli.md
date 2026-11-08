@@ -5,7 +5,7 @@ title: BeatBax CLI
 
 # BeatBax CLI
 
-The **BeatBax CLI** verifies, plays, exports, inspects, extracts instruments, and converts songs.
+The **BeatBax CLI** verifies, plays, exports, inspects, extracts instruments, imports MIDI files, and converts samples.
 
 ## Install
 
@@ -45,6 +45,11 @@ beatbax export arkos songs/spectrum-128/song.bax --instruments   # .aki bank onl
 beatbax extract instrument song.uge
 beatbax extract instrument song.uge kit.ins
 beatbax extract instrument path/to/uges --out gameboy.ins --demo gameboy-instruments-demo.bax
+
+# Import Standard MIDI → .bax (Game Boy or NES)
+beatbax import midi song.mid --inspect
+beatbax import midi song.mid song.bax --chip gameboy
+beatbax convert midi2bax song.mid song.bax --chip nes --config song.import.json
 
 # WAV → NES DMC sample
 beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst
@@ -136,16 +141,29 @@ Keep the kit beside the song, or under a child folder such as `lib/` — parent 
 
 See also [UGE export](/docs/exports/uge) for the reverse direction (BeatBax → `.uge`).
 
+### Import MIDI files
+
+`beatbax import midi` (alias `beatbax convert midi2bax`) turns a Standard MIDI File into an editable `.bax` song for **Game Boy** or **NES**. This is CLI-only file import — not [MIDI step entry](/docs/tools/midi-step-entry) in Desktop, and not a round-trip of `beatbax export midi`.
+
+```powershell
+beatbax import midi song.mid --inspect
+beatbax import midi song.mid song.bax --chip gameboy
+```
+
+Full options, config schema, arrangement, and mapping details: [Import MIDI files](/docs/tools/midi-import).
+
 ### Sample conversion
 
-`beatbax convert` turns audio samples into chip-ready formats. NES DMC (`wav2dmc`) is available today; more converters may follow.
+`beatbax convert wav2dmc` turns audio samples into NES DMC data. MIDI **file** import is a separate command (`import midi` / `convert midi2bax` — see above); use `wav2dmc` only for sample conversion.
 
 #### NES DMC (`wav2dmc`)
 
-`convert wav2dmc` turns a 16-bit mono/stereo PCM WAV into a raw NES `.dmc` sample for `type=dmc` instruments:
+`convert wav2dmc` turns a **16-bit** mono/stereo PCM WAV into a raw NES `.dmc` sample for `type=dmc` instruments. Prefer peaks around −6 to −12 dB (`--gain 0.4`–`0.7`); full-scale audio slope-overloads into grit. Quiet WAV tails become DMC hiss — trim them. Hardware length max is **4081** bytes (~0.98 s at rate 15).
+
+For short drums and tonal hits, encode and play at the same `--dmc-rate` (often `15`). For speech, **encode fast, play slow**: encode at rate 15, then set the instrument `dmc_rate` lower (pitch and duration move together). Useful NTSC pairs: 15→12 ≈ 2× length (~1.93 s), 15→7 ≈ 4× (~3.9 s). Example: bundled `@nes/voice_ready` is designed for `dmc_rate=12`.
 
 ```powershell
-beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst --play
+beatbax convert wav2dmc hit.wav --dmc-rate 15 --gain 0.5 --trim-silence -45 --tail-ms 8 --fade-out-ms 4 --max-duration-ms 180 --emit-inst --play
 ```
 
 With `--emit-inst`, the CLI prints a matching instrument line, for example:
@@ -154,10 +172,13 @@ With `--emit-inst`, the CLI prints a matching instrument line, for example:
 inst kick type=dmc dmc_rate=15 dmc_loop=false dmc_sample="local:samples/wav/kick.dmc"
 ```
 
+Bundled kit samples (`@nes/kick_punch`, `@nes/snare_tight`, …) are documented under [NES → DMC samples](/docs/chips/nes#dmc-samples).
+
 | Flag | Description |
 |------|-------------|
 | `--dmc-rate <0-15>` / `-q` | Encoding / preview rate (`15` = fastest / highest quality) |
 | `--dmc-loop` | Emit `dmc_loop=true` and loop preview |
+| `--gain <factor>` | Linear gain before encoding (default `1`; try `0.4`–`0.7` for drums) |
 | `--trim-silence <db>` / `--no-trim-silence` | Trim quiet tails (often reduces hiss) |
 | `--tail-ms <ms>` | Keep audio after the last above-threshold sample |
 | `--fade-out-ms <ms>` | Fade before encoding |
@@ -182,6 +203,7 @@ If `speaker` did not build on install, playback may fall back or be unreliable �
 
 - [Installation](/docs/getting-started/installation)
 - [Tools overview](/docs/tools/overview)
+- [Import MIDI files](/docs/tools/midi-import)
 - [Instrument Imports](/docs/language/imports)
 - [UGE export](/docs/exports/uge)
 - [Export Plugins](/docs/exports/overview)

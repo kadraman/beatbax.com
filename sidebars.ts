@@ -35,7 +35,17 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'tools/overview',
-        'tools/cli',
+        {
+          type: 'category',
+          label: 'BeatBax CLI',
+          link: {
+            type: 'doc',
+            id: 'tools/cli',
+          },
+          items: [
+            'tools/midi-import',
+          ],
+        },
         'tools/web-client',
         {
           type: 'category',
@@ -62,8 +72,11 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Sound Chip Plugins',
+      link: {
+        type: 'doc',
+        id: 'chips/overview',
+      },
       items: [
-        'chips/overview',
         'chips/gameboy',
         'chips/nes',
         'chips/sms',
@@ -99,6 +112,7 @@ const sidebars: SidebarsConfig = {
         'language/notes',
         'language/patterns',
         'language/sequences',
+        'language/composition',
         'language/channels',
         {
           type: 'category',

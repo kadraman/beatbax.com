@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Game Boy
+description: DMG-01 — pulse, wave, and noise channels; hUGETracker UGE export. Stable.
 ---
 
 # Game Boy (DMG-01)

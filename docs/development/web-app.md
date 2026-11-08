@@ -21,7 +21,7 @@ npm -w @beatbax/web-ui run test
 - Shared logic: `@beatbax/app-core` (stores, playback, editor core, parse pipeline).
 - UI shell: vanilla TypeScript + DOM (`src/main.ts`, `src/app/`, `src/ui/`, `src/panels/`).
 - Save downloads `.bax` files; no native path picker.
-- Desktop-only capabilities (exports UI, Copilot, mixer, pattern grid, Settings modal, CodeLens, command palette) are gated out via `getCurrentCapabilities()`.
+- Desktop-only capabilities (exports UI, Copilot, Settings modal, CodeLens, command palette, Pattern Grid zoom, full Instrument Editor) are gated out via `getCurrentCapabilities()`. Web-lite still ships cutdown panels such as mixer and Pattern Grid.
 - Desktop does not import web-ui panel modules; Copilot lives only in `apps/desktop`.
 
 ## Related docs

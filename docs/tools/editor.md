@@ -44,14 +44,21 @@ Parser errors and warnings appear as editor markers and in the **Problems** pane
 
 ## CodeLens previews
 
-CodeLens is **Desktop-only**. Enable it under **Settings → Editor**. Clickable actions appear above `pat`, `seq`, `inst`, and `effect` lines:
+CodeLens is **Desktop-only**. Enable it under **Settings → Editor**. Clickable actions appear above `pat`, `seq`, `section`, `inst`, and `effect` lines:
 
 - **Preview** / **Loop** / **Stop** on a `pat` or `seq` — play that pattern or sequence in isolation. Loop re-parses on each pass, so edits you make while looping are heard on the next iteration.
-- Note buttons **C3**–**C7** on an `inst` line — audition the instrument’s timbre without writing a pattern. Clicking the same note again restarts it.
+- **Preview** / **Loop** on a `section` header — audition the whole section across bound channels. Inside an advanced `section { … }` block, each `role =` line also gets **Preview** / **Loop** for that role’s generated seq. Beginner `section … use` lines get the header lenses only. These use the same **Sequence previews (seq)** toggle as `seq` lenses.
+- Instrument audition on an `inst` line — melodic types show note lenses centred on the type’s default octave (for example **C2**–**C6**); noise / DMC / Spectrum `tone_mix` percussion show **▶ Hit** or **▶ Sample**. Clicking again restarts. See [Instrument Editor](/docs/tools/instrument-editor#preview-and-midi).
 - **Edit** on an `inst` line — when the [Instrument Editor](/docs/tools/instrument-editor) feature is enabled, open the Instruments tab, select that instrument, and keep focus on the panel for graphical editing and preview.
-- **Preview** on an `effect` line — play a short ascending phrase with that preset applied (for example `vib`, `arp`, or `port`).
+- **Preview** / **Slow** / **Loop** on an `effect` line — play a short phrase with that preset applied (for example `vib`, `arp`, or `port`). **Slow** uses longer notes so slow or wide slides and bends have time to develop.
 
 The preview uses the instrument already associated with that pattern or sequence in a `channel` line; otherwise it uses the first declared instrument. Only one preview plays at a time — starting another stops the current one.
+
+### Choosing which previews appear
+
+Under **Settings → Editor**, **Show CodeLens previews** turns all previews on or off. Below it, separate toggles control **Pattern previews (pat)**, **Sequence previews (seq)**, **Instrument previews (inst)**, and **Effect previews (effect)**. All are on by default. For example, turn off sequence previews if you audition arrangements in [Pattern Grid](/docs/tools/pattern-grid) section focus, but keep instrument audition lenses.
+
+Changing any of these toggles stops the preview that is playing, so a looping preview never keeps going after its **Stop** button is hidden. The **Edit** lens on `inst` lines is not a preview and is not affected by these toggles.
 
 Web-lite has no CodeLens. To audition parts in isolation there, apply the song and use mute/solo, or switch to Desktop.
 
@@ -82,7 +89,7 @@ Commands that need a selection, a symbol under the cursor, [Copilot](/docs/tools
 | `Ctrl+Shift+E` / `Cmd+Shift+E` | Extract to Pattern |
 | `Ctrl+E` / `Cmd+E` | Quick Export (last format) |
 
-Verify from the toolbar or the app **Validate** shortcut (`Alt+V` on Desktop). Audition individual patterns and sequences with [CodeLens](#codelens-previews); use [Pattern Grid](/docs/tools/pattern-grid) section focus for multi-channel arrangement slices.
+Verify from the toolbar or the app **Validate** shortcut (`Alt+V` on Desktop). Audition individual patterns and sequences with [CodeLens](#codelens-previews); use [Pattern Grid](/docs/tools/pattern-grid) section focus for multi-channel arrangement slices, or the Pos ruler to seek and loop on the full song.
 
 ### Right-click menu
 
@@ -119,9 +126,11 @@ The editor context menu always includes a small BeatBax set (for example **Forma
 | **Channel: Toggle Mute… / Solo…** | Quick-pick a channel to mute or solo |
 | **Channel: Instrument Override…** | Context-aware override: channel `inst`, sequence `:inst(name)`, or pattern `inst(...)` |
 | **Play Arrangement Slice** | Focus and play the [Pattern Grid](/docs/tools/pattern-grid) section at the cursor (Pattern Grid must be on and visible) |
-| **Arrange: Add Section Header Comments** | Insert `# --- Section N: … ---` markers for section focus |
+| **Arrange: Add Section Header Comments** | Insert `# --- Section N: … ---` markers for classic section focus (does not emit `section` / `form`) |
 | **Arrange: Restructure Phased Sections into Headers** | Rewrite phased channel-grouped `seq` defs into section header blocks |
 | **Arrange: Split Monolithic Channel Sequences** | Split one long `seq` per channel into aligned section sequences |
+
+Prefer authored [`section` / `form`](/docs/language/composition) for new multi-part songs. The **Arrange** commands above keep classic comment-header / multi-seq layouts workable for Pattern Grid.
 | **Add Selection to Copilot** | Attach the editor selection as a Copilot context chip |
 | **MIDI: Start / Stop / Toggle Step Entry** | Control [MIDI step entry](/docs/tools/midi-step-entry) |
 | **Syntax Reference…** | Open the in-app syntax help |
@@ -136,7 +145,7 @@ These sit around the editor rather than inside it:
 - [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing and preview (Desktop, Experimental)
 - [New Song Wizard](/docs/tools/new-song-wizard) — chip picker and starter template
 - [BeatBax Copilot](/docs/tools/copilot) — AI edits applied to the buffer (Desktop)
-- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline and section-focus playback (Desktop, Experimental)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline and section focus (Desktop Experimental; cutdown on web-lite)
 
 ## Related docs
 

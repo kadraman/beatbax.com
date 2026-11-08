@@ -20,7 +20,9 @@ Register chip plugins and exporter plugins **explicitly** with the engine/host r
 
 Exporters should prefer **payload-first** returns (`ExportPayload` / bytes / string) when `outputPath` is omitted so desktop and browser hosts can download results.
 
-Optional chip hooks: `configureForSong(ChipSongContext)`, `validateSong()`, `getMeterDisplayGain()`, wizard metadata (`NewSongWizardMetadata`, `status`).
+Optional chip hooks: `configureForSong(ChipSongContext)`, `validateSong()`, `getMeterDisplayGain()`, `preloadForPCM(insts, options?)`, wizard metadata (`NewSongWizardMetadata`, `status`).
+
+Implement `preloadForPCM` when the chip loads samples asynchronously (for example NES DMC). Load failures should not throw: report each one through the optional `options.onWarn({ component, message })` callback (types `ChipPreloadOptions` and `ChipWarning`), and fall back to `console.warn` when no callback is passed. The engine `Player` exposes the same warnings as `player.onWarn`, and Desktop shows them in the Output panel.
 
 ## Development Flow
 
@@ -36,7 +38,9 @@ Useful upstream guides:
 
 - [SMS plugin README](https://github.com/kadraman/beatbax/blob/main/packages/plugins/chip-sms/README.md)
 - [Spectrum plugin README](https://github.com/kadraman/beatbax/blob/main/packages/plugins/chip-spectrum-128/README.md)
-- [Creating plugins](https://github.com/kadraman/beatbax/blob/main/docs/contributing/creating-plugins.md)
+- [Creating plugins](https://github.com/kadraman/beatbax/blob/main/docs/contributing/creating-plugins.md) — includes Desktop **Instrument Editor** schema fields (`previewMode`, `previewOctave`, optional `bundledSampleMeta`)
+
+Chip `instrumentEditor` schemas may set per-type preview behaviour for Desktop: melodic piano octave, oneshot **Trigger** (noise/DMC), or Game Boy noise `uge_note` strip. Hosts also treat Spectrum/AY `tone_mix=true` as oneshot preview. See [Instrument Editor](/docs/tools/instrument-editor).
 
 ## Related Docs
 

@@ -34,7 +34,7 @@ Native Open/Save dialogs, recent files, and file associations are built in. **Fi
 
 **Mute / Solo:** per-channel controls after a song is applied.
 
-**Section focus:** with the [Pattern Grid](/docs/tools/pattern-grid) enabled, use the section lane, **F6**, or the command palette to focus and play one arrangement section across all channels. **F5** plays the focused section; **Alt+←** / **Alt+→** steps between sections; **Esc** exits focus. While a section is playing, the grid playhead tracks inside the focused column. See [Pattern Grid](/docs/tools/pattern-grid) for shortcuts, editing while focused, and supported song layouts.
+**Pattern Grid:** with the [Pattern Grid](/docs/tools/pattern-grid) enabled, use the section lane, **F6**, or the command palette for **section focus**; the **Pos** ruler to seek and loop on the full song; and **Auto / Fit / Zoom** so long arrangements stay readable. See [Pattern Grid](/docs/tools/pattern-grid) for shortcuts, seek/loop gestures, and zoom.
 
 ## The Editor
 
@@ -62,12 +62,12 @@ Use it to set theme and editor behaviour, playback (audio backend, sample rate, 
 
 BeatBax Desktop docks extra views around the editor. Show or hide them from the status bar **panel menu** or the **View** menu. Mixer, Instrument Editor, Visualizer, Pattern Grid, and Copilot are also gated under [Settings → Features](/docs/tools/settings).
 
-- **Problems** / **Output** — parser diagnostics and log (bottom pane)
+- **Problems** / **Output** — parser diagnostics, and a log that includes playback warnings such as [DMC samples that failed to load](/docs/chips/nes#dmc-samples) (bottom pane)
 - **Help** — syntax reference (`H` / `?`; click-to-insert)
 - [Channel Mixer](/docs/tools/channel-mixer) — channel strips, VU meters, mute/solo (bottom panel)
 - [Instrument Editor](/docs/tools/instrument-editor) — graphical `inst` editing, waveforms, macros, and preview (right pane; Experimental)
 - [Song Visualizer](/docs/tools/song-visualizer) — per-channel waveforms and performance mode (right pane)
-- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline, section lane, and section-focus playback (Experimental)
+- [Pattern Grid](/docs/tools/pattern-grid) — arrangement timeline, section focus, Pos-ruler seek/loop, and zoom (Experimental)
 - [BeatBax Copilot](/docs/tools/copilot) — AI assistant (right pane)
 
 ## MIDI step entry

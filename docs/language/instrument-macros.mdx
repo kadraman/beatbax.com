@@ -43,7 +43,7 @@ One macro frame is typically **1/60 s** on NTSC-style playback (chip guides note
 
 | Chip | Macros | Notes |
 |------|--------|--------|
-| [NES](/docs/chips/nes) | `vol_env`, `arp_env`, `pitch_env`, `duty_env` | FamiTracker-style; `vol_env` overrides hardware `env` decay |
+| [NES](/docs/chips/nes) | `vol_env`, `arp_env`, `pitch_env`, `duty_env` | FamiTracker-style; `vol_env` overrides hardware `env` decay; `arp_env` / `pitch_env` also apply to noise; not available on DMC |
 | [SMS / Game Gear](/docs/chips/sms) | `vol_env`, `arp_env`, `pitch_env`, `noise_rate_env` | No hardware ADSR — macros are the main articulation |
 | [Spectrum 128 / CPC](/docs/chips/spectrum-128) | `arp_env`, `pitch_env`; `vol_env` is often the **shared hardware envelope** | Watch R6 / R11–R13 conflicts |
 | [Game Boy](/docs/chips/gameboy) | `pitch_env`, `vol_env`, `duty_env`, `arp_env` | Also exports to hUGE **subpatterns**; optional native `subpat` ([below](#subpat)) |
