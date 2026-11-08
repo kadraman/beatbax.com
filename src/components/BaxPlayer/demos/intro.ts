@@ -31,10 +31,11 @@ pat pad_am2 = A3:4 E4:4 C4:4 A3:4
 pat drums_a = kick . hat . snare . hat . kick . hat kick snare . hat .
 pat drums_b = kick . hat kick snare . hat . kick . hat . snare . snare hat
 
-seq lead_seq  = lead_am lead_f lead_g lead_am2 lead_am:oct(-1) lead_f:rot(2) lead_g:oct(+1) lead_am2:rev
-seq bass_seq  = bass_am bass_f bass_g bass_am2 bass_am:rot(2) bass_f:rot(2) bass_g:rot(2) bass_am2:rev
-seq pad_seq   = pad_am pad_f pad_g pad_am2 pad_am:rev pad_f:rev pad_g:rev pad_am2:rev
-seq drums_seq = drums_a drums_b drums_a drums_b drums_a:rot(2) drums_b:rev drums_a:rot(4) drums_b:rev:rot(2)
+# Second half: pitch/contour variation.
+seq lead_seq  = lead_am lead_f lead_g lead_am2 lead_am:oct(-1) lead_f lead_g:oct(+1) lead_am2
+seq bass_seq  = bass_am bass_f bass_g bass_am2 bass_am:oct(-1) bass_f bass_g:oct(-1) bass_am2
+seq pad_seq   = pad_am pad_f pad_g pad_am2 pad_am:oct(+1) pad_f:oct(+1) pad_g:oct(+1) pad_am2:oct(+1)
+seq drums_seq = drums_a drums_b drums_a drums_b drums_b drums_a drums_b drums_a
 
 channel 1 => inst lead seq lead_seq
 channel 2 => inst bass seq bass_seq

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 4
 title: SMS / Game Gear
+description: SN76489 — three tone channels plus noise; VGM export. Beta.
 ---
 
 # Sega Master System / Game Gear (SN76489)

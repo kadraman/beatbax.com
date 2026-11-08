@@ -5,7 +5,7 @@ title: Import MIDI files
 
 # Import MIDI files
 
-Convert a Standard MIDI File (`.mid` / `.midi`) into an editable BeatBax `.bax` song with the [BeatBax CLI](/docs/tools/cli).
+Convert a Standard MIDI File (`.mid` / `.midi`) into an editable BeatBax `.bax` song. This is a [BeatBax CLI](/docs/tools/cli) workflow (`beatbax import midi`).
 
 ```powershell
 beatbax import midi song.mid song.bax --chip gameboy
@@ -109,7 +109,7 @@ The [arrangement options](#arrangement-options) below add more fields for dense,
 
 ### Sections and drums
 
-- **`sectionBars`** (default `8`) — chunks each channel into fixed-size arrangement sections with `# --- Section N: Bars A-B ---` headers and `channel … seq lead_s01_seq lead_s02_seq …` so [Pattern Grid](/docs/tools/pattern-grid) is not stuck in monolithic mode. Use `0` for a single `seq` per channel. Songs with `bars ≤ sectionBars` stay one section.
+- **`sectionBars`** (default `8`) — chunks each channel into fixed-size arrangement sections with `# --- Section N: Bars A-B ---` headers and `channel … seq lead_s01_seq lead_s02_seq …` so [Pattern Grid](/docs/tools/pattern-grid) is not stuck in monolithic mode. Use `0` for a single `seq` per channel. Songs with `bars ≤ sectionBars` stay one section. Hand-authored songs can use [`section` / `form`](/docs/language/composition) instead; re-import still emits comment headers and per-section `seq` lists, not composition syntax.
 - **`drumFlamTicks`** (default `0`) — optionally nudges losing drum tokens into empty ticks after a stacked hit. Leave at `0` for clean backbeats.
 - **`dmcReinforcement`** ([NES](/docs/chips/nes) only) — keeps noise `kick` / `snare` and adds distinct `kick_dmc` / `snare_dmc` on channel 5. Reinforcement follows the **resolved** drum token (so a custom `39 → hihat` map does not copy claps to DMC).
 

@@ -1,0 +1,137 @@
+---
+sidebar_position: 4.5
+title: Composition
+mdx:
+  format: mdx
+---
+
+# Composition
+
+Compile-time **composition** statements make full-length songs easier to author. They expand to ordinary `pat` / `seq` / `channel` before playback and export — there is no runtime scripting.
+
+Use this page when arranging multi-section songs. The [Tutorial](/docs/tutorial/sequencing) still teaches classic `pat` / `seq` / `channel` wiring first.
+
+## Alias \{#alias\}
+
+Bind a name to a **seq item list** (the same tokens allowed on a `seq` RHS):
+
+```bax
+alias hook_mel_body = mel_a mel_a2 mel_a mel_a2
+
+seq hook_mel   = hook_mel_body
+seq finale_mel = hook_mel_body
+```
+
+- File-scoped and immutable.
+- Forward references are allowed; cycles are compile errors.
+- Not valid inside `pat` note lists.
+
+## Sequence concatenation (`cat`) \{#cat\}
+
+On a **`seq` RHS only**, concatenate existing sequences (each operand may carry colon modifiers):
+
+```bax
+seq song_mel = cat(intro_mel, hook_mel:oct(-1), finale_mel)
+channel 1 => inst lead seq song_mel
+```
+
+- Nesting is allowed: `cat(a, cat(b, c))`.
+- Empty `cat()` is an error.
+- Inline `cat(...)` directly on a `channel` `seq` clause is not supported — name the `seq` first.
+
+## Sections \{#section\}
+
+A **`section`** groups per-role sequence bodies for one part of the song (intro, verse, chorus, …). Channels bind to a role through a [`form`](#form).
+
+### Advanced binding
+
+```bax
+section intro {
+  mel  = mel_intro mel_intro2
+  harm = harm_intro
+  bass = bass_intro
+  perc = drums_intro
+}
+
+section hook {
+  mel  = mel_a mel_a2
+  harm = harm_main
+  bass = bass_main
+  perc = drums_main
+}
+
+form main = intro, hook
+
+channel 1 => inst lead role mel  form main
+channel 2 => inst arp  role harm form main
+channel 3 => inst bass role bass form main
+channel 4 => inst kick role perc form main
+```
+
+| Construct | Meaning |
+|-----------|---------|
+| `section name { role = … }` | Role names are author-chosen (`mel`, `harm`, `bass`, `perc`, …). Values are seq RHS item lists. |
+| Expansion | Creates implicit `seq <section>_<role> = …` definitions. A name collision with an existing `seq` is an error. |
+| `role … form …` | Channel picks one role from the named form; the timeline is the concatenation of that role across the form’s sections. |
+
+## Form \{#form\}
+
+A **`form`** declares section order once:
+
+```bax
+form main = intro, hook
+form main = intro > hook > outro   # `>` is a readable alias for commas
+form main = intro, hook
+  defaults inst=lead|arp|bass|kick
+```
+
+| Construct | Meaning |
+|-----------|---------|
+| `form name = a, b, c` | Section order. `a > b > c` is accepted as a readable alternative to commas. |
+| `defaults inst=i1\|i2\|…` | Optional. Fills a channel that has no `inst`, by 1-based channel index. |
+
+## Beginner Mode \{#beginner-mode\}
+
+Sugar that desugars to the same `section` / `form` / `role` model:
+
+```bax
+# Role order is fixed for the chip profile: mel, harm, bass, perc
+section intro use mel_a harm_a bass_a drum_a
+section hook  use mel_b harm_b bass_b drum_b
+
+form main = intro > hook
+
+channel auto form main inst=lead|arp|bass|kick
+```
+
+| Rule | Detail |
+|------|--------|
+| Lane count | Every `section … use` line in the song must share the same arity; `channel auto` `inst=` must match. |
+| `use` names | Bare identifiers only — no `:modifiers`. Use advanced `section { … }` blocks when a role needs modifiers. |
+| `channel auto` | Must be the **only** channel binding in the song. Cannot mix with `role` / `form` channels. |
+| Profiles | **Game Boy**, **SMS**, and **Game Gear**: 4 lanes (`mel harm bass perc`). **NES** / **Famicom**: 4 lanes, or 5 with a trailing `dmc` role. **Spectrum** / **CPC** is not a Beginner profile — use advanced `section` / `role` / `form`. |
+| Unsupported arity | Compile error with a hint to use advanced bindings. |
+
+NES five-lane example:
+
+```bax
+section battle use mel_a harm_a bass_a perc_a dmc_a
+form main = battle
+channel auto form main inst=lead|harm|tri|kick|kick_dmc
+```
+
+## Pattern Grid
+
+Songs with **two or more** authored `section`s (and a `form`) are a **structured** arrangement for [Pattern Grid](/docs/tools/pattern-grid): the section lane uses the section name, and section focus highlights the authored `section` block. A song with only one section is still treated as monolithic for focus UX.
+
+## Not supported
+
+- **`include`** for composition fragments — deferred; use classic `import` for instruments only.
+- External macro preprocessor.
+
+## See also
+
+- [Sequences](/docs/language/sequences)
+- [Channels](/docs/language/channels)
+- [Pattern Grid](/docs/tools/pattern-grid)
+- [Appendix](/docs/language/appendix) — statement index and reserved words

@@ -69,15 +69,19 @@ Applying a template overwrites editable fields of the **selected** instrument (o
 - **Name** and **Type** stay visible. Other scalar fields use **Voice** (duty, width, volume, sample, …) and **Defaults** (default note, GM program, UGE note). Hidden fields follow the instrument type.
 - **Hardware** — parametric **Envelope** and **Sweep** with live shape preview (Game Boy packed `env=` / `sweep=`; NES discrete props). Use dashed **Add** chips to create a field; trash removes it.
 - **Waveform** — Game Boy `wave` instruments: draw a 32×4-bit wavetable, paste a 32-nibble hUGE hex string, or apply shape presets (sine, square, saw, triangle). Chips without a waveform schema hide this section.
-- **Macros** — graph editors for `vol_env`, `arp_env`, `duty_env`, `pitch_env`, and chip extras (for example SMS `noise_rate_env`). Click/drag to paint; Shift-drag draws a line; set a loop marker (`|n`) or leave the sequence empty to omit the field.
+- **Macros** — graph editors for `vol_env`, `arp_env`, `duty_env`, `pitch_env`, and chip extras (for example SMS `noise_rate_env`). Click/drag to paint; Shift-drag draws a line; set a loop marker (`|n`) or leave the sequence empty to omit the field. On NES **DMC** instruments the Macros area shows an empty-state note (“not available on DMC channels”) instead of inert graphs. NES `arp_env` / `pitch_env` apply to noise as well as pulse and triangle.
 
 Field meanings stay chip-specific — see [Instruments](/docs/language/instruments), [Instrument macros](/docs/language/instrument-macros), and the [Sound Chip Plugins](/docs/chips/overview) guides.
 
 ### NES samples
 
-For `type=dmc`, the sample control splits **scheme** (Bundled / Local / HTTPS / GitHub) from **value**. Bundled values are a name dropdown; other schemes use a text field. There is no filesystem Browse dialog.
+For `type=dmc`, the sample control splits **scheme** (Bundled / Local / HTTPS / GitHub) from **value**. Bundled values are a name dropdown (expanded kit: punch/body drums, 808/909, bass saws, orch hits, voices — see [NES → DMC samples](/docs/chips/nes#dmc-samples)); other schemes use a text field. There is no filesystem Browse dialog.
 
-Bundled `@nes/…` samples may show read-only **designed rate** / **base note** guidance in the panel (for example `@nes/bass_c2`). That metadata does not change playback; `dmc_rate` remains the authoring control.
+Some bundled samples (for example `@nes/bass_saw_c1` or `@nes/voice_ready`) show a suggested **rate** and **base note**. Those are hints only — set playback with `dmc_rate`.
+
+`dmc_level` (0–127) is written for FamiTracker export; BeatBax always plays DMC from DAC level 64.
+
+Use **Trigger sample** to preview the hit (same oneshot preview as noise).
 
 ## Preview and MIDI
 

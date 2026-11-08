@@ -236,6 +236,22 @@
   margin: 0;
 }
 
+.screenshotThumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+  border-radius: 10px;
+}
+
+.screenshotThumb:focus-visible {
+  outline: 2px solid var(--beatbax-accent-alt);
+  outline-offset: 3px;
+}
+
 .screenshotCard img {
   display: block;
   width: 100%;
@@ -248,10 +264,58 @@
   background: var(--beatbax-surface);
 }
 
-.screenshotCard figcaption {
+.screenshotTitle {
   margin-top: 0.75rem;
   text-align: center;
-  opacity: 0.85;
+  font-weight: 700;
+  font-size: 1.05em;
+  color: var(--beatbax-accent);
+}
+
+.screenshotLightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(8, 10, 18, 0.88);
+  cursor: zoom-out;
+}
+
+.screenshotLightboxImage {
+  display: block;
+  max-width: min(96vw, 1600px);
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  cursor: default;
+}
+
+.screenshotLightboxClose {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 1;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.screenshotLightboxClose:hover,
+.screenshotLightboxClose:focus-visible {
+  background: rgba(255, 255, 255, 0.28);
+  outline: none;
 }
 
 .downloadPage {

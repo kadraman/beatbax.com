@@ -15,6 +15,8 @@ A **`channel`** line assigns one chip voice: default instrument, what to play, a
 channel <N> => inst <name> seq <SeqRhs>
 channel <N> => inst <name> pat <name>
 channel <N> => inst <name> seq <pat1> <pat2>   # inline playlist
+channel <N> => inst <name> role <role> form <formName>
+channel auto form <formName> inst=i1|i2|i3|i4
 ```
 
 | Part | Meaning |
@@ -22,6 +24,8 @@ channel <N> => inst <name> seq <pat1> <pat2>   # inline playlist
 | `channel N` | Chip voice index (1-based). Mapping depends on `chip` — see [Sound Chip Plugins](/docs/chips/overview). |
 | `inst name` | Default instrument for this voice |
 | `seq` / `pat` | [What to play](#pat-seq) (named sequence, named pattern, or inline sequence items) |
+| `role` / `form` | Bind this voice to a role in a [composition form](/docs/language/composition#section) |
+| `channel auto` | Beginner Mode — expand one line into profile roles; see [Composition](/docs/language/composition#beginner-mode) |
 | `speed=` | [Tempo multiplier](#speed) relative to master `bpm` |
 | `lock=` | Scale-degree lock when a song-level `scale` is set — see [Global directives](/docs/language/metadata-directives#scale-and-channel-locks) |
 
@@ -62,6 +66,7 @@ Other chips expose different counts and roles — see the chip pages.
 ## See also
 
 - [Sequences](/docs/language/sequences)
+- [Composition](/docs/language/composition) — `section`, `form`, `role`, `channel auto`
 - [Instruments](/docs/language/instruments)
 - [Global directives — scale and locks](/docs/language/metadata-directives#scale-and-channel-locks)
 - [Effects — per-channel speed](/docs/language/effects#tempo-and-per-channel-speed)

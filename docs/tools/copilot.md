@@ -209,9 +209,11 @@ On every request the assistant receives:
 
 ## Arrangement layout fixes
 
-When the [Pattern Grid](/docs/tools/pattern-grid) is enabled and a song uses a **phased** or **monolithic** layout, parse diagnostics may suggest improvements so section focus and the section lane work better.
+When the [Pattern Grid](/docs/tools/pattern-grid) is enabled and a song uses a **phased** or **monolithic** layout, parse diagnostics may suggest improvements so section focus and the section lane work better. Those hints prefer authored [`section` / `form`](/docs/language/composition) with `channel auto` (or `role` + `form`).
 
-Copilot can respond to those hints with a short proposal (split monolithic channel sequences, restructure phased sections into `# --- Section N ---` headers, or add section header comments). Reply **yes** / **run it** / **apply split** in chat to run the matching [command palette](/docs/tools/editor#command-palette) action **locally** — no extra model call, and the same commands you can run yourself from `F1`.
+When you ask Copilot to improve section focus, Ask and Edit prefer `section` / `form` / `channel auto` over inserting `# --- Section ---` comments.
+
+Separately, Copilot can propose the **classic** local transforms (split monolithic channel sequences, restructure phased sections into `# --- Section N ---` headers, or add section header comments). Reply **yes** / **run it** / **apply split** in chat to run the matching [command palette](/docs/tools/editor#command-palette) action **locally** — no extra model call, and the same commands you can run yourself from `F1`. Those local commands do **not** rewrite the song into `section` / `form` syntax.
 
 Review the buffer edit, then save when satisfied. These commands only change the open editor; they do not alter playback until you apply the updated source.
 

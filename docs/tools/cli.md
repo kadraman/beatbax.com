@@ -143,31 +143,14 @@ See also [UGE export](/docs/exports/uge) for the reverse direction (BeatBax → 
 
 ### Import MIDI files
 
-`beatbax import midi` (alias `beatbax convert midi2bax`) turns a Standard MIDI File into an editable `.bax` song for **Game Boy** or **NES**. Tracks are auto-mapped from GM programs and names, or overridden with `--config`. This is not [MIDI step entry](/docs/tools/midi-step-entry) and is not a round-trip of `beatbax export midi`.
+`beatbax import midi` (alias `beatbax convert midi2bax`) turns a Standard MIDI File into an editable `.bax` song for **Game Boy** or **NES**. This is CLI-only file import — not [MIDI step entry](/docs/tools/midi-step-entry) in Desktop, and not a round-trip of `beatbax export midi`.
 
 ```powershell
 beatbax import midi song.mid --inspect
 beatbax import midi song.mid song.bax --chip gameboy
-beatbax import midi song.mid --chip nes --dry-run
-beatbax import midi song.mid song.bax --chip gameboy --config song.import.json --annotate
 ```
 
-```text
-Usage: beatbax import midi [options] <input.mid> [output.bax]
-```
-
-| Flag | Description |
-|------|-------------|
-| `--chip <chip>` | **Required** (except with `--inspect`). `gameboy` or `nes` |
-| `--config <file>` | Optional JSON mapping / quantize / arrangement override |
-| `--section-bars <N>` | Pattern Grid section size (default `8`; `0` = monolithic) |
-| `--quantize` / `--grid` | Quantize mode and grid |
-| `--dry-run` / `--strict` / `--title` | Preview, fail on errors, song name |
-| `--inspect` | Print a per-track report of the MIDI file and exit; writes nothing |
-| `--json` | With `--inspect`: print the report as JSON |
-| `--annotate` | Start the output with a comment block explaining channel mappings, drops and timing |
-
-Full options, config schema, arrangement options, and generated names: [Import MIDI files](/docs/tools/midi-import).
+Full options, config schema, arrangement, and mapping details: [Import MIDI files](/docs/tools/midi-import).
 
 ### Sample conversion
 
@@ -175,10 +158,12 @@ Full options, config schema, arrangement options, and generated names: [Import M
 
 #### NES DMC (`wav2dmc`)
 
-`convert wav2dmc` turns a 16-bit mono/stereo PCM WAV into a raw NES `.dmc` sample for `type=dmc` instruments:
+`convert wav2dmc` turns a **16-bit** mono/stereo PCM WAV into a raw NES `.dmc` sample for `type=dmc` instruments. Prefer peaks around −6 to −12 dB (`--gain 0.4`–`0.7`); full-scale audio slope-overloads into grit. Quiet WAV tails become DMC hiss — trim them. Hardware length max is **4081** bytes (~0.98 s at rate 15).
+
+For short drums and tonal hits, encode and play at the same `--dmc-rate` (often `15`). For speech, **encode fast, play slow**: encode at rate 15, then set the instrument `dmc_rate` lower (pitch and duration move together). Useful NTSC pairs: 15→12 ≈ 2× length (~1.93 s), 15→7 ≈ 4× (~3.9 s). Example: bundled `@nes/voice_ready` is designed for `dmc_rate=12`.
 
 ```powershell
-beatbax convert wav2dmc samples/wav/low_kick.wav --dmc-rate 15 --emit-inst --play
+beatbax convert wav2dmc hit.wav --dmc-rate 15 --gain 0.5 --trim-silence -45 --tail-ms 8 --fade-out-ms 4 --max-duration-ms 180 --emit-inst --play
 ```
 
 With `--emit-inst`, the CLI prints a matching instrument line, for example:
@@ -187,10 +172,13 @@ With `--emit-inst`, the CLI prints a matching instrument line, for example:
 inst kick type=dmc dmc_rate=15 dmc_loop=false dmc_sample="local:samples/wav/kick.dmc"
 ```
 
+Bundled kit samples (`@nes/kick_punch`, `@nes/snare_tight`, …) are documented under [NES → DMC samples](/docs/chips/nes#dmc-samples).
+
 | Flag | Description |
 |------|-------------|
 | `--dmc-rate <0-15>` / `-q` | Encoding / preview rate (`15` = fastest / highest quality) |
 | `--dmc-loop` | Emit `dmc_loop=true` and loop preview |
+| `--gain <factor>` | Linear gain before encoding (default `1`; try `0.4`–`0.7` for drums) |
 | `--trim-silence <db>` / `--no-trim-silence` | Trim quiet tails (often reduces hiss) |
 | `--tail-ms <ms>` | Keep audio after the last above-threshold sample |
 | `--fade-out-ms <ms>` | Fade before encoding |

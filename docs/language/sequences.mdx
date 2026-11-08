@@ -25,6 +25,7 @@ Empty sequences (`seq name =` with nothing after `=`) are **errors** — every `
 |------|---------|
 | `patName` | Play that pattern once |
 | `name:mod(…)` | Apply [modifiers](/docs/language/modifiers#modifier-catalog) (chainable) |
+| `cat(a, b, …)` | Concatenate sequences — see [Composition](/docs/language/composition#cat) |
 
 ### Repeats (`*N`) \{#repeat\}
 
@@ -49,13 +50,14 @@ seq lifted    = lead_a:oct(+1):rot(2)
 
 Items may be separated by spaces or commas. Comments (`#` / `//`) are allowed between items.
 
-When each `channel` line lists the same top-level `seq` references in order, the [Pattern Grid](/docs/tools/pattern-grid) section lane can focus and play one section across all channels. See [Pattern Grid](/docs/tools/pattern-grid) for structured, phased, and monolithic layouts.
+When each `channel` line lists the same top-level `seq` references in order, the [Pattern Grid](/docs/tools/pattern-grid) section lane can focus and play one section across all channels. Authored [`section` / `form`](/docs/language/composition) arrangements are preferred for new songs. See [Pattern Grid](/docs/tools/pattern-grid) for structured, phased, and monolithic layouts.
 
 <BaxPlayer title="Sequence refs, groups, and repeats" code={sequencesBasicBax} />
 
 ## See also
 
 - [Patterns](/docs/language/patterns)
+- [Composition](/docs/language/composition) — `alias`, `cat()`, `section`, `form`
 - [Channels](/docs/language/channels)
 - [Modifiers](/docs/language/modifiers)
 - [Pattern Grid](/docs/tools/pattern-grid) — section-focus playback across channels

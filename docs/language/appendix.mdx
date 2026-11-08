@@ -28,10 +28,13 @@ Compact index of top-level statements, lexical rules, and reserved words as impl
 | `effect` | [Effects](/docs/language/effects) |
 | `pat` / shorthand `name = …` | [Patterns](/docs/language/patterns) |
 | `seq` | [Sequences](/docs/language/sequences) |
+| `alias` | [Composition](/docs/language/composition#alias) |
+| `section` | [Composition](/docs/language/composition#section) |
+| `form` | [Composition](/docs/language/composition#form) |
 | `channel` | [Channels](/docs/language/channels) |
 | `export` | **Deprecated** — prefer CLI / Desktop / web; see [Export](/docs/language/export) |
 
-Not in the current grammar (do not use): `alias`, `section`, `form`, `include`, `cat`.
+`cat(...)` is a [sequence RHS](/docs/language/composition#cat) form, not a top-level statement. Not in the current grammar (do not use): `include`.
 
 ## Lexical notes
 
@@ -46,7 +49,7 @@ Not in the current grammar (do not use): `alias`, `section`, `form`, `include`, 
 
 These cannot start a pattern-shorthand statement (`name = …` without `pat`):
 
-`chip`, `bpm`, `scale`, `time`, `stepsPerBar`, `ticksPerStep`, `song`, `inst`, `subpat`, `pat`, `seq`, `channel`, `effect`, `play`, `export`
+`chip`, `bpm`, `scale`, `time`, `stepsPerBar`, `ticksPerStep`, `song`, `inst`, `subpat`, `pat`, `seq`, `alias`, `section`, `form`, `channel`, `effect`, `play`, `export`
 
 (`volume` and `import` are statement keywords but are not in the shorthand reserved list — prefer explicit `pat` when in doubt.)
 

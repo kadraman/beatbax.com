@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: NES
+description: Ricoh 2A03 — pulse, triangle, noise, and DMC; FamiTracker text export. Stable.
 ---
 
 # NES (Ricoh 2A03)
@@ -44,7 +45,8 @@ inst snare  type=noise  noise_mode=normal  noise_period=6   env=14,down  env_per
 inst hihat  type=noise  noise_mode=normal  noise_period=3   env=8,down   env_period=0
 
 ; DMC sample playback
-inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
+inst kick_punch type=dmc  dmc_rate=15  dmc_loop=false  dmc_sample="@nes/kick_punch"
+inst bass_hit   type=dmc  dmc_rate=7   dmc_loop=false  dmc_sample="@nes/bass_saw_c1"
 ```
 
 **Key differences from Game Boy:**
@@ -52,8 +54,9 @@ inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
 - `env_period` controls hardware envelope decay (0 = fastest, 15 = slowest) separately from the initial level in `env`
 - Triangle has no hardware volume; `vol=0` is a software mute, any other value = full amplitude
 - Noise pitch is determined by `noise_period` (0–15), not by the note name in the pattern
-- Channel 5 (DMC) plays sample files, not synthesised tones
-- In the Desktop [Instrument Editor](/docs/tools/instrument-editor), noise and DMC use **Trigger** (oneshot named hit) instead of a chromatic keyboard; triangle preview defaults to octave **2**
+- Channel 5 (DMC) plays sample files, not synthesised tones — **one sample at a time**; a new trigger cuts the previous hit
+- Optional `dmc_level=` (0–127) is for [FamiTracker text](/docs/exports/famitracker-text) export; BeatBax playback always starts the DAC at **64**
+- In the Desktop [Instrument Editor](/docs/tools/instrument-editor), noise and DMC use **Trigger** (oneshot named hit) instead of a chromatic keyboard; triangle preview defaults to octave **2**. DMC shows an empty Macros state (macros are not available on DMC)
 
 ## DMC samples
 
@@ -61,13 +64,30 @@ inst bass_hit  type=dmc  dmc_rate=7  dmc_loop=false  dmc_sample="@nes/bass_c2"
 
 | Reference | Source |
 |-----------|--------|
-| `@nes/<name>` | A sample bundled with BeatBax, for example `@nes/bass_c2` (Instrument Editor may show designed rate / base note as guidance only) |
+| `@nes/<name>` | A sample bundled with BeatBax (Instrument Editor may show designed rate / base note as guidance only) |
 | `local:<path>` | A `.dmc` file on disk. Desktop looks next to the saved song and in its parent folders; the CLI resolves the path from the working directory. Not available in the web client |
 | `github:<owner>/<repo>/<path>` | A file in a GitHub repository, read from the `main` branch |
 | `https://…` | Any HTTPS URL. GitHub `blob` / `raw` links are converted to `raw.githubusercontent.com` |
 
+### Bundled kit (`@nes/…`)
+
+Classic `@nes/kick` and `@nes/snare` are unchanged. Prefer fuller hits for new songs:
+
+| Group | Examples |
+|-------|----------|
+| Drums (prefer) | `kick_punch`, `kick_body`, `snare_tight`, `snare_fat`, `hat_closed`, `hat_open`, `crash`, `crash_cym`, `rim`, `shaker`, `cowbell` |
+| Classic / aliases | `kick`, `snare`, `hihat` (distinct from clap — no longer aliases clap), `clap`, `bass`, `bass_c2` |
+| 808 (Fischer CC0) | `kick_808`, `snare_808`, `hat_808`, `hat_open_808`, `clap_808`, `cymbal_808`, `rim_808`, `cowbell_808`, `maracas_808`, `tom_low_808`, `tom_mid_808`, `tom_high_808` |
+| 909 | `kick_909`, `snare_909`, `hat_909`, `hat_open_909` |
+| Pitched bass | `bass_saw_c0`, `bass_saw_d0`, `bass_saw_e0`, `bass_saw_g0`, `bass_saw_a0`, `bass_saw_c1` |
+| Hits / speech | `orch_hit`, `orch_hit_up`; `voice_ready` (designed for `dmc_rate=12`), `voice_go`, `voice_correct`, `voice_set`, `voice_hurry_up`, `voice_level_up`, `voice_go_go_go`, `voice_you_win` |
+
+Provenance for bundled samples lives in the toolchain repo (`samples/dmc/NOTICE`). Keep hats on noise for continuous grooves; use DMC hats as accents — channel 5 cannot overlap kick and snare.
+
 ```bax
-inst kick  type=dmc  dmc_rate=15  dmc_loop=false  dmc_sample="github:kadraman/beatbax-samples/dmc/kick.dmc"
+inst kick_punch type=dmc  dmc_rate=15  dmc_loop=false  dmc_sample="@nes/kick_punch"
+inst voice_ready type=dmc  dmc_rate=12  dmc_loop=false  dmc_sample="@nes/voice_ready"
+inst remote_kick type=dmc  dmc_rate=15  dmc_loop=false  dmc_sample="github:kadraman/beatbax-samples/dmc/kick.dmc"
 ```
 
 In [BeatBax Desktop](/docs/tools/desktop), remote samples are downloaded only from hosts in the [remote host allowlist](/docs/tools/settings#remote-host-allowlist). `raw.githubusercontent.com` is always allowed, so `github:` references work out of the box. Other hosts must be added under **Settings → Advanced → Remote host allowlist**.
@@ -78,7 +98,7 @@ A sample that cannot be loaded (blocked host, HTTP error, timeout, missing file)
 NES DMC: failed to load sample 'https://example.com/snare.dmc': Remote asset host 'example.com' is not in the Desktop allowlist. Add it under Settings → Advanced → Remote host allowlist.
 ```
 
-The CLI and WAV export print the failure to the console instead.
+The CLI and WAV export print the failure to the console instead. Convert your own WAVs with [`beatbax convert wav2dmc`](/docs/tools/cli#nes-dmc-wav2dmc).
 
 ## Named instrument tokens
 
@@ -99,9 +119,11 @@ Per-frame (60 Hz) envelope sequences (FamiTracker / FamiStudio style):
 | Macro | Applied to | Values | Effect |
 |-------|------------|--------|--------|
 | `vol_env` | pulse1, pulse2, noise | `0`–`15` per frame | Volume automation; overrides hardware `env` decay |
-| `arp_env` | pulse1, pulse2, triangle | semitone offset per frame | Rapid arpeggio shimmer |
-| `pitch_env` | pulse1, pulse2, triangle | semitone offset per frame | Pitch rip / fall-in |
+| `arp_env` | pulse1, pulse2, triangle, noise | semitone offset per frame | Rapid arpeggio shimmer |
+| `pitch_env` | pulse1, pulse2, triangle, noise | semitone offset per frame | Pitch rip / fall-in |
 | `duty_env` | pulse1, pulse2 | `0`–`3` per frame | Duty cycle modulation |
+
+DMC instruments do not use software macros (the Instrument Editor shows an empty-state note instead of inert arp/pitch graphs).
 
 Syntax: `macro_name=[v0,v1,…]` — play once and hold the last value. Add `|N` to loop from index N:
 

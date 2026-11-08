@@ -5,15 +5,17 @@ title: Pattern Grid
 
 # Pattern Grid (Experimental)
 
-The **Pattern Grid** is a **desktop** timeline of the resolved song: one row per chip channel, with pattern blocks laid out in time and a playhead that follows playback.
+The **Pattern Grid** is a timeline of the resolved song: one row per chip channel, with pattern blocks laid out in time and a playhead that follows playback.
 
-It is the main surface for **section focus** (hearing one arrangement section across every channel), **Pos-ruler seek and loop** on the full song, and **zoom / scroll** so long arrangements stay readable.
+It is the main surface for **section focus** (hearing one arrangement section across every channel), **Pos-ruler seek and loop** on the full song, and (on Desktop) **zoom / scroll** so long arrangements stay readable.
 
-> The Pattern Grid is marked **Experimental** in [Settings](/docs/tools/settings) and disabled by default.
+> On [BeatBax Desktop](/docs/tools/desktop), Pattern Grid is marked **Experimental** in [Settings](/docs/tools/settings) and disabled by default.
 
-> The [BeatBax web-lite client](/docs/tools/web-client) does not include the Pattern Grid. Use [BeatBax Desktop](/docs/tools/desktop).
+> The [web-lite client](/docs/tools/web-client) includes a **cutdown** Pattern Grid (timeline + section focus). Desktop-only extras such as zoom controls are not available there yet.
 
 ## Enabling the grid
+
+### Desktop
 
 1. Open [BeatBax Desktop](/docs/tools/desktop).
 2. Press `Ctrl+,` / `Cmd+,` (or **View → Settings…**) to open **Settings**.
@@ -21,6 +23,10 @@ It is the main surface for **section focus** (hearing one arrangement section ac
 4. Close Settings. The grid appears above the editor.
 
 The transport bar stays in sync with the grid playhead.
+
+### Web-lite
+
+Open [app.beatbax.com](https://app.beatbax.com) and apply a song — the cutdown grid is available in the web-lite UI without a Settings feature flag.
 
 ## Reading the timeline
 
@@ -44,7 +50,7 @@ When your song has identifiable top-level sections on each `channel` line, the g
 
 | Action | What it does |
 | --- | --- |
-| Click a section **name** | **Focus** that section — highlights the column in the grid, decorates matching `seq` lines in the editor, and scopes transport playback. Does **not** start audio. |
+| Click a section **name** | **Focus** that section — highlights the column in the grid, decorates matching `seq` lines or the authored `section` block in the editor, and scopes transport playback. Does **not** start audio. |
 | Click **▶** on a section | **Focus and play** that section on all overlapping channels. |
 | Right-click a section | **Focus section** or **Play section** from the context menu. |
 
@@ -65,7 +71,7 @@ Section focus builds a temporary slice of the song (same `inst` / `pat` / `seq` 
 
 ### Editing while focused
 
-After **Apply** or **Live** re-parses the song, an active section focus **rebinds** to the same section (matched by `# --- Section … ---` headword or primary `seq` name) and refreshes grid highlights and editor decorations to the new line numbers.
+After **Apply** or **Live** re-parses the song, an active section focus **rebinds** to the same section (matched by authored `section` name, `# --- Section … ---` headword, or primary `seq` name) and refreshes grid highlights and editor decorations to the new line numbers.
 
 - If the focused section **grows or shrinks** (for example you add bars to `lead_intro`), the focus window and slice playback follow the updated boundaries.
 - If that section is **removed** from the song, focus exits and the status bar explains why.
@@ -84,15 +90,15 @@ Pattern blocks do **not** enter section focus on Desktop — use the section lan
 
 ## Supported song layouts
 
-Section focus works best when each `channel` line lists the same number of **top-level** `seq` references in the same order.
+Prefer authored [`section` / `form`](/docs/language/composition) for new multi-part songs. Classic multi-seq layouts still work when each `channel` line lists the same number of **top-level** `seq` references in the same order.
 
 | Layout | Typical shape | Section lane |
 | --- | --- | --- |
-| **Structured** | `# --- Section N: … ---` comment blocks with cross-channel `seq` defs | Full section lane, editor highlights section comment + all role `seq` lines |
+| **Structured** | Two or more authored `section`s plus a `form` (or classic `# --- Section N: … ---` comment blocks with cross-channel `seq` defs) | Full section lane. For `section` / `form`, labels use the section name and focus highlights the authored `section` block (generated `<section>_<role>` seqs have no `seq name =` lines). Comment-header songs highlight the comment + role `seq` lines. |
 | **Phased** | Matching `seq` tokens per channel (`intro`, `main`, `bridge`, …) without section headers | Slice play and column highlight work; editor grouping is weaker |
-| **Monolithic** | One long `seq` per channel for the whole song | Focus selects the **entire** timeline; pat-block navigation and **F6** on individual pats still work |
+| **Monolithic** | One long `seq` per channel for the whole song, or a song with only **one** authored `section` | Focus selects the **entire** timeline; pat-block navigation and **F6** on individual pats still work. Comment headers alone do **not** create Pattern Grid sections on a monolithic song. |
 
-After a successful parse, BeatBax may show **info** diagnostics on the first `channel` line suggesting layout improvements (for example phased or monolithic arrangements). These are hints, not errors.
+After a successful parse, BeatBax may show **info** diagnostics on the first `channel` line suggesting layout improvements. Those hints prefer migrating to `section` / `form` with `channel auto` (or `role` + `form`). Classic alternatives remain available.
 
 ### Arrangement layout commands
 
@@ -101,11 +107,11 @@ Open the [command palette](/docs/tools/editor#command-palette) (`F1` or `Ctrl+Sh
 | Command | Purpose |
 | --- | --- |
 | **Play Arrangement Slice** | Focus and play the section at the editor cursor (only when Pattern Grid is on and visible) |
-| **Arrange: Add Section Header Comments** | Insert `# --- Section N: … ---` markers for structured layouts |
+| **Arrange: Add Section Header Comments** | Insert `# --- Section N: … ---` markers for classic structured layouts (does not rewrite into `section` / `form`) |
 | **Arrange: Restructure Phased Sections into Headers** | Rewrite channel-grouped phased `seq` defs into section header blocks (opt-in buffer edit) |
 | **Arrange: Split Monolithic Channel Sequences** | Split one long `seq` per channel into aligned section sequences (opt-in buffer edit) |
 
-[BeatBax Copilot](/docs/tools/copilot) can propose the same layout fixes when diagnostics mention section focus — confirm in chat to run the matching command locally without a model round-trip.
+These three **Arrange** commands are the classic local transforms. They do not convert a song into `section` / `form` syntax. [BeatBax Copilot](/docs/tools/copilot) can propose the same classic fixes when diagnostics mention section focus — confirm in chat to run the matching command locally without a model round-trip. When you ask Copilot to improve section focus in Edit/Ask, it prefers authored `section` / `form` / `channel auto` over comment headers.
 
 ## Keyboard shortcuts (section focus)
 
@@ -164,7 +170,9 @@ Web-lite Pattern Grid zoom is not available yet.
 ## Related docs
 
 - [BeatBax Desktop](/docs/tools/desktop)
+- [BeatBax web-lite client](/docs/tools/web-client)
 - [BeatBax Editor](/docs/tools/editor) — command palette commands
+- [Composition](/docs/language/composition) — `section` / `form` / `channel auto`
 - [Sequences](/docs/language/sequences)
 - [Channels](/docs/language/channels)
 - [Modifiers](/docs/language/modifiers)

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: Spectrum 128 / CPC
+description: AY-3-8912 — three tones with shared noise/envelope; experimental Arkos export.
 ---
 
 # ZX Spectrum 128 / Amstrad CPC (AY-3-8912)

@@ -39,6 +39,6 @@ A command-line client for scripted, utility and headless workflows. Install with
 | [Settings](/docs/tools/settings) | Full Settings modal | Theme and toolbar only | CLI flags |
 | [Channel Mixer](/docs/tools/channel-mixer) | Yes | Yes | N/A |
 | [Instrument Editor](/docs/tools/instrument-editor) | Yes (Experimental) | No | N/A |
-| [Pattern Grid](/docs/tools/pattern-grid) | Yes (Experimental) | No | N/A |
+| [Pattern Grid](/docs/tools/pattern-grid) | Yes (Experimental) | Yes (cutdown) | N/A |
 | [Song Visualizer](/docs/tools/song-visualizer) | Yes | No | N/A |
 | [BeatBax Copilot](/docs/tools/copilot) | Yes | No | N/A |
